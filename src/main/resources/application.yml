@@ -1,0 +1,37 @@
+server:
+  port: 8080
+
+spring:
+  mvc:
+    servlet:
+      load-on-startup: 1
+  resources:
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/, classpath:/static/
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/ccorder?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8
+    username: root
+    password: 123456
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    mode: HTML
+    encoding: UTF-8
+    suffix: .html
+    servlet:
+      content-type: text/html
+  servlet:
+    multipart:
+      max-file-size: 5242880
+      max-request-size: 5242880
+
+#logging:
+#  level:
+#    com.zm.blogsystem: info
+#  path: "D:/Projects/Log/test.log"
+
+mybatis:
+  mapper-locations: classpath:mapper/*Mapper.xml
+  type-aliases-package: com.ccorder.orderproject
+  configuration:
+    map-underscore-to-camel-case: true
