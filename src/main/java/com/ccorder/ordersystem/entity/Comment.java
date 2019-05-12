@@ -4,27 +4,25 @@ import java.util.Date;
 import lombok.Data;
 
 @Data
-public class Food {
+public class Comment {
     private String id;
 
-    private String foodName;
-
-    private Double foodPrice;
+    private String orderId;
 
     /**
-     * 对应字典项的id
+     * 商家对应的user_id
      */
-    private String foodType;
+    private String userId;
 
-    private String foodMaterial;
+    private String content;
 
     private String createUserId;
 
-    private Date createDate;
+    private Date createTime;
 
     private String modifyUserId;
 
-    private Date modifyDate;
+    private Date modifyTime;
 
     /**
      * 0是默认值，-1失效

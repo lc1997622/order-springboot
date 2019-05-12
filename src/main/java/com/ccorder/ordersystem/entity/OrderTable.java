@@ -4,19 +4,19 @@ import java.util.Date;
 import lombok.Data;
 
 @Data
-public class Food {
+public class OrderTable {
     private String id;
 
-    private String foodName;
-
-    private Double foodPrice;
+    private String orderNum;
 
     /**
-     * 对应字典项的id
-     */
-    private String foodType;
+    * 字典项id
+    */
+    private String payMethod;
 
-    private String foodMaterial;
+    private String address;
+
+    private Double actualPayment;
 
     private String createUserId;
 
@@ -27,7 +27,7 @@ public class Food {
     private Date modifyDate;
 
     /**
-     * 0是默认值，-1失效
-     */
+    * 0是默认值，-1失效
+    */
     private Integer status;
 }

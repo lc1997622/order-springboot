@@ -4,19 +4,14 @@ import java.util.Date;
 import lombok.Data;
 
 @Data
-public class Food {
+public class SysRole {
     private String id;
 
-    private String foodName;
+    private String code;
 
-    private Double foodPrice;
+    private String sort;
 
-    /**
-     * 对应字典项的id
-     */
-    private String foodType;
-
-    private String foodMaterial;
+    private String name;
 
     private String createUserId;
 
