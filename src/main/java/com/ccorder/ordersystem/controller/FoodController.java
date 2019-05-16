@@ -6,7 +6,7 @@ import com.ccorder.ordersystem.entity.MapUserFood;
 import com.ccorder.ordersystem.entity.SysUser;
 import com.ccorder.ordersystem.mapper.MapUserFoodMapper;
 import com.ccorder.ordersystem.service.FoodService;
-import com.ccorder.ordersystem.service.UserService;
+import com.ccorder.ordersystem.service.SysUserService;
 import com.ccorder.ordersystem.sys.dto.AjaxMessage;
 import com.ccorder.ordersystem.sys.dto.MsgType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ public class FoodController {
     private FoodService foodService;
 
     @Autowired
-    private UserService userService;
+    private SysUserService userService;
 
     @Autowired
     private MapUserFoodMapper mapUserFoodMapper;
@@ -52,7 +52,7 @@ public class FoodController {
      */
     public Object addNewFood(@RequestBody Food newFood){
         /*获取店家user*/
-        SysUser storeUser = userService.getUserById(newFood.getCreateUserId());
+        SysUser storeUser = userService.selectByPrimaryKey(newFood.getCreateUserId());
 
         try {
             /*food表插入记录*/
