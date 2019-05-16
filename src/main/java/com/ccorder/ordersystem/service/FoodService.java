@@ -1,9 +1,9 @@
 package com.ccorder.ordersystem.service;
 
 import com.ccorder.ordersystem.entity.Food;
-import com.ccorder.ordersystem.entity.MapUserFood;
+import com.ccorder.ordersystem.entity.mapEntity.MapUserFood;
 import com.ccorder.ordersystem.mapper.FoodMapper;
-import com.ccorder.ordersystem.mapper.MapUserFoodMapper;
+import com.ccorder.ordersystem.mapper.mapMapper.MapUserFoodMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

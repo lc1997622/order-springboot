@@ -2,9 +2,9 @@ package com.ccorder.ordersystem.controller;
 
 
 import com.ccorder.ordersystem.entity.Food;
-import com.ccorder.ordersystem.entity.MapUserFood;
+import com.ccorder.ordersystem.entity.mapEntity.MapUserFood;
 import com.ccorder.ordersystem.entity.SysUser;
-import com.ccorder.ordersystem.mapper.MapUserFoodMapper;
+import com.ccorder.ordersystem.mapper.mapMapper.MapUserFoodMapper;
 import com.ccorder.ordersystem.service.FoodService;
 import com.ccorder.ordersystem.service.SysUserService;
 import com.ccorder.ordersystem.sys.dto.AjaxMessage;
@@ -36,6 +36,13 @@ public class FoodController {
     @Autowired
     private MapUserFoodMapper mapUserFoodMapper;
 
+    /**
+     * @param []
+     * @return java.lang.Object
+     * @Description 测试检验
+     * @author zm
+     * @date 13:39 2019/5/16
+     */
     @GetMapping("getFoodName")
     @ResponseBody
     public Object getFoodName(){
@@ -85,4 +92,8 @@ public class FoodController {
         List<Food> foodList = new ArrayList<>();
         return new AjaxMessage().Set(MsgType.Success,"获取店铺所有商品成功", foodList);
     }
+
+    /*public Object getUserInfo(){
+
+    }*/
 }

@@ -1,20 +1,15 @@
-package com.ccorder.ordersystem.entity;
+package com.ccorder.ordersystem.entity.mapEntity;
 
 import java.util.Date;
 import lombok.Data;
 
 @Data
-public class MapFile {
+public class MapOrderComment {
     private String id;
 
-    /**
-    * 对应字典项的id
-    */
-    private String foodType;
+    private String orderId;
 
-    private String 对象id;
-
-    private String objectType;
+    private String commentId;
 
     private String createUserId;
 

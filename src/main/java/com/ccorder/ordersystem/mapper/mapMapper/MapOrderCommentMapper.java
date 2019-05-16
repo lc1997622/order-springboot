@@ -1,6 +1,6 @@
-package com.ccorder.ordersystem.mapper;
+package com.ccorder.ordersystem.mapper.mapMapper;
 
-import com.ccorder.ordersystem.entity.MapOrderComment;
+import com.ccorder.ordersystem.entity.mapEntity.MapOrderComment;
 
 public interface MapOrderCommentMapper {
     int insert(MapOrderComment record);

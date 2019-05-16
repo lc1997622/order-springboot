@@ -1,6 +1,6 @@
-package com.ccorder.ordersystem.mapper;
+package com.ccorder.ordersystem.mapper.mapMapper;
 
-import com.ccorder.ordersystem.entity.MapFile;
+import com.ccorder.ordersystem.entity.mapEntity.MapFile;
 
 public interface MapFileMapper {
     int insert(MapFile record);

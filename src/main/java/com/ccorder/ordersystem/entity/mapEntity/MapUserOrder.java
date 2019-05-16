@@ -1,11 +1,11 @@
-package com.ccorder.ordersystem.entity;
+package com.ccorder.ordersystem.entity.mapEntity;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
 import lombok.Data;
 
-@ApiModel(value="com.ccorder.ordersystem.entity.MapUserOrder")
+@ApiModel(value="com.ccorder.ordersystem.entity.mapEntity.MapUserOrder")
 @Data
 public class MapUserOrder {
     @ApiModelProperty(value="null")

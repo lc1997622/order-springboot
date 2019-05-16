@@ -1,6 +1,6 @@
-package com.ccorder.ordersystem.mapper;
+package com.ccorder.ordersystem.mapper.mapMapper;
 
-import com.ccorder.ordersystem.entity.MapOrderFood;
+import com.ccorder.ordersystem.entity.mapEntity.MapOrderFood;
 
 public interface MapOrderFoodMapper {
     int deleteByPrimaryKey(String id);

@@ -1,9 +1,9 @@
-package com.ccorder.ordersystem.service;
+package com.ccorder.ordersystem.service.mapService;
 
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
-import com.ccorder.ordersystem.mapper.MapOrderCommentMapper;
-import com.ccorder.ordersystem.entity.MapOrderComment;
+import com.ccorder.ordersystem.mapper.mapMapper.MapOrderCommentMapper;
+import com.ccorder.ordersystem.entity.mapEntity.MapOrderComment;
 @Service
 public class MapOrderCommentService{
 

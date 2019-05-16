@@ -1,15 +1,17 @@
-package com.ccorder.ordersystem.entity;
+package com.ccorder.ordersystem.entity.mapEntity;
 
 import java.util.Date;
 import lombok.Data;
 
 @Data
-public class MapUserRole {
+public class MapOrderFood {
     private String id;
 
-    private String userId;
+    private String orderId;
 
-    private String roleId;
+    private String foodId;
+
+    private Double score;
 
     private String createUserId;
 

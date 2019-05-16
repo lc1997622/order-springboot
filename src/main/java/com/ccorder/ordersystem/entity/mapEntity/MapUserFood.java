@@ -1,4 +1,4 @@
-package com.ccorder.ordersystem.entity;
+package com.ccorder.ordersystem.entity.mapEntity;
 
 import java.util.Date;
 import lombok.Data;

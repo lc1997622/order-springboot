@@ -1,9 +1,9 @@
-package com.ccorder.ordersystem.service;
+package com.ccorder.ordersystem.service.mapService;
 
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
-import com.ccorder.ordersystem.entity.MapUserRole;
-import com.ccorder.ordersystem.mapper.MapUserRoleMapper;
+import com.ccorder.ordersystem.entity.mapEntity.MapUserRole;
+import com.ccorder.ordersystem.mapper.mapMapper.MapUserRoleMapper;
 @Service
 public class MapUserRoleService{
 

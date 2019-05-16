@@ -1,6 +1,6 @@
-package com.ccorder.ordersystem.mapper;
+package com.ccorder.ordersystem.mapper.mapMapper;
 
-import com.ccorder.ordersystem.entity.MapUserRole;
+import com.ccorder.ordersystem.entity.mapEntity.MapUserRole;
 
 public interface MapUserRoleMapper {
     int deleteByPrimaryKey(String id);

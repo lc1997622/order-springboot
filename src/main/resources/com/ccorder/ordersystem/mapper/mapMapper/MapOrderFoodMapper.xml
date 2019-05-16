@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ccorder.ordersystem.mapper.MapUserRoleMapper">
-  <resultMap id="BaseResultMap" type="com.ccorder.ordersystem.entity.MapUserRole">
+<mapper namespace="com.ccorder.ordersystem.mapper.mapMapper.MapOrderFoodMapper">
+  <resultMap id="BaseResultMap" type="com.ccorder.ordersystem.entity.mapEntity.MapOrderFood">
     <!--@mbg.generated-->
     <id column="id" jdbcType="VARCHAR" property="id" />
-    <result column="user_id" jdbcType="VARCHAR" property="userId" />
-    <result column="role_id" jdbcType="VARCHAR" property="roleId" />
+    <result column="order_id" jdbcType="VARCHAR" property="orderId" />
+    <result column="food_id" jdbcType="VARCHAR" property="foodId" />
+    <result column="score" jdbcType="FLOAT" property="score" />
     <result column="create_user_id" jdbcType="VARCHAR" property="createUserId" />
     <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
     <result column="modify_user_id" jdbcType="VARCHAR" property="modifyUserId" />
@@ -14,41 +15,47 @@
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    id, user_id, role_id, create_user_id, create_date, modify_user_id, modify_date, `status`
+    id, order_id, food_id, score, create_user_id, create_date, modify_user_id, modify_date, 
+    `status`
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     <!--@mbg.generated-->
     select 
     <include refid="Base_Column_List" />
-    from map_user_role
+    from map_order_food
     where id = #{id,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     <!--@mbg.generated-->
-    delete from map_user_role
+    delete from map_order_food
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.ccorder.ordersystem.entity.MapUserRole">
+  <insert id="insert" parameterType="com.ccorder.ordersystem.entity.mapEntity.MapOrderFood">
     <!--@mbg.generated-->
-    insert into map_user_role (id, user_id, role_id, 
-      create_user_id, create_date, modify_user_id, 
-      modify_date, `status`)
-    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{roleId,jdbcType=VARCHAR}, 
-      #{createUserId,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{modifyUserId,jdbcType=VARCHAR}, 
-      #{modifyDate,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER})
+    insert into map_order_food (id, order_id, food_id, 
+      score, create_user_id, create_date, 
+      modify_user_id, modify_date, `status`
+      )
+    values (#{id,jdbcType=VARCHAR}, #{orderId,jdbcType=VARCHAR}, #{foodId,jdbcType=VARCHAR}, 
+      #{score,jdbcType=FLOAT}, #{createUserId,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{modifyUserId,jdbcType=VARCHAR}, #{modifyDate,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.ccorder.ordersystem.entity.MapUserRole">
+  <insert id="insertSelective" parameterType="com.ccorder.ordersystem.entity.mapEntity.MapOrderFood">
     <!--@mbg.generated-->
-    insert into map_user_role
+    insert into map_order_food
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
       </if>
-      <if test="userId != null">
-        user_id,
+      <if test="orderId != null">
+        order_id,
       </if>
-      <if test="roleId != null">
-        role_id,
+      <if test="foodId != null">
+        food_id,
+      </if>
+      <if test="score != null">
+        score,
       </if>
       <if test="createUserId != null">
         create_user_id,
@@ -70,11 +77,14 @@
       <if test="id != null">
         #{id,jdbcType=VARCHAR},
       </if>
-      <if test="userId != null">
-        #{userId,jdbcType=VARCHAR},
+      <if test="orderId != null">
+        #{orderId,jdbcType=VARCHAR},
       </if>
-      <if test="roleId != null">
-        #{roleId,jdbcType=VARCHAR},
+      <if test="foodId != null">
+        #{foodId,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=FLOAT},
       </if>
       <if test="createUserId != null">
         #{createUserId,jdbcType=VARCHAR},
@@ -93,15 +103,18 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ccorder.ordersystem.entity.MapUserRole">
+  <update id="updateByPrimaryKeySelective" parameterType="com.ccorder.ordersystem.entity.mapEntity.MapOrderFood">
     <!--@mbg.generated-->
-    update map_user_role
+    update map_order_food
     <set>
-      <if test="userId != null">
-        user_id = #{userId,jdbcType=VARCHAR},
+      <if test="orderId != null">
+        order_id = #{orderId,jdbcType=VARCHAR},
       </if>
-      <if test="roleId != null">
-        role_id = #{roleId,jdbcType=VARCHAR},
+      <if test="foodId != null">
+        food_id = #{foodId,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null">
+        score = #{score,jdbcType=FLOAT},
       </if>
       <if test="createUserId != null">
         create_user_id = #{createUserId,jdbcType=VARCHAR},
@@ -121,11 +134,12 @@
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.ccorder.ordersystem.entity.MapUserRole">
+  <update id="updateByPrimaryKey" parameterType="com.ccorder.ordersystem.entity.mapEntity.MapOrderFood">
     <!--@mbg.generated-->
-    update map_user_role
-    set user_id = #{userId,jdbcType=VARCHAR},
-      role_id = #{roleId,jdbcType=VARCHAR},
+    update map_order_food
+    set order_id = #{orderId,jdbcType=VARCHAR},
+      food_id = #{foodId,jdbcType=VARCHAR},
+      score = #{score,jdbcType=FLOAT},
       create_user_id = #{createUserId,jdbcType=VARCHAR},
       create_date = #{createDate,jdbcType=TIMESTAMP},
       modify_user_id = #{modifyUserId,jdbcType=VARCHAR},

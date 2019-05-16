@@ -1,44 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ccorder.ordersystem.mapper.MapUserFoodMapper">
-  <resultMap id="BaseResultMap" type="com.ccorder.ordersystem.entity.MapUserFood">
+<mapper namespace="com.ccorder.ordersystem.mapper.mapMapper.MapFileMapper">
+  <resultMap id="BaseResultMap" type="com.ccorder.ordersystem.entity.mapEntity.MapFile">
     <!--@mbg.generated-->
     <result column="id" jdbcType="VARCHAR" property="id" />
-    <result column="user_id" jdbcType="VARCHAR" property="userId" />
-    <result column="food_id" jdbcType="VARCHAR" property="foodId" />
-    <result column="discount" jdbcType="FLOAT" property="discount" />
+    <result column="food_type" jdbcType="VARCHAR" property="foodType" />
+    <result column="对象id" jdbcType="VARCHAR" property="对象id" />
+    <result column="object_type" jdbcType="VARCHAR" property="objectType" />
     <result column="create_user_id" jdbcType="VARCHAR" property="createUserId" />
     <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
     <result column="modify_user_id" jdbcType="VARCHAR" property="modifyUserId" />
     <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
     <result column="status" jdbcType="INTEGER" property="status" />
   </resultMap>
-  <insert id="insert" parameterType="com.ccorder.ordersystem.entity.MapUserFood">
+  <insert id="insert" parameterType="com.ccorder.ordersystem.entity.mapEntity.MapFile">
     <!--@mbg.generated-->
-    insert into map_user_food (id, user_id, food_id, 
-      discount, create_user_id, create_date, 
+    insert into map_file (id, food_type, 对象id, 
+      object_type, create_user_id, create_date, 
       modify_user_id, modify_date, `status`
       )
-    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{foodId,jdbcType=VARCHAR}, 
-      #{discount,jdbcType=FLOAT}, #{createUserId,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+    values (#{id,jdbcType=VARCHAR}, #{foodType,jdbcType=VARCHAR}, #{对象id,jdbcType=VARCHAR}, 
+      #{objectType,jdbcType=VARCHAR}, #{createUserId,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
       #{modifyUserId,jdbcType=VARCHAR}, #{modifyDate,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.ccorder.ordersystem.entity.MapUserFood">
+  <insert id="insertSelective" parameterType="com.ccorder.ordersystem.entity.mapEntity.MapFile">
     <!--@mbg.generated-->
-    insert into map_user_food
+    insert into map_file
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
       </if>
-      <if test="userId != null">
-        user_id,
+      <if test="foodType != null">
+        food_type,
       </if>
-      <if test="foodId != null">
-        food_id,
+      <if test="对象id != null">
+        对象id,
       </if>
-      <if test="discount != null">
-        discount,
+      <if test="objectType != null">
+        object_type,
       </if>
       <if test="createUserId != null">
         create_user_id,
@@ -60,14 +60,14 @@
       <if test="id != null">
         #{id,jdbcType=VARCHAR},
       </if>
-      <if test="userId != null">
-        #{userId,jdbcType=VARCHAR},
+      <if test="foodType != null">
+        #{foodType,jdbcType=VARCHAR},
       </if>
-      <if test="foodId != null">
-        #{foodId,jdbcType=VARCHAR},
+      <if test="对象id != null">
+        #{对象id,jdbcType=VARCHAR},
       </if>
-      <if test="discount != null">
-        #{discount,jdbcType=FLOAT},
+      <if test="objectType != null">
+        #{objectType,jdbcType=VARCHAR},
       </if>
       <if test="createUserId != null">
         #{createUserId,jdbcType=VARCHAR},

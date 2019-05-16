@@ -1,9 +1,9 @@
-package com.ccorder.ordersystem.service;
+package com.ccorder.ordersystem.service.mapService;
 
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
-import com.ccorder.ordersystem.mapper.MapFileMapper;
-import com.ccorder.ordersystem.entity.MapFile;
+import com.ccorder.ordersystem.mapper.mapMapper.MapFileMapper;
+import com.ccorder.ordersystem.entity.mapEntity.MapFile;
 @Service
 public class MapFileService{
 
