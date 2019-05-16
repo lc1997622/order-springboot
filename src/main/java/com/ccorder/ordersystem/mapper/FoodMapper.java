@@ -14,4 +14,5 @@ public interface FoodMapper {
     int updateByPrimaryKeySelective(Food record);
 
     int updateByPrimaryKey(Food record);
+
 }

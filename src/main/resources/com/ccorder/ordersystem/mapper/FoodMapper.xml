@@ -1,161 +1,161 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ccorder.ordersystem.mapper.FoodMapper">
-  <resultMap id="BaseResultMap" type="com.ccorder.ordersystem.entity.Food">
-    <!--@mbg.generated-->
-    <id column="id" jdbcType="VARCHAR" property="id" />
-    <result column="food_name" jdbcType="VARCHAR" property="foodName" />
-    <result column="food_price" jdbcType="DOUBLE" property="foodPrice" />
-    <result column="food_type" jdbcType="VARCHAR" property="foodType" />
-    <result column="food_material" jdbcType="VARCHAR" property="foodMaterial" />
-    <result column="create_user_id" jdbcType="VARCHAR" property="createUserId" />
-    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
-    <result column="modify_user_id" jdbcType="VARCHAR" property="modifyUserId" />
-    <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
-    <result column="status" jdbcType="INTEGER" property="status" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    <!--@mbg.generated-->
-    id, food_name, food_price, food_type, food_material, create_user_id, create_date, 
-    modify_user_id, modify_date, `status`
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    <!--@mbg.generated-->
-    select 
-    <include refid="Base_Column_List" />
-    from food
-    where id = #{id,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    <!--@mbg.generated-->
-    delete from food
-    where id = #{id,jdbcType=VARCHAR}
-  </delete>
-  <insert id="insert" parameterType="com.ccorder.ordersystem.entity.Food">
-    <!--@mbg.generated-->
-    insert into food (id, food_name, food_price, 
-      food_type, food_material, create_user_id, 
-      create_date, modify_user_id, modify_date, 
-      `status`)
-    values (#{id,jdbcType=VARCHAR}, #{foodName,jdbcType=VARCHAR}, #{foodPrice,jdbcType=DOUBLE}, 
-      #{foodType,jdbcType=VARCHAR}, #{foodMaterial,jdbcType=VARCHAR}, #{createUserId,jdbcType=VARCHAR}, 
-      #{createDate,jdbcType=TIMESTAMP}, #{modifyUserId,jdbcType=VARCHAR}, #{modifyDate,jdbcType=TIMESTAMP}, 
-      #{status,jdbcType=INTEGER})
-  </insert>
-  <insert id="insertSelective" parameterType="com.ccorder.ordersystem.entity.Food">
-    <!--@mbg.generated-->
-    insert into food
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="foodName != null">
-        food_name,
-      </if>
-      <if test="foodPrice != null">
-        food_price,
-      </if>
-      <if test="foodType != null">
-        food_type,
-      </if>
-      <if test="foodMaterial != null">
-        food_material,
-      </if>
-      <if test="createUserId != null">
-        create_user_id,
-      </if>
-      <if test="createDate != null">
-        create_date,
-      </if>
-      <if test="modifyUserId != null">
-        modify_user_id,
-      </if>
-      <if test="modifyDate != null">
-        modify_date,
-      </if>
-      <if test="status != null">
-        `status`,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=VARCHAR},
-      </if>
-      <if test="foodName != null">
-        #{foodName,jdbcType=VARCHAR},
-      </if>
-      <if test="foodPrice != null">
-        #{foodPrice,jdbcType=DOUBLE},
-      </if>
-      <if test="foodType != null">
-        #{foodType,jdbcType=VARCHAR},
-      </if>
-      <if test="foodMaterial != null">
-        #{foodMaterial,jdbcType=VARCHAR},
-      </if>
-      <if test="createUserId != null">
-        #{createUserId,jdbcType=VARCHAR},
-      </if>
-      <if test="createDate != null">
-        #{createDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="modifyUserId != null">
-        #{modifyUserId,jdbcType=VARCHAR},
-      </if>
-      <if test="modifyDate != null">
-        #{modifyDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="status != null">
-        #{status,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ccorder.ordersystem.entity.Food">
-    <!--@mbg.generated-->
-    update food
-    <set>
-      <if test="foodName != null">
-        food_name = #{foodName,jdbcType=VARCHAR},
-      </if>
-      <if test="foodPrice != null">
+    <resultMap id="BaseResultMap" type="com.ccorder.ordersystem.entity.Food">
+        <!--@mbg.generated-->
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="food_name" jdbcType="VARCHAR" property="foodName"/>
+        <result column="food_price" jdbcType="DOUBLE" property="foodPrice"/>
+        <result column="food_type" jdbcType="VARCHAR" property="foodType"/>
+        <result column="food_material" jdbcType="VARCHAR" property="foodMaterial"/>
+        <result column="create_user_id" jdbcType="VARCHAR" property="createUserId"/>
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
+        <result column="modify_user_id" jdbcType="VARCHAR" property="modifyUserId"/>
+        <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id, food_name, food_price, food_type, food_material, create_user_id, create_date,
+        modify_user_id, modify_date, `status`
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from food
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        <!--@mbg.generated-->
+        delete from food
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.ccorder.ordersystem.entity.Food">
+        <!--@mbg.generated-->
+        insert into food (id, food_name, food_price,
+        food_type, food_material, create_user_id,
+        create_date, modify_user_id, modify_date,
+        `status`)
+        values (#{id,jdbcType=VARCHAR}, #{foodName,jdbcType=VARCHAR}, #{foodPrice,jdbcType=DOUBLE},
+        #{foodType,jdbcType=VARCHAR}, #{foodMaterial,jdbcType=VARCHAR}, #{createUserId,jdbcType=VARCHAR},
+        #{createDate,jdbcType=TIMESTAMP}, #{modifyUserId,jdbcType=VARCHAR}, #{modifyDate,jdbcType=TIMESTAMP},
+        #{status,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" parameterType="com.ccorder.ordersystem.entity.Food">
+        <!--@mbg.generated-->
+        insert into food
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="foodName != null">
+                food_name,
+            </if>
+            <if test="foodPrice != null">
+                food_price,
+            </if>
+            <if test="foodType != null">
+                food_type,
+            </if>
+            <if test="foodMaterial != null">
+                food_material,
+            </if>
+            <if test="createUserId != null">
+                create_user_id,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="modifyUserId != null">
+                modify_user_id,
+            </if>
+            <if test="modifyDate != null">
+                modify_date,
+            </if>
+            <if test="status != null">
+                `status`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="foodName != null">
+                #{foodName,jdbcType=VARCHAR},
+            </if>
+            <if test="foodPrice != null">
+                #{foodPrice,jdbcType=DOUBLE},
+            </if>
+            <if test="foodType != null">
+                #{foodType,jdbcType=VARCHAR},
+            </if>
+            <if test="foodMaterial != null">
+                #{foodMaterial,jdbcType=VARCHAR},
+            </if>
+            <if test="createUserId != null">
+                #{createUserId,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyUserId != null">
+                #{modifyUserId,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyDate != null">
+                #{modifyDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ccorder.ordersystem.entity.Food">
+        <!--@mbg.generated-->
+        update food
+        <set>
+            <if test="foodName != null">
+                food_name = #{foodName,jdbcType=VARCHAR},
+            </if>
+            <if test="foodPrice != null">
+                food_price = #{foodPrice,jdbcType=DOUBLE},
+            </if>
+            <if test="foodType != null">
+                food_type = #{foodType,jdbcType=VARCHAR},
+            </if>
+            <if test="foodMaterial != null">
+                food_material = #{foodMaterial,jdbcType=VARCHAR},
+            </if>
+            <if test="createUserId != null">
+                create_user_id = #{createUserId,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyUserId != null">
+                modify_user_id = #{modifyUserId,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyDate != null">
+                modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                `status` = #{status,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ccorder.ordersystem.entity.Food">
+        <!--@mbg.generated-->
+        update food
+        set food_name = #{foodName,jdbcType=VARCHAR},
         food_price = #{foodPrice,jdbcType=DOUBLE},
-      </if>
-      <if test="foodType != null">
         food_type = #{foodType,jdbcType=VARCHAR},
-      </if>
-      <if test="foodMaterial != null">
         food_material = #{foodMaterial,jdbcType=VARCHAR},
-      </if>
-      <if test="createUserId != null">
         create_user_id = #{createUserId,jdbcType=VARCHAR},
-      </if>
-      <if test="createDate != null">
         create_date = #{createDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="modifyUserId != null">
         modify_user_id = #{modifyUserId,jdbcType=VARCHAR},
-      </if>
-      <if test="modifyDate != null">
         modify_date = #{modifyDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="status != null">
-        `status` = #{status,jdbcType=INTEGER},
-      </if>
-    </set>
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.ccorder.ordersystem.entity.Food">
-    <!--@mbg.generated-->
-    update food
-    set food_name = #{foodName,jdbcType=VARCHAR},
-      food_price = #{foodPrice,jdbcType=DOUBLE},
-      food_type = #{foodType,jdbcType=VARCHAR},
-      food_material = #{foodMaterial,jdbcType=VARCHAR},
-      create_user_id = #{createUserId,jdbcType=VARCHAR},
-      create_date = #{createDate,jdbcType=TIMESTAMP},
-      modify_user_id = #{modifyUserId,jdbcType=VARCHAR},
-      modify_date = #{modifyDate,jdbcType=TIMESTAMP},
-      `status` = #{status,jdbcType=INTEGER}
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
+        `status` = #{status,jdbcType=INTEGER}
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
 </mapper>
