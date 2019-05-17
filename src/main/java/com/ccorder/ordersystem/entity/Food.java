@@ -10,7 +10,7 @@ import lombok.Data;
  * @author zm
  */
 @Data
-@ApiModel
+@ApiModel(value = "Food",description = "食品实体")
 public class Food {
     @ApiModelProperty(value = "ID",name = "ID",dataType = "String",example = "aswdawfevqe",
             required = true,allowEmptyValue = false)
@@ -27,7 +27,7 @@ public class Food {
     /**
      * 对应字典项的id
      */
-    @ApiModelProperty(value = "食物类别",name = "foodType",dataType = "String",example = "aswdawfevqe", notes = "对应字典项的id",
+    @ApiModelProperty(value = "食物类别",name = "foodType",dataType = "String",example = "0001", notes = "对应字典项的id",
             required = true,allowEmptyValue = false)
     private String foodType;
 
@@ -35,13 +35,13 @@ public class Food {
             required = false,allowEmptyValue = true)
     private String foodMaterial;
 
-    @ApiModelProperty(value = "创建人ID",name = "createUserId",dataType = "String",example = "aswdawfevqe")
+    @ApiModelProperty(value = "创建人ID",name = "createUserId",dataType = "String",example = "o258k0Zofn-pJJvLs6DzKRHwvkbA")
     private String createUserId;
 
     @ApiModelProperty(value = "创建时间",name = "createDate",dataType = "Data",example = "1999-01-26")
     private Date createDate;
 
-    @ApiModelProperty(value = "最后修改人ID",name = "modifyUserId",dataType = "String",example = "aswdawfevqe")
+    @ApiModelProperty(value = "最后修改人ID",name = "modifyUserId",dataType = "String",example = "o258k0Zofn-pJJvLs6DzKRHwvkbA")
     private String modifyUserId;
 
     @ApiModelProperty(value = "最后修改时间",name = "modifyDate",dataType = "Data",example = "1999-01-26")

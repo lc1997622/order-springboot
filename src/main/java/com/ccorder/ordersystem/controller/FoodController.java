@@ -2,8 +2,10 @@ package com.ccorder.ordersystem.controller;
 
 
 import com.ccorder.ordersystem.entity.Food;
+import com.ccorder.ordersystem.entity.SysDict;
 import com.ccorder.ordersystem.entity.mapEntity.MapUserFood;
 import com.ccorder.ordersystem.entity.SysUser;
+import com.ccorder.ordersystem.mapper.SysDictMapper;
 import com.ccorder.ordersystem.mapper.mapMapper.MapUserFoodMapper;
 import com.ccorder.ordersystem.service.FoodService;
 import com.ccorder.ordersystem.service.SysUserService;
@@ -12,6 +14,7 @@ import com.ccorder.ordersystem.sys.dto.MsgType;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -40,13 +43,10 @@ public class FoodController {
     @Autowired
     private MapUserFoodMapper mapUserFoodMapper;
 
-    /**
-     * @param
-     * @return java.lang.Object
-     * @Description 测试检验
-     * @author zm
-     * @date 13:39 2019/5/16
-     */
+    @Autowired
+    private SysDictMapper dictMapper;
+
+
     @ApiOperation(value = "后端测试")
     @GetMapping("getFoodName")
     @ResponseBody
@@ -55,17 +55,54 @@ public class FoodController {
         return new AjaxMessage().Set(MsgType.Success, "获取FoodName成功", tmpFood);
     }
 
-    /**
-     * @param [newFood]
-     * @return java.lang.Object
-     * @Description 根据传入的newFood信息新增食品，createUserId就是门店的id
-     * @author zm
-     * @date 13:02 2019/5/16
-     */
-    @ApiOperation(value = "添加新的Food")
+
+    @ApiOperation(value = "(店铺管理模块)添加新的食品分类")
+    @PostMapping("/addNewType")
+    @ResponseBody
+    public Object addNewType(
+            @ApiParam(name = "newFoodType", value = "新的Food种类(中文)", required = true,type = "String")
+            @RequestParam
+                    String newFoodType,
+            @ApiParam(name = "openId", value = "当前微信用户的唯一标识", required = true,type = "String")
+            @RequestParam
+                    String openId,
+            @ApiParam(name = "sortNum", value = "类别排序数字", required = true, type = "Integer")
+            @RequestParam
+                    Integer sortNum
+    ) {
+        SysUser userNow = userService.selectByPrimaryKey(openId);
+
+        /*获取食品类别的dict_type_id*/
+        String dictTypeId = dictMapper.selectByNameEnAndStatus("foodType", 0);
+        SysDict newSysDict = new SysDict();
+        newSysDict.setId(UUID.randomUUID().toString());
+        newSysDict.setNameCn(newFoodType);
+        newSysDict.setSort(sortNum);
+
+        Date dateNow = new Date();
+        newSysDict.setCreateUserId(userNow.getId());
+        newSysDict.setModifyUserId(userNow.getId());
+        newSysDict.setCreateDate(dateNow);
+        newSysDict.setModifyDate(dateNow);
+
+        try {
+            dictMapper.insertSelective(newSysDict);
+            return new AjaxMessage().Set(MsgType.Success, "添加食品分类成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new AjaxMessage().Set(MsgType.Error, "添加食品分类失败");
+    }
+
+
+    @ApiOperation(value = "(店铺管理模块)添加新食物")
     @PostMapping("/addNewFood")
     @ResponseBody
-    public Object addNewFood(@RequestBody Food newFood) {
+    public Object addNewFood(
+            @ApiParam(name = "newFood", value = "新的食物(需要设置foodType)", required = true, type = "Food")
+            @RequestBody
+                    Food newFood
+    ) {
         /*user的openId在暂存在newFood中的createId中*/
         String openId = newFood.getCreateUserId();
 
@@ -98,18 +135,5 @@ public class FoodController {
         return new AjaxMessage().Set(MsgType.Error, "新增Food失败");
     }
 
-    /**
-     * @param [storeId]
-     * @return java.lang.Object
-     * @Description 根据店铺Id返回当前店铺的所有食品List
-     * @author zm
-     * @date 10:37 2019/5/16
-     */
-    public Object getStoreFood(
-            @RequestParam("storeId") String storeId
-    ) {
-        List<Food> foodList = new ArrayList<>();
-        return new AjaxMessage().Set(MsgType.Success, "获取店铺所有商品成功", foodList);
-    }
 
 }
