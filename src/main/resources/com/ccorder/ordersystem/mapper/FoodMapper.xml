@@ -21,7 +21,7 @@
 
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    id, food_name, food_price, food_type, food_material, create_user_id, create_date, 
+    id, food_name, food_price, food_type, food_material, create_user_id, create_date,
     modify_user_id, modify_date, `status`
   </sql>
 
@@ -43,7 +43,7 @@
 
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     <!--@mbg.generated-->
-    select 
+    select
     <include refid="Base_Column_List" />
     from food
     where id = #{id,jdbcType=VARCHAR}
