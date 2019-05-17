@@ -6,6 +6,7 @@
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="order_id" jdbcType="VARCHAR" property="orderId" />
     <result column="food_id" jdbcType="VARCHAR" property="foodId" />
+    <result column="amount" jdbcType="INTEGER" property="amount" />
     <result column="score" jdbcType="FLOAT" property="score" />
     <result column="create_user_id" jdbcType="VARCHAR" property="createUserId" />
     <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
@@ -15,8 +16,8 @@
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    id, order_id, food_id, score, create_user_id, create_date, modify_user_id, modify_date, 
-    `status`
+    id, order_id, food_id, amount, score, create_user_id, create_date, modify_user_id, 
+    modify_date, `status`
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     <!--@mbg.generated-->
@@ -33,13 +34,13 @@
   <insert id="insert" parameterType="com.ccorder.ordersystem.entity.mapEntity.MapOrderFood">
     <!--@mbg.generated-->
     insert into map_order_food (id, order_id, food_id, 
-      score, create_user_id, create_date, 
-      modify_user_id, modify_date, `status`
-      )
+      amount, score, create_user_id, 
+      create_date, modify_user_id, modify_date, 
+      `status`)
     values (#{id,jdbcType=VARCHAR}, #{orderId,jdbcType=VARCHAR}, #{foodId,jdbcType=VARCHAR}, 
-      #{score,jdbcType=FLOAT}, #{createUserId,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
-      #{modifyUserId,jdbcType=VARCHAR}, #{modifyDate,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}
-      )
+      #{amount,jdbcType=INTEGER}, #{score,jdbcType=FLOAT}, #{createUserId,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{modifyUserId,jdbcType=VARCHAR}, #{modifyDate,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.ccorder.ordersystem.entity.mapEntity.MapOrderFood">
     <!--@mbg.generated-->
@@ -53,6 +54,9 @@
       </if>
       <if test="foodId != null">
         food_id,
+      </if>
+      <if test="amount != null">
+        amount,
       </if>
       <if test="score != null">
         score,
@@ -82,6 +86,9 @@
       </if>
       <if test="foodId != null">
         #{foodId,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=INTEGER},
       </if>
       <if test="score != null">
         #{score,jdbcType=FLOAT},
@@ -113,6 +120,9 @@
       <if test="foodId != null">
         food_id = #{foodId,jdbcType=VARCHAR},
       </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=INTEGER},
+      </if>
       <if test="score != null">
         score = #{score,jdbcType=FLOAT},
       </if>
@@ -139,6 +149,7 @@
     update map_order_food
     set order_id = #{orderId,jdbcType=VARCHAR},
       food_id = #{foodId,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=INTEGER},
       score = #{score,jdbcType=FLOAT},
       create_user_id = #{createUserId,jdbcType=VARCHAR},
       create_date = #{createDate,jdbcType=TIMESTAMP},

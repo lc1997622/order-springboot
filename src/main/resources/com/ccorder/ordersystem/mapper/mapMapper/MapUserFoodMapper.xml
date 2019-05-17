@@ -3,7 +3,7 @@
 <mapper namespace="com.ccorder.ordersystem.mapper.mapMapper.MapUserFoodMapper">
   <resultMap id="BaseResultMap" type="com.ccorder.ordersystem.entity.mapEntity.MapUserFood">
     <!--@mbg.generated-->
-    <result column="id" jdbcType="VARCHAR" property="id" />
+    <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="user_id" jdbcType="VARCHAR" property="userId" />
     <result column="food_id" jdbcType="VARCHAR" property="foodId" />
     <result column="discount" jdbcType="FLOAT" property="discount" />
@@ -13,6 +13,23 @@
     <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
     <result column="status" jdbcType="INTEGER" property="status" />
   </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, user_id, food_id, discount, create_user_id, create_date, modify_user_id, modify_date, 
+    `status`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from map_user_food
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    <!--@mbg.generated-->
+    delete from map_user_food
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
   <insert id="insert" parameterType="com.ccorder.ordersystem.entity.mapEntity.MapUserFood">
     <!--@mbg.generated-->
     insert into map_user_food (id, user_id, food_id, 
@@ -86,4 +103,48 @@
       </if>
     </trim>
   </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ccorder.ordersystem.entity.mapEntity.MapUserFood">
+    <!--@mbg.generated-->
+    update map_user_food
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="foodId != null">
+        food_id = #{foodId,jdbcType=VARCHAR},
+      </if>
+      <if test="discount != null">
+        discount = #{discount,jdbcType=FLOAT},
+      </if>
+      <if test="createUserId != null">
+        create_user_id = #{createUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyUserId != null">
+        modify_user_id = #{modifyUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyDate != null">
+        modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ccorder.ordersystem.entity.mapEntity.MapUserFood">
+    <!--@mbg.generated-->
+    update map_user_food
+    set user_id = #{userId,jdbcType=VARCHAR},
+      food_id = #{foodId,jdbcType=VARCHAR},
+      discount = #{discount,jdbcType=FLOAT},
+      create_user_id = #{createUserId,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      modify_user_id = #{modifyUserId,jdbcType=VARCHAR},
+      modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+      `status` = #{status,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
 </mapper>

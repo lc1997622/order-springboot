@@ -4,8 +4,9 @@
   <resultMap id="BaseResultMap" type="com.ccorder.ordersystem.entity.mapEntity.MapFile">
     <!--@mbg.generated-->
     <result column="id" jdbcType="VARCHAR" property="id" />
+    <result column="file_id" jdbcType="VARCHAR" property="fileId" />
+    <result column="object_id" jdbcType="VARCHAR" property="objectId" />
     <result column="food_type" jdbcType="VARCHAR" property="foodType" />
-    <result column="对象id" jdbcType="VARCHAR" property="对象id" />
     <result column="object_type" jdbcType="VARCHAR" property="objectType" />
     <result column="create_user_id" jdbcType="VARCHAR" property="createUserId" />
     <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
@@ -15,14 +16,14 @@
   </resultMap>
   <insert id="insert" parameterType="com.ccorder.ordersystem.entity.mapEntity.MapFile">
     <!--@mbg.generated-->
-    insert into map_file (id, food_type, 对象id, 
-      object_type, create_user_id, create_date, 
-      modify_user_id, modify_date, `status`
-      )
-    values (#{id,jdbcType=VARCHAR}, #{foodType,jdbcType=VARCHAR}, #{对象id,jdbcType=VARCHAR}, 
-      #{objectType,jdbcType=VARCHAR}, #{createUserId,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
-      #{modifyUserId,jdbcType=VARCHAR}, #{modifyDate,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}
-      )
+    insert into map_file (id, file_id, object_id, 
+      food_type, object_type, create_user_id, 
+      create_date, modify_user_id, modify_date, 
+      `status`)
+    values (#{id,jdbcType=VARCHAR}, #{fileId,jdbcType=VARCHAR}, #{objectId,jdbcType=VARCHAR}, 
+      #{foodType,jdbcType=VARCHAR}, #{objectType,jdbcType=VARCHAR}, #{createUserId,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{modifyUserId,jdbcType=VARCHAR}, #{modifyDate,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.ccorder.ordersystem.entity.mapEntity.MapFile">
     <!--@mbg.generated-->
@@ -31,11 +32,14 @@
       <if test="id != null">
         id,
       </if>
+      <if test="fileId != null">
+        file_id,
+      </if>
+      <if test="objectId != null">
+        object_id,
+      </if>
       <if test="foodType != null">
         food_type,
-      </if>
-      <if test="对象id != null">
-        对象id,
       </if>
       <if test="objectType != null">
         object_type,
@@ -60,11 +64,14 @@
       <if test="id != null">
         #{id,jdbcType=VARCHAR},
       </if>
+      <if test="fileId != null">
+        #{fileId,jdbcType=VARCHAR},
+      </if>
+      <if test="objectId != null">
+        #{objectId,jdbcType=VARCHAR},
+      </if>
       <if test="foodType != null">
         #{foodType,jdbcType=VARCHAR},
-      </if>
-      <if test="对象id != null">
-        #{对象id,jdbcType=VARCHAR},
       </if>
       <if test="objectType != null">
         #{objectType,jdbcType=VARCHAR},

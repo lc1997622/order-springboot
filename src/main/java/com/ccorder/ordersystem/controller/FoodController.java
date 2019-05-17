@@ -131,6 +131,4 @@ public class FoodController {
         }
         return new AjaxMessage().Set(MsgType.Error, "新增Food失败");
     }
-
-
 }
