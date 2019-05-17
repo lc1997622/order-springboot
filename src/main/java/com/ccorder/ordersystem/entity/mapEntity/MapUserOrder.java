@@ -1,37 +1,47 @@
 package com.ccorder.ordersystem.entity.mapEntity;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
 import lombok.Data;
 
-@ApiModel(value="com.ccorder.ordersystem.entity.mapEntity.MapUserOrder")
 @Data
 public class MapUserOrder {
-    @ApiModelProperty(value="null")
+    /**
+     * 主键ID
+     */
     private String id;
 
-    @ApiModelProperty(value="null")
+    /**
+     * 用户id
+     */
     private String userId;
 
-    @ApiModelProperty(value="null")
+    /**
+     * 订单id
+     */
     private String orderId;
 
-    @ApiModelProperty(value="null")
+    /**
+     * 创建人id
+     */
     private String createUserId;
 
-    @ApiModelProperty(value="null")
+    /**
+     * 创建时间
+     */
     private Date createDate;
 
-    @ApiModelProperty(value="null")
+    /**
+     * 最终修改人id
+     */
     private String modifyUserId;
 
-    @ApiModelProperty(value="null")
+    /**
+     * 最终修改时间
+     */
     private Date modifyDate;
 
     /**
-    * 0是默认值，-1失效
-    */
-    @ApiModelProperty(value="0是默认值，-1失效")
+     * 0是默认值，-1失效
+     */
     private Integer status;
 }

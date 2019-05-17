@@ -1,7 +1,6 @@
 package com.ccorder.ordersystem.mapper;
 
-import com.ccorder.ordersystem.entity.SysDict;
-import org.apache.ibatis.annotations.Param;
+import com.ccorder.ordersystem.entity.SysDict;import org.apache.ibatis.annotations.Param;
 
 public interface SysDictMapper {
     int deleteByPrimaryKey(String id);
@@ -18,7 +17,7 @@ public interface SysDictMapper {
 
     /**
      * 根据名字和状态查询返回sys_dict_type的id
-     * 
+     *
      * @param nameEn
      * @param status
      * @return java.lang.String

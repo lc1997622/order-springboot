@@ -5,14 +5,29 @@ import lombok.Data;
 
 @Data
 public class SysUser {
+    /**
+     * 主键id
+     */
     private String id;
 
+    /**
+     * 用户名
+     */
     private String username;
 
+    /**
+     * 用户密码
+     */
     private String password;
 
+    /**
+     * 真实姓名
+     */
     private String realName;
 
+    /**
+     * 昵称
+     */
     private String nickName;
 
     /**
@@ -20,18 +35,39 @@ public class SysUser {
      */
     private Integer sex;
 
+    /**
+     * 电话号
+     */
     private String telephone;
 
+    /**
+     * 邮箱
+     */
     private String email;
 
+    /**
+     * 生日
+     */
     private Date birthday;
 
+    /**
+     * 创建人id
+     */
     private String createUserId;
 
+    /**
+     * 创建时间
+     */
     private Date createTime;
 
+    /**
+     * 最终修改人id
+     */
     private String modifyUserId;
 
+    /**
+     * 最终修改时间
+     */
     private Date modifyTime;
 
     /**

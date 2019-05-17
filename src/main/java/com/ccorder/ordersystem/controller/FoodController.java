@@ -2,8 +2,6 @@ package com.ccorder.ordersystem.controller;
 
 
 import com.ccorder.ordersystem.entity.Food;
-import com.ccorder.ordersystem.mapper.FoodMapper;
-import com.ccorder.ordersystem.entity.Food;
 import com.ccorder.ordersystem.entity.SysDict;
 import com.ccorder.ordersystem.entity.mapEntity.MapUserFood;
 import com.ccorder.ordersystem.entity.SysUser;
@@ -13,23 +11,15 @@ import com.ccorder.ordersystem.service.FoodService;
 import com.ccorder.ordersystem.service.SysUserService;
 import com.ccorder.ordersystem.sys.dto.AjaxMessage;
 import com.ccorder.ordersystem.sys.dto.MsgType;
-import io.swagger.annotations.ApiOperation;
-import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
-
-import java.util.*;
 
 /**
  * @author zm
@@ -40,9 +30,6 @@ import java.util.*;
 @RequestMapping(value = "/food")
 @Api(tags = "食品API")
 public class FoodController {
-
-    @Autowired
-    FoodMapper foodMapper;
 
     @Autowired
     private FoodService foodService;
@@ -144,37 +131,4 @@ public class FoodController {
         }
         return new AjaxMessage().Set(MsgType.Error, "新增Food失败");
     }
-
-
-    @ApiOperation(value = "获取食物列表")
-    @GetMapping("getFoodList")
-    public Object getFoodList(){
-
-        @Data
-        class kindFoods{
-            String type;
-            Food[] typeFoodList;
-            kindFoods(String type,Food[] foods){
-                this.type = type;
-                this.typeFoodList = foods;
-            }
-        }
-        List<Map<String,Object>> types = foodMapper.getAllType();
-        List<String> foodtypes = new ArrayList<>();
-        List<kindFoods> foodsList = new ArrayList<>();
-
-        for (int i = 0 ; i < types.size();i++){
-            foodtypes.add(types.get(i).get("foodType").toString());
-        }
-        for (int i = 0; i< foodtypes.size();i++){
-            Food[] foods = foodMapper.getFoodsByType(foodtypes.get(i));
-            foodsList.add(new kindFoods(foodtypes.get(i),foods));
-        }
-
-        return new AjaxMessage().Set(MsgType.Success,"食品列表",foodsList);
-    }
-
-
-
-
 }
