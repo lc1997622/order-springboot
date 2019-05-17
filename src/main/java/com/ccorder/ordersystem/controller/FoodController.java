@@ -41,17 +41,16 @@ public class FoodController {
     private MapUserFoodMapper mapUserFoodMapper;
 
     /**
-     * @param []
+     * @param
      * @return java.lang.Object
      * @Description 测试检验
      * @author zm
      * @date 13:39 2019/5/16
      */
-    @ApiOperation(value="后端测试")
-    //@ApiImplicitParam(name="id",value="查询ID",required=true)
+    @ApiOperation(value = "后端测试")
     @GetMapping("getFoodName")
     @ResponseBody
-    public Object getFoodName(){
+    public Object getFoodName() {
         Food tmpFood = new Food();
         return new AjaxMessage().Set(MsgType.Success, "获取FoodName成功", tmpFood);
     }
@@ -63,28 +62,42 @@ public class FoodController {
      * @author zm
      * @date 13:02 2019/5/16
      */
-    public Object addNewFood(@RequestBody Food newFood){
-        /*获取店家user*/
-        SysUser storeUser = userService.selectByPrimaryKey(newFood.getCreateUserId());
+    @ApiOperation(value = "添加新的Food")
+    @PostMapping("/addNewFood")
+    @ResponseBody
+    public Object addNewFood(@RequestBody Food newFood) {
+        /*user的openId在暂存在newFood中的createId中*/
+        String openId = newFood.getCreateUserId();
 
-        try {
-            /*food表插入记录*/
-            newFood.setId(UUID.randomUUID().toString());
-            foodService.addNewFood(newFood);
-            /*添加关联记录*/
-            MapUserFood userFoodMap = new MapUserFood();
-            userFoodMap.setId(UUID.randomUUID().toString());
-            userFoodMap.setUserId(storeUser.getId());
-            userFoodMap.setFoodId(newFood.getId());
-            userFoodMap.setCreateUserId(storeUser.getId());
-            userFoodMap.setCreateDate(new Date());
-            mapUserFoodMapper.insertSelective(userFoodMap);
-            return new AjaxMessage().Set(MsgType.Success,"新增Food成功");
-        }catch (Exception e){
-            e.printStackTrace();
+        /*获取店家*/
+        SysUser storeUser = userService.selectByPrimaryKey(newFood.getCreateUserId());
+        System.out.println(storeUser);
+
+        if (storeUser != null) {
+            try {
+                /*food表插入记录*/
+                newFood.setId(UUID.randomUUID().toString());
+                foodService.addNewFood(newFood);
+
+                /*添加关联记录*/
+                MapUserFood userFoodMap = new MapUserFood();
+                userFoodMap.setId(UUID.randomUUID().toString());
+                userFoodMap.setUserId(storeUser.getId());
+                userFoodMap.setFoodId(newFood.getId());
+                userFoodMap.setCreateUserId(storeUser.getId());
+                userFoodMap.setModifyUserId(storeUser.getId());
+                Date tmpDate = new Date();
+                userFoodMap.setCreateDate(tmpDate);
+                userFoodMap.setModifyDate(tmpDate);
+                mapUserFoodMapper.insertSelective(userFoodMap);
+                return new AjaxMessage().Set(MsgType.Success, "新增Food成功");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-        return new AjaxMessage().Set(MsgType.Error,"新增Food失败");
+        return new AjaxMessage().Set(MsgType.Error, "新增Food失败");
     }
+
     /**
      * @param [storeId]
      * @return java.lang.Object
@@ -94,12 +107,9 @@ public class FoodController {
      */
     public Object getStoreFood(
             @RequestParam("storeId") String storeId
-    ){
+    ) {
         List<Food> foodList = new ArrayList<>();
-        return new AjaxMessage().Set(MsgType.Success,"获取店铺所有商品成功", foodList);
+        return new AjaxMessage().Set(MsgType.Success, "获取店铺所有商品成功", foodList);
     }
 
-    /*public Object getUserInfo(){
-
-    }*/
 }
