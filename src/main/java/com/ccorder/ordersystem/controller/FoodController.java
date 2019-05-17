@@ -9,6 +9,9 @@ import com.ccorder.ordersystem.service.FoodService;
 import com.ccorder.ordersystem.service.SysUserService;
 import com.ccorder.ordersystem.sys.dto.AjaxMessage;
 import com.ccorder.ordersystem.sys.dto.MsgType;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +28,7 @@ import java.util.UUID;
  */
 @Controller
 @RequestMapping(value = "/food")
+@Api(tags = "食品API")
 public class FoodController {
 
     @Autowired
@@ -43,6 +47,8 @@ public class FoodController {
      * @author zm
      * @date 13:39 2019/5/16
      */
+    @ApiOperation(value="后端测试")
+    //@ApiImplicitParam(name="id",value="查询ID",required=true)
     @GetMapping("getFoodName")
     @ResponseBody
     public Object getFoodName(){
