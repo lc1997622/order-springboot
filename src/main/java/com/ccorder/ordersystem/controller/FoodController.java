@@ -12,16 +12,13 @@ import com.ccorder.ordersystem.service.SysUserService;
 import com.ccorder.ordersystem.sys.dto.AjaxMessage;
 import com.ccorder.ordersystem.sys.dto.MsgType;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 /**
