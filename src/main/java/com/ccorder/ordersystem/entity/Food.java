@@ -30,4 +30,5 @@ public class Food {
      * 0是默认值，-1失效
      */
     private Integer status;
+
 }

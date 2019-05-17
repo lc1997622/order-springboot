@@ -14,11 +14,33 @@
     <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
     <result column="status" jdbcType="INTEGER" property="status" />
   </resultMap>
+
+  <resultMap id="FoodTypeMap" type="java.util.HashMap">
+    <result column="food_type" jdbcType="VARCHAR" property="foodType" />
+  </resultMap>
+
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
     id, food_name, food_price, food_type, food_material, create_user_id, create_date, 
     modify_user_id, modify_date, `status`
   </sql>
+
+  <select id="getAllFood" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select
+    <include refid="Base_Column_List" />
+    from food
+  </select>
+
+  <select id="getAllType" resultMap="FoodTypeMap">
+    <!--@mbg.generated-->
+    select
+    food_type
+    from food
+    group by
+    food_type
+  </select>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     <!--@mbg.generated-->
     select 
@@ -26,6 +48,15 @@
     from food
     where id = #{id,jdbcType=VARCHAR}
   </select>
+
+  <select id="getFoodsByType" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select
+    <include refid="Base_Column_List" />
+    from food
+    where food_type = #{foodType,jdbcType=VARCHAR}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     <!--@mbg.generated-->
     delete from food
