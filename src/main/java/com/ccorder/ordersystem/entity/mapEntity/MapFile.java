@@ -1,7 +1,11 @@
 package com.ccorder.ordersystem.entity.mapEntity;
 
 import java.util.Date;
+import java.util.List;
+
+import com.ccorder.ordersystem.entity.File;
 import lombok.Data;
+import org.apache.catalina.LifecycleState;
 
 @Data
 public class MapFile {
@@ -54,4 +58,6 @@ public class MapFile {
      * 0是默认值，-1失效
      */
     private Integer status;
+
+    List<File> files;
 }

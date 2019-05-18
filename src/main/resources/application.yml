@@ -24,7 +24,10 @@ spring:
     multipart:
       max-file-size: 5242880
       max-request-size: 5242880
-
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+#    show-sql: true
 #logging:
 #  level:
 #    com.zm.blogsystem: info

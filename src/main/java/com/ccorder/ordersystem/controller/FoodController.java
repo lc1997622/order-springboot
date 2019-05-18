@@ -3,6 +3,7 @@ package com.ccorder.ordersystem.controller;
 
 import com.ccorder.ordersystem.entity.Food;
 import com.ccorder.ordersystem.entity.SysDict;
+import com.ccorder.ordersystem.entity.UserFood;
 import com.ccorder.ordersystem.entity.mapEntity.MapUserFood;
 import com.ccorder.ordersystem.entity.SysUser;
 import com.ccorder.ordersystem.mapper.SysDictMapper;
@@ -14,12 +15,12 @@ import com.ccorder.ordersystem.sys.dto.MsgType;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author zm
@@ -50,6 +51,37 @@ public class FoodController {
     public Object getFoodName() {
         Food tmpFood = new Food();
         return new AjaxMessage().Set(MsgType.Success, "获取FoodName成功", tmpFood);
+    }
+
+    @ApiOperation(value = "获取客户端食物列表")
+    @GetMapping("getUserFoodList")
+    @ResponseBody
+    public Object getUserFoodList(){
+
+        @Data
+        class kindFoods{
+            String type;
+            UserFood[] typeFoodList;
+            kindFoods(String type,UserFood[] userFoods){
+                this.type = type;
+                this.typeFoodList = userFoods;
+            }
+        }
+        List<Map<String,Object>> types = foodService.getAllType();
+        List<String> foodtypes = new ArrayList<>();
+        List<kindFoods> foodsList = new ArrayList<>();
+        System.out.println(foodService.getFoodsByType("肉"));
+
+        for (int i = 0 ; i < types.size();i++){
+            foodtypes.add(types.get(i).get("foodType").toString());
+        }
+        for (int i = 0; i< foodtypes.size();i++){
+            System.out.println(foodtypes.get(i));
+            UserFood[] userFoods = foodService.getFoodsByType(foodtypes.get(i));
+            foodsList.add(new kindFoods(foodtypes.get(i),userFoods));
+        }
+
+        return new AjaxMessage().Set(MsgType.Success,"食品列表", foodsList);
     }
 
 

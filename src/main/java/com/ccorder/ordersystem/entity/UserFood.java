@@ -1,19 +1,22 @@
 package com.ccorder.ordersystem.entity;
 
-import java.util.Date;
-
-import io.swagger.annotations.ApiModel;
+import com.ccorder.ordersystem.entity.mapEntity.MapFile;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.persistence.Id;
+import java.util.Date;
+import java.util.List;
 
 /**
- * @author zm
+ * @author ：LiChao
+ * @date ：Created in 2019/5/17 23:25
+ * @description：Food About User Client
+ * @modified By：
+ * @version: 1.0$
  */
 @Data
-@ApiModel(value = "Food",description = "食品实体")
-public class Food {
+public class UserFood {
     @ApiModelProperty(value = "ID",name = "ID",dataType = "String",example = "aswdawfevqe",
             required = true,allowEmptyValue = false)
     @Id
@@ -56,4 +59,5 @@ public class Food {
     @ApiModelProperty(value = "ID",name = "ID",dataType = "Integer",example = "0",notes = "0是默认值，-1失效")
     private Integer status;
 
+    private List<File> imges;
 }

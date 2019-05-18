@@ -19,6 +19,21 @@
     <result column="food_type" jdbcType="VARCHAR" property="foodType" />
   </resultMap>
 
+  <resultMap id="UserFood" type="com.ccorder.ordersystem.entity.UserFood">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="food_name" jdbcType="VARCHAR" property="foodName" />
+    <result column="food_price" jdbcType="DOUBLE" property="foodPrice" />
+    <result column="food_type" jdbcType="VARCHAR" property="foodType" />
+    <result column="food_material" jdbcType="VARCHAR" property="foodMaterial" />
+
+    <collection property="imges" ofType="com.ccorder.ordersystem.entity.File">
+      <result column="file_name" jdbcType="VARCHAR" property="fileName" />
+      <result column="file_type" jdbcType="VARCHAR" property="fileType" />
+      <result column="file_path" jdbcType="VARCHAR" property="filePath" />
+      <result column="file_remark" jdbcType="VARCHAR" property="fileRemark" />
+    </collection>
+  </resultMap>
+
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
     id, food_name, food_price, food_type, food_material, create_user_id, create_date,
@@ -32,6 +47,22 @@
     from food
   </select>
 
+  <select id="getUserFood" resultMap="UserFood">
+    select
+      F.id id,
+      F.food_name food_name,
+      F.food_price food_price,
+      F.food_type food_type,
+      F.food_material food_material,
+      FI.file_name file_name,
+      FI.file_path file_path,
+      FI.file_type file_type,
+      FI.file_remark file_remark
+    from
+      Food F
+      left join map_file MF on (MF.object_type='Food' and MF.object_id=F.id)
+      left join file FI on MF.file_id = FI.id
+  </select>
   <select id="getAllType" resultMap="FoodTypeMap">
     <!--@mbg.generated-->
     select
@@ -49,12 +80,24 @@
     where id = #{id,jdbcType=VARCHAR}
   </select>
 
-  <select id="getFoodsByType" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="getFoodsByType" parameterType="java.lang.String" resultMap="UserFood">
     <!--@mbg.generated-->
     select
-    <include refid="Base_Column_List" />
-    from food
-    where food_type = #{foodType,jdbcType=VARCHAR}
+      F.id id,
+      F.food_name food_name,
+      F.food_price food_price,
+      F.food_type food_type,
+      F.food_material food_material,
+      FI.file_name file_name,
+      FI.file_path file_path,
+      FI.file_type file_type,
+      FI.file_remark file_remark
+    from
+      Food F
+      left join map_file MF on (MF.object_type='Food' and MF.object_id=F.id)
+      left join file FI on MF.file_id = FI.id
+    where
+      F.food_type=#{type,jdbcType=VARCHAR}
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
