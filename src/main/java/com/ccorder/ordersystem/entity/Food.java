@@ -6,8 +6,6 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import javax.persistence.Id;
-
 /**
  * @author zm
  */
@@ -16,7 +14,6 @@ import javax.persistence.Id;
 public class Food {
     @ApiModelProperty(value = "ID",name = "ID",dataType = "String",example = "aswdawfevqe",
             required = true,allowEmptyValue = false)
-    @Id
     private String id;
 
     @ApiModelProperty(value = "食物名称",name = "foodName",dataType = "String",example = "酸菜鱼",

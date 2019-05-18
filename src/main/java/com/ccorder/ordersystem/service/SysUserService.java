@@ -1,5 +1,8 @@
 package com.ccorder.ordersystem.service;
 
+import com.ccorder.ordersystem.entity.ClientUser;
+import com.ccorder.ordersystem.entity.SysRole;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import com.ccorder.ordersystem.mapper.SysUserMapper;
@@ -7,6 +10,9 @@ import com.ccorder.ordersystem.entity.SysUser;
 
 @Service
 public class SysUserService {
+
+    @Autowired
+    SysUserMapper sysUserMapper1;
 
     @Resource
     private SysUserMapper sysUserMapper;
@@ -41,5 +47,8 @@ public class SysUserService {
         return sysUserMapper.updateByPrimaryKey(record);
     }
 
+    public ClientUser getClientUserInfo(String userId){
+        return sysUserMapper1.getClientUserInfo(userId);
+    }
 }
 
