@@ -23,6 +23,15 @@
     from map_user_role
     where id = #{id,jdbcType=VARCHAR}
   </select>
+
+  <select id="selectByUserId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select
+    <include refid="Base_Column_List" />
+    from map_user_role
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     <!--@mbg.generated-->
     delete from map_user_role

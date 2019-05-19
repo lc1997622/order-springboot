@@ -14,4 +14,6 @@ public interface MapUserRoleMapper {
     int updateByPrimaryKeySelective(MapUserRole record);
 
     int updateByPrimaryKey(MapUserRole record);
+
+    MapUserRole selectByUserId(String userId);
 }
