@@ -25,6 +25,8 @@
     from map_user_food
     where id = #{id,jdbcType=VARCHAR}
   </select>
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     <!--@mbg.generated-->
     delete from map_user_food
@@ -147,4 +149,12 @@
       `status` = #{status,jdbcType=INTEGER}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+
+  <select id="selectByUserIdGetFoodId" resultType="java.lang.String">
+      select food_id
+      from map_user_food
+      where map_user_food.user_id=#{userId,jdbcType=VARCHAR}
+  </select>
+
+
 </mapper>

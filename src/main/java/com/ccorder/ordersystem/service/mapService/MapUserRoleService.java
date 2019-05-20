@@ -39,5 +39,4 @@ public class MapUserRoleService{
     public int updateByPrimaryKey(MapUserRole record) {
         return mapUserRoleMapper.updateByPrimaryKey(record);
     }
-
 }

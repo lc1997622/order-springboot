@@ -251,4 +251,10 @@
       `status` = #{status,jdbcType=INTEGER}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+    <select id="selectByCreateUserIdGetUser" resultMap="BaseResultMap">
+      select
+      <include refid="Base_Column_List" />
+      from sys_user
+      where sys_user.create_user_id=#{createUserId,jdbcType=VARCHAR}
+    </select>
 </mapper>

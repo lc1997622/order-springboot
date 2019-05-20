@@ -134,4 +134,12 @@
       `status` = #{status,jdbcType=INTEGER}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+
+  <select id="selectByUserIdGetOrderId" resultType="java.lang.String">
+    select map_user_order.order_id
+    from map_user_order
+    where map_user_order.user_id=#{userId,jdbcType=VARCHAR}
+  </select>
+
+
 </mapper>

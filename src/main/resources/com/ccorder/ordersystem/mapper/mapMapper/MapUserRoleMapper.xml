@@ -23,6 +23,8 @@
     from map_user_role
     where id = #{id,jdbcType=VARCHAR}
   </select>
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     <!--@mbg.generated-->
     delete from map_user_role
@@ -133,4 +135,11 @@
       `status` = #{status,jdbcType=INTEGER}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+
+  <select id="selectByUserId" resultMap="BaseResultMap">
+    select role_id
+    from map_user_role
+    where user_id= #{userId,jdbcType=VARCHAR}
+  </select>
+
 </mapper>
