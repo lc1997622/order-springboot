@@ -158,4 +158,16 @@
       `status` = #{status,jdbcType=INTEGER}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+
+  <select id="getOrderPayment" resultType="java.lang.Float">
+      select order_table.actual_payment
+      from order_table
+      where order_table.id=#{orderId,jdbcType=VARCHAR}
+  </select>
+
+  <select id="getOrderStatus" resultType="java.lang.Integer">
+      select order_table.status
+      from order_table
+      where order_table.id=#{orderId,jdbcType=VARCHAR}
+  </select>
 </mapper>

@@ -1,6 +1,7 @@
 package com.ccorder.ordersystem.mapper.mapMapper;
 
 import com.ccorder.ordersystem.entity.mapEntity.MapUserRole;
+import org.apache.ibatis.annotations.Param;
 
 public interface MapUserRoleMapper {
     int deleteByPrimaryKey(String id);
@@ -15,5 +16,5 @@ public interface MapUserRoleMapper {
 
     int updateByPrimaryKey(MapUserRole record);
 
-    MapUserRole selectByUserId(String userId);
+    String selectByUserId(String userId);
 }

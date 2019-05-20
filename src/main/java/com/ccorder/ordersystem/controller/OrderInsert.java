@@ -1,4 +1,4 @@
-package com.ccorder.ordersystem.orderOpterations;
+package com.ccorder.ordersystem.controller;
 
 import com.ccorder.ordersystem.entity.OrderTable;
 import com.ccorder.ordersystem.entity.mapEntity.MapOrderFood;
@@ -34,16 +34,13 @@ public class OrderInsert {
     private MapOrderFoodMapper mapOrderFoodMapper;
 
     @ApiOperation(value = "产生新的订单时向数据库的表中添加新的订单")
-    @GetMapping("/addOrder")
+    @PostMapping("/addOrder")
     @ResponseBody
     public Object addOrder(
             @ApiParam(name = "openId", value = "微信用户的id", required = true,type = "String")
             @RequestParam
                     String openId,
-            @ApiParam(name = "orderNum", value = "订单编号", required = true,type = "String")
-            @RequestParam
-                    String orderNum,
-            @ApiParam(name = "paymethod", value = "支付方式", required = true, type = "String")
+            @ApiParam(name = "payMethod", value = "支付方式", required = true, type = "String")
             @RequestParam
                     String payMethod,
             @ApiParam(name = "address", value = "送货地址", required = true, type = "String")
@@ -80,18 +77,13 @@ public class OrderInsert {
         //设置创建日期
         newOrder.setCreateDate(date);
         //设置最终修改人的id
-        if (modifyUserId != null) {
-            newOrder.setModifyUserId(modifyUserId);
-        } else {
-            newOrder.setModifyUserId(openId);
-        }
+        newOrder.setModifyUserId(modifyUserId);
         //设置最后的修改日期
         newOrder.setModifyDate(date);
         //设置状态
         newOrder.setStatus(0);
 
         MapOrderFood mapOrderFood=new MapOrderFood();
-
         //添加主键id
         mapOrderFood.setId(UUID.randomUUID().toString());
         //添加订单id
@@ -103,18 +95,18 @@ public class OrderInsert {
         //添加本食品的评分
         mapOrderFood.setScore(score);
         //添加创建人的id
-        mapOrderFood.setCreateUserId(newOrder.getCreateUserId());
+        mapOrderFood.setCreateUserId(openId);
         //添加创建时间
         mapOrderFood.setCreateDate(date);
         //添加最终修改人的id
-        mapOrderFood.setModifyUserId(newOrder.getModifyUserId());
+        mapOrderFood.setModifyUserId(modifyUserId);
         //添加最终的修改时间
         mapOrderFood.setModifyDate(date);
         //设置状态
         mapOrderFood.setStatus(0);
         try {
-            orderTableMapper.insertSelective(newOrder);
-            mapOrderFoodMapper.insertSelective(mapOrderFood);
+            orderTableMapper.insert(newOrder);
+            mapOrderFoodMapper.insert(mapOrderFood);
             return new AjaxMessage().Set(MsgType.Success,"成功添加订单至order");
         }catch (Exception e){
             e.printStackTrace();
