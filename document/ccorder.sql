@@ -11,11 +11,27 @@
  Target Server Version : 50723
  File Encoding         : 65001
 
- Date: 20/05/2019 10:52:14
+ Date: 20/05/2019 18:09:53
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for address
+-- ----------------------------
+DROP TABLE IF EXISTS `address`;
+CREATE TABLE `address`  (
+  `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键id',
+  `address_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '地址名',
+  `house number` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '门牌号',
+  `create_user_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建人id',
+  `create_date` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `modify_user_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '最终修改人id',
+  `modify_date` datetime(0) NULL DEFAULT NULL COMMENT '最终修改时间',
+  `status` int(11) NULL DEFAULT 0 COMMENT '0是初始值，-1失效, 1是默认地址',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for comment
@@ -119,6 +135,22 @@ CREATE TABLE `map_order_food`  (
   `status` int(11) NULL DEFAULT 0 COMMENT '0是默认值，-1失效',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '包含score，用户打分属性' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for map_user_address
+-- ----------------------------
+DROP TABLE IF EXISTS `map_user_address`;
+CREATE TABLE `map_user_address`  (
+  `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键id',
+  `user_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户id',
+  `address_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '地址id',
+  `create_user_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建人id',
+  `create_date` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `modify_user_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '最后修改人id',
+  `modify_date` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
+  `status` int(11) NULL DEFAULT 0 COMMENT '0是默认值，-1失效',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for map_user_food
