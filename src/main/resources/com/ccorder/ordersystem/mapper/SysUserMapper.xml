@@ -18,11 +18,58 @@
     <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
     <result column="status" jdbcType="INTEGER" property="status" />
   </resultMap>
+  <resultMap id="UserClientUsertMap" type="com.ccorder.ordersystem.entity.ClientUser">
+    <!--@mbg.generated-->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="real_name" jdbcType="VARCHAR" property="realName" />
+    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
+    <result column="telephone" jdbcType="VARCHAR" property="telephone" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <collection property="roles" ofType="com.ccorder.ordersystem.entity.SysRole">
+      <result column="code" jdbcType="VARCHAR" property="code" />
+      <result column="sort" jdbcType="VARCHAR" property="sort" />
+      <result column="name" jdbcType="VARCHAR" property="name" />
+    </collection>
+    <collection property="userimgs" ofType="com.ccorder.ordersystem.entity.File">
+      <result column="file_name" jdbcType="VARCHAR" property="fileName" />
+      <result column="file_type" jdbcType="VARCHAR" property="fileType" />
+      <result column="file_path" jdbcType="VARCHAR" property="filePath" />
+      <result column="file_remark" jdbcType="VARCHAR" property="fileRemark" />
+    </collection>
+  </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
     id, username, `password`, real_name, nick_name, sex, telephone, email, birthday, 
     create_user_id, create_time, modify_user_id, modify_time, `status`
   </sql>
+  
+  <select id="getClientUserInfo" parameterType="java.lang.String" resultMap="UserClientUsertMap">
+    select
+      u.username username,
+      u.birthday birthday,
+      u.email email,
+      u.nick_name nick_name,
+      u.real_name real_name,
+      u.sex sex,
+      u.telephone telephone,
+      R.code code,
+      R.name name,
+      F.file_name file_name,
+      F.file_path file_path,
+      F.file_type file_type,
+      F.file_remark file_remark
+    from
+      sys_user u
+      left join map_user_role MR on MR.user_id = u.id
+      left join sys_role R on  R.id = MR.role_id
+      left join map_file MF on MF.object_type = '用户' and MF.object_id=u.id
+      left join file F on F.id = MF.file_id
+    where
+    u.id = #{userId,jdbcType=VARCHAR}
+  </select>
+  
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     <!--@mbg.generated-->
     select 

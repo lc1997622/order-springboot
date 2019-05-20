@@ -1,17 +1,21 @@
 package com.ccorder.ordersystem.entity;
 
-import java.util.Date;
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.util.List;
+
 /**
- * @author zm
+ * @author ：LiChao
+ * @date ：Created in 2019/5/17 23:25
+ * @description：Food About User Client
+ * @modified By：
+ * @version: 1.0$
  */
 @Data
-@ApiModel(value = "Food",description = "食品实体")
-public class Food {
+@ApiModel(value = "UserFood",description = "客户端食品实体")
+public class UserFood {
     @ApiModelProperty(value = "ID",name = "ID",dataType = "String",example = "aswdawfevqe",
             required = true,allowEmptyValue = false)
     private String id;
@@ -35,22 +39,6 @@ public class Food {
             required = false,allowEmptyValue = true)
     private String foodMaterial;
 
-    @ApiModelProperty(value = "创建人ID",name = "createUserId",dataType = "String",example = "o258k0Zofn-pJJvLs6DzKRHwvkbA")
-    private String createUserId;
-
-    @ApiModelProperty(value = "创建时间",name = "createDate",dataType = "Data",example = "1999-01-26")
-    private Date createDate;
-
-    @ApiModelProperty(value = "最后修改人ID",name = "modifyUserId",dataType = "String",example = "o258k0Zofn-pJJvLs6DzKRHwvkbA")
-    private String modifyUserId;
-
-    @ApiModelProperty(value = "最后修改时间",name = "modifyDate",dataType = "Data",example = "1999-01-26")
-    private Date modifyDate;
-
-    /**
-     * 0是默认值，-1失效
-     */
-    @ApiModelProperty(value = "ID",name = "ID",dataType = "Integer",example = "0",notes = "0是默认值，-1失效")
-    private Integer status;
-
+    @ApiModelProperty(value = "食物图片",name = "imges",dataType = "List")
+    private List<File> imges;
 }

@@ -1,7 +1,14 @@
 package com.ccorder.ordersystem.mapper;
 
 import com.ccorder.ordersystem.entity.Food;
+import com.ccorder.ordersystem.entity.UserFood;
+import org.springframework.stereotype.Repository;
 
+import java.awt.print.Pageable;
+import java.util.List;
+import java.util.Map;
+
+@Repository
 public interface FoodMapper {
     int deleteByPrimaryKey(String id);
 
@@ -15,4 +22,15 @@ public interface FoodMapper {
 
     int updateByPrimaryKey(Food record);
 
+    Food[] getAllFood();
+
+    List<Map<String,Object>> getAllType();
+
+    UserFood[] getFoodsByType(String type);
+
+    UserFood[] getUserFood();
+
+    List<String> selectByOrderIdGetFoodName(String orderId);
+
+    Food selectByUserIdFoodId(String userId,String foodId);
 }
