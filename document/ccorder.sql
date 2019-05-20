@@ -11,7 +11,7 @@
  Target Server Version : 50723
  File Encoding         : 65001
 
- Date: 17/05/2019 14:15:56
+ Date: 20/05/2019 10:52:14
 */
 
 SET NAMES utf8mb4;
@@ -177,6 +177,7 @@ CREATE TABLE `order_table`  (
   `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键id',
   `order_num` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '订单号',
   `pay_method` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '支付方式(字典项id)',
+  `delivery_time` datetime(0) NULL DEFAULT NULL COMMENT '订单配送时间',
   `address` varchar(511) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '收货地址',
   `actual_payment` float NULL DEFAULT NULL COMMENT '实际支付',
   `create_user_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建人id',
