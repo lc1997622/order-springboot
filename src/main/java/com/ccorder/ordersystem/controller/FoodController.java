@@ -84,6 +84,14 @@ public class FoodController {
         return new AjaxMessage().Set(MsgType.Success,"食品列表", foodsList);
     }
 
+    @PostMapping("/addNewUserFood")
+    @ResponseBody
+    public Object addNewFood(
+            @RequestBody
+            UserFood userFood
+    ){
+        return new AjaxMessage().Set(MsgType.Success, "Just For Model");
+    }
 
     @ApiOperation(value = "(店铺管理模块)添加新的食品分类")
     @PostMapping("/addNewType")
