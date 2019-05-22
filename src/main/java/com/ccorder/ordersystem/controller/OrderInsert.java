@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -24,7 +25,7 @@ import java.util.UUID;
  */
 @Controller
 @RequestMapping(value="/order")
-@Api(tags = "订单表插入的api")
+@Api(tags = "订单插入")
 public class OrderInsert {
 
     @Autowired
@@ -46,21 +47,24 @@ public class OrderInsert {
             @ApiParam(name = "address", value = "送货地址", required = true, type = "String")
             @RequestParam
                     String address,
-            @ApiParam(name = "Money", value = "实际支付的金额", required = true, type = "float")
+            @ApiParam(name = "Money", value = "实际支付的金额", required = true, type = "Double")
             @RequestParam
-                    float Money,
+                    Double Money,
             @ApiParam(name = "modifyUserId", value = "更改订单的用户Id", required = true, type = "String")
             @RequestParam
                     String modifyUserId,
-            @ApiParam(name = "food_id", value = "商品的名称", required = true, type = "String")
+            @ApiParam(name = "food_id", value = "商品的id", required = true, type = "List<String>")
             @RequestParam
-                    String food_id,
+                    List<String> food_id,
             @ApiParam(name = "amount", value = "数量", required = true, type = "Integer")
             @RequestParam
                     Integer amount,
             @ApiParam(name = "score",  value = "评分", required = true, type = "double")
             @RequestParam
-                    double score
+                    double score,
+            @ApiParam(name = "delivery_time_datetime",  value = "送达时间", required = true, type = "Date")
+            @RequestParam
+                    Date delivery_time_datetime
     ){
         OrderTable newOrder=new OrderTable();
         Date date=new Date();
@@ -74,6 +78,8 @@ public class OrderInsert {
         newOrder.setAddress(address);
         //设置创建人id
         newOrder.setCreateUserId(openId);
+        //设置实际支付金额
+        newOrder.setActualPayment(Money);
         //设置创建日期
         newOrder.setCreateDate(date);
         //设置最终修改人的id
@@ -82,14 +88,15 @@ public class OrderInsert {
         newOrder.setModifyDate(date);
         //设置状态
         newOrder.setStatus(0);
+        //设置送达时间
+        newOrder.setDeliveryTime(delivery_time_datetime);
 
         MapOrderFood mapOrderFood=new MapOrderFood();
         //添加主键id
         mapOrderFood.setId(UUID.randomUUID().toString());
         //添加订单id
         mapOrderFood.setOrderId(newOrder.getId());
-        //添加食品id
-        mapOrderFood.setFoodId(food_id);
+
         //添加食品数量
         mapOrderFood.setAmount(amount);
         //添加本食品的评分
@@ -106,11 +113,14 @@ public class OrderInsert {
         mapOrderFood.setStatus(0);
         try {
             orderTableMapper.insert(newOrder);
-            mapOrderFoodMapper.insert(mapOrderFood);
-            return new AjaxMessage().Set(MsgType.Success,"成功添加订单至order");
+            for (String s : food_id) {
+                mapOrderFood.setFoodId(s);
+                mapOrderFoodMapper.insert(mapOrderFood);
+            }
+            return new AjaxMessage().Set(MsgType.Success,"成功添加订单");
         }catch (Exception e){
             e.printStackTrace();
         }
-        return new AjaxMessage().Set(MsgType.Error, "添加订单失败至order");
+        return new AjaxMessage().Set(MsgType.Error, "添加订单失败");
     }
 }
