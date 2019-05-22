@@ -1,5 +1,7 @@
 package com.ccorder.ordersystem.mapper;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.ccorder.ordersystem.entity.Comment;
 
 public interface CommentMapper {
@@ -14,4 +16,6 @@ public interface CommentMapper {
     int updateByPrimaryKeySelective(Comment record);
 
     int updateByPrimaryKey(Comment record);
+
+    Comment selectByOrderId(@Param("orderId") String orderId);
 }
