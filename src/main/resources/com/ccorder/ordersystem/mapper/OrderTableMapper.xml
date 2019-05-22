@@ -44,7 +44,7 @@
     values (#{id,jdbcType=VARCHAR}, #{orderNum,jdbcType=VARCHAR}, #{payMethod,jdbcType=VARCHAR}, 
       #{deliveryTime,jdbcType=TIMESTAMP}, #{address,jdbcType=VARCHAR}, #{actualPayment,jdbcType=FLOAT}, 
       #{createUserId,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{modifyUserId,jdbcType=VARCHAR}, 
-      #{modifyDate,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER})
+      #{modifyDate,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER} )
   </insert>
   <insert id="insertSelective" parameterType="com.ccorder.ordersystem.entity.OrderTable">
     <!--@mbg.generated-->

@@ -21,7 +21,7 @@ public interface MapOrderFoodMapper {
 
     List<Integer> selectByOrderIdGetAmount(String orderId);
 
-    Integer seletcByFoodIdGetAmount(String foodId,String userId);
+    Integer selectByFoodIdGetAmount(String foodId,String orderId);
 
     List<String> selectByOrderIdGetFoodId(String orderId);
 

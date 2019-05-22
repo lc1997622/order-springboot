@@ -76,13 +76,13 @@ public class OrderInquiry {
         status[3]="已完成";
     }
     //总的订单查询
-    @ApiOperation(value = "商家进行的总的订单的查询")
+    @ApiOperation(value = "商家历史订单订单的查询")
     @GetMapping("/inquiry")
     @ResponseBody
     public Object inquiry(
-            @ApiParam(name = "userId", value = "微信用户的id", required = true,type = "String")
+            @ApiParam(name = "openId", value = "微信用户的id", required = true,type = "String")
             @RequestParam
-                    String userId
+                    String openId
     ){
         @Data
         class AllOrder{
@@ -99,7 +99,7 @@ public class OrderInquiry {
             }
         }
         //查询数据库找到对象的role_id
-        String roleId= mapUserRoleMapper.selectByUserId(userId);
+        String roleId= mapUserRoleMapper.selectByUserId(openId);
         //通过role_id找到对应的code
         String code= sysRoleMapper.selectByRoleIdGetCode(roleId);
         //通过code判断是商家还是用户
@@ -112,17 +112,18 @@ public class OrderInquiry {
         //数量（order_food_amount），food（food_name）总的价格（order_table）
 
         //先获得order_Id
-        List<String> order_id_list=mapUserOrderMapper.selectByUserIdGetOrderId(userId);
-        List<String> orderStatus=null;
-        List<List<Integer>> amountList=null;
-        List<Float> paymentList=null;
-        List<List<String>> foodNameList=null;
+        List<String> order_id_list=mapUserOrderMapper.selectByUserIdGetOrderId(openId);
+        List<String> orderStatus=new ArrayList<String>();
+        List<List<Integer>> amountList=new ArrayList<List<Integer>>();
+        List<Float> paymentList=new ArrayList<Float>();
+        List<List<String>> foodNameList=new ArrayList<List<String>>();
 
         //获得对应的对应的订单状态
         for (String orderId : order_id_list) {
-            //通过order_id获得订单状态(order_table)
-            int state=orderTableMapper.getOrderStatus(orderId);
-            orderStatus.add(status[state]);
+            System.out.println(orderId);
+                //通过order_id获得订单状态(order_table)
+                int state=orderTableMapper.getOrderStatus(orderId);
+                orderStatus.add(status[state]);
             //通过order_id获得该订单的总的价格(order_table)
             paymentList.add(orderTableMapper.getOrderPayment(orderId));
             //通过order_id获得该订单中每件商品的数量商品数量(map_order_food)
@@ -132,8 +133,9 @@ public class OrderInquiry {
             List<String> nameList=new ArrayList<String>();
             List<Integer> amounts=new ArrayList<Integer>();
             for (String foodId : foodIds) {
-                amounts.add(mapOrderFoodMapper.selectByFoodIdGetAmount(foodId));
-                nameList.add(foodMapper.selectByUserIdFoodId(userId,foodId).getFoodName());
+                System.out.println(foodId);
+                amounts.add(mapOrderFoodMapper.selectByFoodIdGetAmount(foodId,orderId));
+                nameList.add(foodMapper.selectByUserIdFoodId(openId,foodId).getFoodName());
             }
             amountList.add(amounts);
             //获得该订单的食物列表(food)
@@ -153,9 +155,9 @@ public class OrderInquiry {
     @GetMapping("/theOrder")
     @ResponseBody
     public Object inquiry(
-            @ApiParam(name = "userId", value = "微信用户的id", required = true,type = "String")
+            @ApiParam(name = "openId", value = "微信用户的id", required = true,type = "String")
             @RequestParam
-                    String userId,
+                    String openId,
             @ApiParam(name = "orderId", value = "订单的id", required = true,type = "String")
             @RequestParam
                     String orderId
@@ -188,14 +190,14 @@ public class OrderInquiry {
         String orderStatus=status[index];
         //获得商品列表：该订单下 商品的数量，价格，名称
         //先获得该订单的foodid
-        List<String> foodIdList=mapUserFoodMapper.selectByUserIdGetFoodId(userId);
+        List<String> foodIdList=mapUserFoodMapper.selectByUserIdGetFoodId(openId);
         //通过food_id获得商品名称和价格
         List<String> foodName=new ArrayList<String>();
         List<Double> foodPrice=new ArrayList<Double>();
         List<Integer> amountList=new ArrayList<Integer>();
         for (String foodId : foodIdList) {
-            Food food=foodMapper.selectByUserIdFoodId(userId, foodId);
-            amountList.add(mapOrderFoodMapper.seletcByFoodIdGetAmount(foodId,userId));
+            Food food=foodMapper.selectByUserIdFoodId(openId,foodId);
+            amountList.add(mapOrderFoodMapper.selectByFoodIdGetAmount(foodId,orderId));
             foodName.add(food.getFoodName());
             foodPrice.add(food.getFoodPrice());
         }
@@ -218,5 +220,6 @@ public class OrderInquiry {
             e.printStackTrace();
         }
         return new AjaxMessage().Set(MsgType.Success,"查询失败");
+        //
     }
 }

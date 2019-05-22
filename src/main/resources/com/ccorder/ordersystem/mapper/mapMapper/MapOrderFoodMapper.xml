@@ -173,6 +173,7 @@
           and map_order_food.create_user_id = #{userId,jdbcType=VARCHAR}
     </select>
 
+
     <select id="selectByOrderIdGetAmount" resultType="java.lang.Integer">
         select map_order_food.amount
         from map_order_food
@@ -196,5 +197,17 @@
         from map_order_food
         where order_id = #{orderId,jdbcType=VARCHAR}
     </select>
+  <select id="selectByOrderIdGetFoodId" resultType="java.lang.String">
+    select food_id
+    from map_order_food
+    where map_order_food.order_id=#{orderId,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByFoodIdGetAmount" resultType="java.lang.Integer">
+    select map_order_food.amount
+    from map_order_food
+    where map_order_food.order_id=#{param2,jdbcType=VARCHAR}  and
+    map_order_food.food_id=#{param1,jdbcType=VARCHAR}
+  </select>
 
 </mapper>
