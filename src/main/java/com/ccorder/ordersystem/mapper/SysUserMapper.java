@@ -18,4 +18,6 @@ public interface SysUserMapper {
     int updateByPrimaryKey(SysUser record);
 
     ClientUser getClientUserInfo(String userId);
+
+    SysUser selectByCreateUserIdGetUser(String createUserId);
 }

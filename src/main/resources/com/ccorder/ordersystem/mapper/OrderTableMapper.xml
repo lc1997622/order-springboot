@@ -6,19 +6,23 @@
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="order_num" jdbcType="VARCHAR" property="orderNum" />
     <result column="pay_method" jdbcType="VARCHAR" property="payMethod" />
+    <result column="delivery_time" jdbcType="TIMESTAMP" property="deliveryTime" />
     <result column="address" jdbcType="VARCHAR" property="address" />
     <result column="actual_payment" jdbcType="FLOAT" property="actualPayment" />
+    <result column="score" jdbcType="FLOAT" property="score" />
     <result column="create_user_id" jdbcType="VARCHAR" property="createUserId" />
     <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
     <result column="modify_user_id" jdbcType="VARCHAR" property="modifyUserId" />
     <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
     <result column="status" jdbcType="INTEGER" property="status" />
   </resultMap>
+
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    id, order_num, pay_method, address, actual_payment, create_user_id, create_date, 
-    modify_user_id, modify_date, `status`
+    id, order_num, pay_method, delivery_time, address, actual_payment, score,create_user_id,
+    create_date, modify_user_id, modify_date, `status`
   </sql>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     <!--@mbg.generated-->
     select 
@@ -34,13 +38,13 @@
   <insert id="insert" parameterType="com.ccorder.ordersystem.entity.OrderTable">
     <!--@mbg.generated-->
     insert into order_table (id, order_num, pay_method, 
-      address, actual_payment, create_user_id, 
-      create_date, modify_user_id, modify_date, 
-      `status`)
+      delivery_time, address, actual_payment,score,
+      create_user_id, create_date, modify_user_id, 
+      modify_date, `status`)
     values (#{id,jdbcType=VARCHAR}, #{orderNum,jdbcType=VARCHAR}, #{payMethod,jdbcType=VARCHAR}, 
-      #{address,jdbcType=VARCHAR}, #{actualPayment,jdbcType=FLOAT}, #{createUserId,jdbcType=VARCHAR}, 
-      #{createDate,jdbcType=TIMESTAMP}, #{modifyUserId,jdbcType=VARCHAR}, #{modifyDate,jdbcType=TIMESTAMP}, 
-      #{status,jdbcType=INTEGER})
+      #{deliveryTime,jdbcType=TIMESTAMP}, #{address,jdbcType=VARCHAR}, #{actualPayment,jdbcType=FLOAT}, 
+      #{createUserId,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{modifyUserId,jdbcType=VARCHAR}, 
+      #{modifyDate,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER} )
   </insert>
   <insert id="insertSelective" parameterType="com.ccorder.ordersystem.entity.OrderTable">
     <!--@mbg.generated-->
@@ -55,11 +59,17 @@
       <if test="payMethod != null">
         pay_method,
       </if>
+      <if test="deliveryTime != null">
+        delivery_time,
+      </if>
       <if test="address != null">
         address,
       </if>
       <if test="actualPayment != null">
         actual_payment,
+      </if>
+      <if test="score != null">
+        score,
       </if>
       <if test="createUserId != null">
         create_user_id,
@@ -86,6 +96,9 @@
       </if>
       <if test="payMethod != null">
         #{payMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryTime != null">
+        #{deliveryTime,jdbcType=TIMESTAMP},
       </if>
       <if test="address != null">
         #{address,jdbcType=VARCHAR},
@@ -120,11 +133,17 @@
       <if test="payMethod != null">
         pay_method = #{payMethod,jdbcType=VARCHAR},
       </if>
+      <if test="deliveryTime != null">
+        delivery_time = #{deliveryTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="address != null">
         address = #{address,jdbcType=VARCHAR},
       </if>
       <if test="actualPayment != null">
         actual_payment = #{actualPayment,jdbcType=FLOAT},
+      </if>
+      <if test="score != null">
+        score = #{score,jdbcType=FLOAT},
       </if>
       <if test="createUserId != null">
         create_user_id = #{createUserId,jdbcType=VARCHAR},
@@ -149,8 +168,10 @@
     update order_table
     set order_num = #{orderNum,jdbcType=VARCHAR},
       pay_method = #{payMethod,jdbcType=VARCHAR},
+      delivery_time = #{deliveryTime,jdbcType=TIMESTAMP},
       address = #{address,jdbcType=VARCHAR},
       actual_payment = #{actualPayment,jdbcType=FLOAT},
+      score = #{score,jdbcType=FLOAT},
       create_user_id = #{createUserId,jdbcType=VARCHAR},
       create_date = #{createDate,jdbcType=TIMESTAMP},
       modify_user_id = #{modifyUserId,jdbcType=VARCHAR},
@@ -158,4 +179,16 @@
       `status` = #{status,jdbcType=INTEGER}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+
+  <select id="getOrderPayment" resultType="java.lang.Float">
+      select order_table.actual_payment
+      from order_table
+      where order_table.id=#{orderId,jdbcType=VARCHAR}
+  </select>
+
+  <select id="getOrderStatus" resultType="java.lang.Integer">
+      select order_table.status
+      from order_table
+      where order_table.id=#{orderId,jdbcType=VARCHAR}
+  </select>
 </mapper>

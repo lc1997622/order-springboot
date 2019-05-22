@@ -147,4 +147,10 @@
       `status` = #{status,jdbcType=INTEGER}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+
+    <select id="selectByRoleIdGetCode" resultType="java.lang.String">
+      select code
+      from sys_role
+      where sys_role.id=#{roleId,jdbcType=VARCHAR}
+    </select>
 </mapper>

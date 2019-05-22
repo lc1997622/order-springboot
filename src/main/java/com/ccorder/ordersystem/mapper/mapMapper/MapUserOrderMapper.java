@@ -1,6 +1,9 @@
 package com.ccorder.ordersystem.mapper.mapMapper;
 
+
 import com.ccorder.ordersystem.entity.mapEntity.MapUserOrder;
+
+import java.util.List;
 
 public interface MapUserOrderMapper {
     int deleteByPrimaryKey(String id);
@@ -14,4 +17,7 @@ public interface MapUserOrderMapper {
     int updateByPrimaryKeySelective(MapUserOrder record);
 
     int updateByPrimaryKey(MapUserOrder record);
+
+    List<String> selectByUserIdGetOrderId(String userId);
+
 }

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ccorder.ordersystem.mapper.mapMapper.MapUserRoleMapper">
-  <resultMap id="BaseResultMap" type="com.ccorder.ordersystem.entity.mapEntity.MapUserRole">
+<mapper namespace="com.ccorder.ordersystem.mapper.mapMapper.MapUserAddressMapper">
+  <resultMap id="BaseResultMap" type="com.ccorder.ordersystem.entity.mapEntity.MapUserAddress">
     <!--@mbg.generated-->
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="user_id" jdbcType="VARCHAR" property="userId" />
-    <result column="role_id" jdbcType="VARCHAR" property="roleId" />
+    <result column="address_id" jdbcType="VARCHAR" property="addressId" />
     <result column="create_user_id" jdbcType="VARCHAR" property="createUserId" />
     <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
     <result column="modify_user_id" jdbcType="VARCHAR" property="modifyUserId" />
@@ -14,34 +14,33 @@
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    id, user_id, role_id, create_user_id, create_date, modify_user_id, modify_date, `status`
+    id, user_id, address_id, create_user_id, create_date, modify_user_id, modify_date, 
+    `status`
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     <!--@mbg.generated-->
     select 
     <include refid="Base_Column_List" />
-    from map_user_role
+    from map_user_address
     where id = #{id,jdbcType=VARCHAR}
   </select>
-
-
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     <!--@mbg.generated-->
-    delete from map_user_role
+    delete from map_user_address
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.ccorder.ordersystem.entity.mapEntity.MapUserRole">
+  <insert id="insert" parameterType="com.ccorder.ordersystem.entity.mapEntity.MapUserAddress">
     <!--@mbg.generated-->
-    insert into map_user_role (id, user_id, role_id, 
+    insert into map_user_address (id, user_id, address_id, 
       create_user_id, create_date, modify_user_id, 
       modify_date, `status`)
-    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{roleId,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{addressId,jdbcType=VARCHAR}, 
       #{createUserId,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{modifyUserId,jdbcType=VARCHAR}, 
       #{modifyDate,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.ccorder.ordersystem.entity.mapEntity.MapUserRole">
+  <insert id="insertSelective" parameterType="com.ccorder.ordersystem.entity.mapEntity.MapUserAddress">
     <!--@mbg.generated-->
-    insert into map_user_role
+    insert into map_user_address
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
@@ -49,8 +48,8 @@
       <if test="userId != null">
         user_id,
       </if>
-      <if test="roleId != null">
-        role_id,
+      <if test="addressId != null">
+        address_id,
       </if>
       <if test="createUserId != null">
         create_user_id,
@@ -75,8 +74,8 @@
       <if test="userId != null">
         #{userId,jdbcType=VARCHAR},
       </if>
-      <if test="roleId != null">
-        #{roleId,jdbcType=VARCHAR},
+      <if test="addressId != null">
+        #{addressId,jdbcType=VARCHAR},
       </if>
       <if test="createUserId != null">
         #{createUserId,jdbcType=VARCHAR},
@@ -95,15 +94,15 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ccorder.ordersystem.entity.mapEntity.MapUserRole">
+  <update id="updateByPrimaryKeySelective" parameterType="com.ccorder.ordersystem.entity.mapEntity.MapUserAddress">
     <!--@mbg.generated-->
-    update map_user_role
+    update map_user_address
     <set>
       <if test="userId != null">
         user_id = #{userId,jdbcType=VARCHAR},
       </if>
-      <if test="roleId != null">
-        role_id = #{roleId,jdbcType=VARCHAR},
+      <if test="addressId != null">
+        address_id = #{addressId,jdbcType=VARCHAR},
       </if>
       <if test="createUserId != null">
         create_user_id = #{createUserId,jdbcType=VARCHAR},
@@ -123,11 +122,11 @@
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.ccorder.ordersystem.entity.mapEntity.MapUserRole">
+  <update id="updateByPrimaryKey" parameterType="com.ccorder.ordersystem.entity.mapEntity.MapUserAddress">
     <!--@mbg.generated-->
-    update map_user_role
+    update map_user_address
     set user_id = #{userId,jdbcType=VARCHAR},
-      role_id = #{roleId,jdbcType=VARCHAR},
+      address_id = #{addressId,jdbcType=VARCHAR},
       create_user_id = #{createUserId,jdbcType=VARCHAR},
       create_date = #{createDate,jdbcType=TIMESTAMP},
       modify_user_id = #{modifyUserId,jdbcType=VARCHAR},
@@ -135,11 +134,4 @@
       `status` = #{status,jdbcType=INTEGER}
     where id = #{id,jdbcType=VARCHAR}
   </update>
-
-  <select id="selectByUserId" resultMap="BaseResultMap">
-    select role_id
-    from map_user_role
-    where user_id= #{userId,jdbcType=VARCHAR}
-  </select>
-
 </mapper>

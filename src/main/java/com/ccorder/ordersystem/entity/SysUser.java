@@ -71,7 +71,7 @@ public class SysUser {
     private Date modifyTime;
 
     /**
-     * 0是默认值，-1失效
+     * 0是默认值，-1失效，1是店家
      */
     private Integer status;
 }

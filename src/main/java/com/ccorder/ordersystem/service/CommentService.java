@@ -41,5 +41,9 @@ public class CommentService {
         return commentMapper.updateByPrimaryKey(record);
     }
 
+    /** 根据orderId获取评论*/
+    public Comment getOrderComment(String orderId) {
+        return commentMapper.selectByOrderId(orderId);
+    }
 }
 

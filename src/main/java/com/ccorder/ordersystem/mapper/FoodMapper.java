@@ -2,8 +2,6 @@ package com.ccorder.ordersystem.mapper;
 
 import com.ccorder.ordersystem.entity.Food;
 import com.ccorder.ordersystem.entity.UserFood;
-import org.springframework.data.jpa.domain.Specification;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.awt.print.Pageable;
@@ -31,4 +29,9 @@ public interface FoodMapper {
     UserFood[] getFoodsByType(String type);
 
     UserFood[] getUserFood();
+
+    List<String> selectByOrderIdGetFoodName(String orderId);
+
+    Food selectByUserIdFoodId(String userId,String foodId);
+
 }
