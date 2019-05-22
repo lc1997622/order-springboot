@@ -35,6 +35,10 @@ public class OrderTable {
             required = false, allowEmptyValue = true)
     private Double actualPayment;
 
+    @ApiModelProperty(name = "score", value = "订单评分", dataType = "Double", example = "100.5",
+            required = false, allowEmptyValue = true)
+    private Double score;
+
     @ApiModelProperty(name = "foodList", value = "食物列表", dataType = "List<Food>", example = "无此输入项",
             required = false, allowEmptyValue = true)
     private List<Food> foodList;

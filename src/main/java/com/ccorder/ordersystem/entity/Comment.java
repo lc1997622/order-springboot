@@ -15,10 +15,6 @@ public class Comment {
      */
     private String orderId;
 
-    /**
-     * 对应的商家id
-     */
-    private String userId;
 
     /**
      * 评论内容(每个订单有一次评论机会)

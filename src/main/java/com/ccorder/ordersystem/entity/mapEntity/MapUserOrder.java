@@ -41,7 +41,7 @@ public class MapUserOrder {
     private Date modifyDate;
 
     /**
-     * 0是默认值，-1失效
+     * 0是默认值，-1失效，1代表是用户，2代表是商家
      */
     private Integer status;
 }

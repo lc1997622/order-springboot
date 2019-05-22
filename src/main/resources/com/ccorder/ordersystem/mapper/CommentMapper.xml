@@ -5,7 +5,6 @@
     <!--@mbg.generated-->
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="order_id" jdbcType="VARCHAR" property="orderId" />
-    <result column="user_id" jdbcType="VARCHAR" property="userId" />
     <result column="content" jdbcType="VARCHAR" property="content" />
     <result column="create_user_id" jdbcType="VARCHAR" property="createUserId" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
@@ -15,7 +14,7 @@
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    id, order_id, user_id, content, create_user_id, create_time, modify_user_id, modify_time, 
+    id, order_id, content, create_user_id, create_time, modify_user_id, modify_time,
     `status`
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -32,11 +31,11 @@
   </delete>
   <insert id="insert" parameterType="com.ccorder.ordersystem.entity.Comment">
     <!--@mbg.generated-->
-    insert into comment (id, order_id, user_id, 
+    insert into comment (id, order_id,
       content, create_user_id, create_time, 
       modify_user_id, modify_time, `status`
       )
-    values (#{id,jdbcType=VARCHAR}, #{orderId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=VARCHAR}, #{orderId,jdbcType=VARCHAR},
       #{content,jdbcType=VARCHAR}, #{createUserId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
       #{modifyUserId,jdbcType=VARCHAR}, #{modifyTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}
       )
@@ -50,9 +49,6 @@
       </if>
       <if test="orderId != null">
         order_id,
-      </if>
-      <if test="userId != null">
-        user_id,
       </if>
       <if test="content != null">
         content,
@@ -79,9 +75,6 @@
       </if>
       <if test="orderId != null">
         #{orderId,jdbcType=VARCHAR},
-      </if>
-      <if test="userId != null">
-        #{userId,jdbcType=VARCHAR},
       </if>
       <if test="content != null">
         #{content,jdbcType=VARCHAR},
@@ -110,9 +103,6 @@
       <if test="orderId != null">
         order_id = #{orderId,jdbcType=VARCHAR},
       </if>
-      <if test="userId != null">
-        user_id = #{userId,jdbcType=VARCHAR},
-      </if>
       <if test="content != null">
         content = #{content,jdbcType=VARCHAR},
       </if>
@@ -138,7 +128,6 @@
     <!--@mbg.generated-->
     update comment
     set order_id = #{orderId,jdbcType=VARCHAR},
-      user_id = #{userId,jdbcType=VARCHAR},
       content = #{content,jdbcType=VARCHAR},
       create_user_id = #{createUserId,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
