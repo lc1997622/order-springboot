@@ -1,4 +1,6 @@
 package com.ccorder.ordersystem.mapper.mapMapper;
+import com.ccorder.ordersystem.sys.utils.StringAndInteger;
+import org.apache.ibatis.annotations.Param;
 
 import com.ccorder.ordersystem.entity.mapEntity.MapOrderFood;
 
@@ -24,4 +26,6 @@ public interface MapOrderFoodMapper {
     List<String> selectByOrderIdGetFoodId(String orderId);
 
     Integer selectByFoodIdGetAmount(String foodId);
+
+    List<StringAndInteger> selectFoodIdAndAmountByOrderId(@Param("orderId")String orderId);
 }

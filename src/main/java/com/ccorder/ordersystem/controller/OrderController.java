@@ -1,6 +1,8 @@
 package com.ccorder.ordersystem.controller;
 
+import com.ccorder.ordersystem.entity.Food;
 import com.ccorder.ordersystem.entity.OrderTable;
+import com.ccorder.ordersystem.service.FoodService;
 import com.ccorder.ordersystem.service.OrderService;
 import com.ccorder.ordersystem.sys.dto.AjaxMessage;
 import com.ccorder.ordersystem.sys.dto.MsgType;
@@ -29,6 +31,9 @@ public class OrderController {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private FoodService foodService;
 
     @ApiOperation(value = "获取用户历史订单")
     @PostMapping("/getMyOrders")
@@ -60,6 +65,13 @@ public class OrderController {
     ){
         try{
             OrderTable orderNow = orderService.getOrderById(orderId);
+
+            List<Food> foodList = foodService.getFoodsByOrderId(orderId);
+
+            System.out.println(foodList);
+
+            orderNow.setFoodList(foodList);
+
             return new AjaxMessage().Set(MsgType.Success,"获取订单详情成功",orderNow);
         }catch (Exception e){
             e.printStackTrace();

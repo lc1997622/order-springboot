@@ -6,20 +6,20 @@ package com.ccorder.ordersystem.sys.dto;
  * @data 2019/5/22
  */
 public enum OrderType {
-    Deleted(-1,"已删除"),
-    UnPayed(0,"未支付"),
-    Received(1,"已接单"),
-    Delivering(2,"配送中"),
-    Delivered(3,"已送达"),
-    Finished(4,"已完成");
+    Deleted(-1, "已删除"),
+    UnPayed(0, "未支付"),
+    Received(1, "已接单"),
+    Delivering(2, "配送中"),
+    Delivered(3, "已送达"),
+    Finished(4, "已完成"),
+    evaluated(5,"已评价");
 
     private int code;
 
     private String msgName;
 
-    OrderType(int code,String msgName)
-    {
-        this.code=code;
-        this.msgName=msgName;
+    OrderType(int code, String msgName) {
+        this.code = code;
+        this.msgName = msgName;
     }
 }

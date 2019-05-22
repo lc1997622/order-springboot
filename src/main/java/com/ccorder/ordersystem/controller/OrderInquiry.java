@@ -64,8 +64,6 @@ public class OrderInquiry {
     @Autowired
     private MapUserOrderMapper mapUserOrderMapper;
 
-
-
     private String orderNum;
     private List<String> foodList=null;
     private List<Integer> statusList=null;
