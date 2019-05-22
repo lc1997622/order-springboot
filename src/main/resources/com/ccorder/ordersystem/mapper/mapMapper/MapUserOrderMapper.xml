@@ -139,7 +139,7 @@
     select map_user_order.order_id
     from map_user_order
     where map_user_order.user_id=#{userId,jdbcType=VARCHAR}
+    and map_user_order.status != -1
   </select>
-
 
 </mapper>

@@ -29,7 +29,7 @@ import java.util.*;
  */
 @Controller
 @RequestMapping(value = "/food")
-@Api(tags = "食品API")
+@Api(tags = "食品pi")
 public class FoodController {
 
     @Autowired

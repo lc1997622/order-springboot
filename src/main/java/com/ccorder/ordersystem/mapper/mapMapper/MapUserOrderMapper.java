@@ -20,5 +20,4 @@ public interface MapUserOrderMapper {
 
     List<String> selectByUserIdGetOrderId(String userId);
 
-
 }

@@ -21,6 +21,11 @@ public class OrderTable {
     private String payMethod;
 
     /**
+     * 送达时间
+     */
+    private Date deliveryTime;
+
+    /**
      * 收货地址
      */
     private String address;
@@ -54,9 +59,4 @@ public class OrderTable {
      * 0是默认值，-1失效
      */
     private Integer status;
-
-    /*
-    * delivery_time_datetime表示送达的时间
-    */
-    private Date delivery_time_datetime;
 }

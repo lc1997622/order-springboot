@@ -2,8 +2,6 @@ package com.ccorder.ordersystem.mapper;
 
 import com.ccorder.ordersystem.entity.OrderTable;
 
-import java.util.List;
-
 public interface OrderTableMapper {
     int deleteByPrimaryKey(String id);
 

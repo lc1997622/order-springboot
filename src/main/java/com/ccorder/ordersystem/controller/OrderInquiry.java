@@ -206,7 +206,7 @@ public class OrderInquiry {
         OrderTable oneOrder=orderTableMapper.selectByPrimaryKey(orderId);
         String address=oneOrder.getAddress();
         //获取送达时间
-        Date date=oneOrder.getDelivery_time_datetime();
+        Date date=oneOrder.getDeliveryTime();
         //通过create_user_Id获得用户姓名以及电话
         SysUser sysUser = sysUserMapper.selectByCreateUserIdGetUser(oneOrder.getCreateUserId());
         String userName=sysUser.getNickName();
