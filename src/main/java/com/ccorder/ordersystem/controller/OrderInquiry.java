@@ -17,6 +17,7 @@ import com.ccorder.ordersystem.mapper.mapMapper.MapUserOrderMapper;
 import com.ccorder.ordersystem.mapper.mapMapper.MapUserRoleMapper;
 import com.ccorder.ordersystem.sys.dto.AjaxMessage;
 import com.ccorder.ordersystem.sys.dto.MsgType;
+import com.ccorder.ordersystem.sys.dto.OrderType;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -24,10 +25,7 @@ import io.swagger.annotations.Authorization;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
@@ -70,13 +68,24 @@ public class OrderInquiry {
     private List<String> foodList=null;
     private List<Integer> statusList=null;
     //状态与订单的对应
-    String[] status=new String[4];
-    {
-        status[0]="未支付";
-        status[1]="等待接单";
-        status[2]="配送中";
-        status[3]="已完成";
+    private static final String[] status={
+            "已删除","未支付","已接单","配送中","已送达","已完成"};
+    //订单状态的修改
+    @ApiOperation(value = "订单状态的修改")
+    @PostMapping("/changeOrderState")
+    @ResponseBody
+    public Object changeOrderStatus(
+        @ApiParam(name = "orderId", value = "订单编号", required = true,type = "String")
+        @RequestParam
+        String orderId,
+        @ApiParam(name = "stateId", value = "该订单的状态", required = true,type = "int")
+        @RequestParam
+                Integer stateId
+    ){
+        orderTableMapper.updateOrderstate(orderId,stateId+1);
+        return new AjaxMessage().Set(MsgType.Success,"订单状态修改成功");
     }
+
     //总的订单查询
     @ApiOperation(value = "商家历史订单订单的查询")
     @GetMapping("/inquiry")
