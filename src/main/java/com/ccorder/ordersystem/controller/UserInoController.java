@@ -30,7 +30,7 @@ public class UserInoController {
     @PostMapping("getUserInfo")
     @ResponseBody
     public Object getUserInfo(
-            @ApiParam(name = "userID", value = "用户的微信ID", required = true,type = "String")
+            @ApiParam(name = "userId", value = "用户的微信ID", required = true,type = "String")
             @RequestParam
             String userId
     ){
