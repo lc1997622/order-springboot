@@ -67,21 +67,25 @@ public class FoodController {
                 this.typeFoodList = userFoods;
             }
         }
-        List<Map<String,Object>> types = foodService.getAllType();
         List<String> foodtypes = new ArrayList<>();
         List<kindFoods> foodsList = new ArrayList<>();
-        System.out.println(foodService.getFoodsByType("肉"));
 
-        for (int i = 0 ; i < types.size();i++){
-            foodtypes.add(types.get(i).get("foodType").toString());
-        }
-        for (int i = 0; i< foodtypes.size();i++){
-            System.out.println(foodtypes.get(i));
-            UserFood[] userFoods = foodService.getFoodsByType(foodtypes.get(i));
-            foodsList.add(new kindFoods(foodtypes.get(i),userFoods));
-        }
+        try{
+            List<Map<String,Object>> types = foodService.getAllType();
+            for (int i = 0 ; i < types.size();i++){
+                foodtypes.add(types.get(i).get("foodType").toString());
+            }
+            for (int i = 0; i< foodtypes.size();i++){
+                System.out.println(foodtypes.get(i));
+                UserFood[] userFoods = foodService.getFoodsByType(foodtypes.get(i));
+                foodsList.add(new kindFoods(foodtypes.get(i),userFoods));
+            }
 
-        return new AjaxMessage().Set(MsgType.Success,"食品列表", foodsList);
+            return new AjaxMessage().Set(MsgType.Success,"获取食品列表成功", foodsList);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return new AjaxMessage().Set(MsgType.Error,"获取食品列表失败");
     }
 
     @PostMapping("/addNewUserFood")
