@@ -58,8 +58,13 @@ public class UserInoController {
             @RequestParam
             String userId
     ){
-        ClientUser clientUser= sysUserService.getClientUserInfo(userId);
-        return new AjaxMessage().Set(MsgType.Success, "获取用户信息成功", clientUser);
+        try {
+            ClientUser clientUser= sysUserService.getClientUserInfo(userId);
+            return new AjaxMessage().Set(MsgType.Success, "获取用户信息成功", clientUser);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return new AjaxMessage().Set(MsgType.Error, "获取用户信息失败");
     }
 
     @ApiOperation(value = "插入新用户")
@@ -107,7 +112,7 @@ public class UserInoController {
 //
 //        List<File> files = clientUser.getUserimgs();
 
-        return new AjaxMessage().Set(MsgType.Success,"插入新用户失败");
+        return new AjaxMessage().Set(MsgType.Error,"插入新用户失败");
     }
 
     @ApiOperation(value = "获取用户地址")
@@ -128,7 +133,7 @@ public class UserInoController {
         }catch (Exception e){
             e.printStackTrace();
         }
-        return new AjaxMessage().Set(MsgType.Success,"获取用户地址失败");
+        return new AjaxMessage().Set(MsgType.Error,"获取用户地址失败");
     }
 
     @ApiOperation(value = "加入用户地址")
@@ -157,6 +162,6 @@ public class UserInoController {
             e.printStackTrace();
         }
 
-        return new AjaxMessage().Set(MsgType.Success,"用户插入地址失败");
+        return new AjaxMessage().Set(MsgType.Error,"用户插入地址失败");
     }
 }
