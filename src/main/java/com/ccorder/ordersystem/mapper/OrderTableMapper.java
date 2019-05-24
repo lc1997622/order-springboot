@@ -18,4 +18,6 @@ public interface OrderTableMapper {
     Integer getOrderStatus(String orderId);
 
     Float getOrderPayment(String orderId);
+
+    void updateOrderstate(String orderId,int state);
 }

@@ -191,4 +191,10 @@
       from order_table
       where order_table.id=#{orderId,jdbcType=VARCHAR}
   </select>
+
+  <update id="updateOrderstate">
+    update order_table
+    set order_table.status=#{param2}
+    where order_table.id=#{param1,jdbcType=VARCHAR}
+  </update>
 </mapper>
