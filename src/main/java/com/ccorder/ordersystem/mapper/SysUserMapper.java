@@ -20,4 +20,6 @@ public interface SysUserMapper {
     ClientUser getClientUserInfo(String userId);
 
     SysUser selectByCreateUserIdGetUser(String createUserId);
+
+    SysUser selectByBusinessIdGetUser(String businessId);
 }

@@ -42,7 +42,8 @@
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
     id, username, `password`, real_name, nick_name, sex, telephone, email, birthday, 
-    create_user_id, create_time, modify_user_id, modify_time, `status`
+    create_user_id, create_time, modify_user_id, modify_time, `status`,
+    'businessIntroduction','startTime','endTime','starsNum'
   </sql>
   
   <select id="getClientUserInfo" parameterType="java.lang.String" resultMap="UserClientUsertMap">
@@ -256,5 +257,11 @@
       <include refid="Base_Column_List" />
       from sys_user
       where sys_user.create_user_id=#{createUserId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByBusinessIdGetUser" resultMap="BaseResultMap">
+      select <include refid="Base_Column_List"/>
+      from ccorder.sys_user
+      where sys_user.id=#{businessId,jdbcType=VARCHAR}
     </select>
 </mapper>
