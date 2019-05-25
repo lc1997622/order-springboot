@@ -74,4 +74,24 @@ public class SysUser {
      * 0是默认值，-1失效，1是店家
      */
     private Integer status;
+
+    /*
+    *配送起始时间
+     */
+    private Date startTime;
+
+    /*
+    *配送结束时间
+     */
+    private Date endTime;
+
+    /**
+     * 商家的自我介绍
+     */
+    private String businessIntroduction;
+
+    /**
+     * 商家的评星
+     */
+    private Integer starsNum;
 }

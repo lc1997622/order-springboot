@@ -17,6 +17,10 @@
     <result column="modify_user_id" jdbcType="VARCHAR" property="modifyUserId" />
     <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
     <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="business_introduction" jdbcType="VARCHAR" property="businessIntroduction" />
+    <result column="stars_num" jdbcType="INTEGER" property="starsNum" />
   </resultMap>
   <resultMap id="UserClientUsertMap" type="com.ccorder.ordersystem.entity.ClientUser">
     <!--@mbg.generated-->
@@ -39,11 +43,12 @@
       <result column="file_remark" jdbcType="VARCHAR" property="fileRemark" />
     </collection>
   </resultMap>
+
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
     id, username, `password`, real_name, nick_name, sex, telephone, email, birthday, 
     create_user_id, create_time, modify_user_id, modify_time, `status`,
-    'businessIntroduction','startTime','endTime','starsNum'
+    business_introduction,start_time,end_time,stars_num
   </sql>
   
   <select id="getClientUserInfo" parameterType="java.lang.String" resultMap="UserClientUsertMap">
@@ -265,19 +270,4 @@
       from ccorder.sys_user
       where sys_user.id=#{businessId,jdbcType=VARCHAR}
     </select>
-  <insert id="insertBusiness" parameterType="com.ccorder.ordersystem.entity.SysUser">
-    <!--@mbg.generated-->
-    insert into sys_user (id, username, `password`,
-    real_name, nick_name, sex,
-    telephone, email, birthday,
-    create_user_id, create_time, modify_user_id,
-    modify_time, `status`,'businessIntroduction',
-    'startTime','endTime','starsNum')
-    values (#{id,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
-    #{realName,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER},
-    #{telephone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{birthday,jdbcType=TIMESTAMP},
-    #{createUserId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{modifyUserId,jdbcType=VARCHAR},
-    #{modifyTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER},#{businessIntroduction,jdbcType=VARCHAR}
-    #{startTime,jdbcType=TIMESTAMP},#{endTime,jdbc=TIMESTAMP},#{starsNum,jdbc=Integer} )
-  </insert>
 </mapper>

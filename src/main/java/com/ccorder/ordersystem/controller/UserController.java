@@ -8,9 +8,12 @@ import com.ccorder.ordersystem.sys.dto.MsgType;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
 
 /**
  * @author htj
@@ -35,16 +38,26 @@ public class UserController {
             @RequestParam
                     String businessId
     ){
+        @Data
         class BusinessInfo{
-            SysUser sysUser=null;
+            Date startTime=null;
+            Date endTime=null;
+            String businessIntroduction=null;
+            Integer starsNum=null;
             String address=null;
+            String phoneNum=null;
         }
         try{
             BusinessInfo businessInfo=new BusinessInfo();
             //返回商家的营业时间（配送时间），评星，电话，自我介绍
-            businessInfo.sysUser= sysUserMapper.selectByBusinessIdGetUser(businessId);
+            SysUser sysUser= sysUserMapper.selectByBusinessIdGetUser(businessId);
+            businessInfo.starsNum=sysUser.getStarsNum();
+            businessInfo.startTime=sysUser.getStartTime();
+            businessInfo.endTime=sysUser.getEndTime();
+            businessInfo.businessIntroduction=sysUser.getBusinessIntroduction();
+            businessInfo.phoneNum=sysUser.getTelephone();
             //返回商家的地址
-            businessInfo.address=addressMapper.selectByPrimaryKey(businessId).getAddressName();
+            businessInfo.address=addressMapper.selectByCreateUserIdGetAddressName(businessId);
             return new AjaxMessage().Set(MsgType.Success,"成功返回商家信息",businessInfo);
         }catch (Exception e){
             e.printStackTrace();
