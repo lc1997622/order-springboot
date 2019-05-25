@@ -51,6 +51,26 @@ public class SysUser {
     private Date birthday;
 
     /**
+     * 门店介绍
+     */
+    private String businessIntroduction;
+
+    /**
+     * 店铺评星
+     */
+    private Integer starsNum;
+
+    /**
+     * 配送开始时间
+     */
+    private Date startTime;
+
+    /**
+     * 配送结束时间
+     */
+    private Date endTime;
+
+    /**
      * 创建人id
      */
     private String createUserId;
@@ -71,7 +91,7 @@ public class SysUser {
     private Date modifyTime;
 
     /**
-     * 0是默认值，-1失效，1是店家
+     * 0是默认值，-1失效
      */
     private Integer status;
 }
