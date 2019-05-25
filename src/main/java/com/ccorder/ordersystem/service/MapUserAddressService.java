@@ -4,6 +4,9 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import com.ccorder.ordersystem.mapper.mapMapper.MapUserAddressMapper;
 import com.ccorder.ordersystem.entity.mapEntity.MapUserAddress;
+
+import java.util.List;
+
 @Service
 public class MapUserAddressService{
 
@@ -30,6 +33,7 @@ public class MapUserAddressService{
         return mapUserAddressMapper.selectByPrimaryKey(id);
     }
 
+    public List<MapUserAddress> selectByUserId(String userId){return mapUserAddressMapper.selectByUserId(userId);}
     
     public int updateByPrimaryKeySelective(MapUserAddress record) {
         return mapUserAddressMapper.updateByPrimaryKeySelective(record);

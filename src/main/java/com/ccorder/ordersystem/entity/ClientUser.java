@@ -16,6 +16,11 @@ import java.util.List;
 @Data
 public class ClientUser {
     /**
+     * 主键id
+     */
+    private String id;
+
+    /**
      * 用户名
      */
     private String username;
@@ -54,6 +59,31 @@ public class ClientUser {
      * 生日
      */
     private Date birthday;
+
+    /**
+     * 创建人id
+     */
+    private String createUserId;
+
+    /**
+     * 创建时间
+     */
+    private Date createTime;
+
+    /**
+     * 最终修改人id
+     */
+    private String modifyUserId;
+
+    /**
+     * 最终修改时间
+     */
+    private Date modifyTime;
+
+    /**
+     * 0是默认值，-1失效，1是店家
+     */
+    private Integer status;
 
     /**
      * 角色
