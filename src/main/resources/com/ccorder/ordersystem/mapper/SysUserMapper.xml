@@ -89,7 +89,8 @@
       real_name, nick_name, sex, 
       telephone, email, birthday, 
       create_user_id, create_time, modify_user_id, 
-      modify_time, `status`)
+      modify_time, `status`,'businessIntroduction',
+    'startTime','endTime','starsNum')
     values (#{id,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{realName,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, 
       #{telephone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{birthday,jdbcType=TIMESTAMP}, 
@@ -264,4 +265,19 @@
       from ccorder.sys_user
       where sys_user.id=#{businessId,jdbcType=VARCHAR}
     </select>
+  <insert id="insertBusiness" parameterType="com.ccorder.ordersystem.entity.SysUser">
+    <!--@mbg.generated-->
+    insert into sys_user (id, username, `password`,
+    real_name, nick_name, sex,
+    telephone, email, birthday,
+    create_user_id, create_time, modify_user_id,
+    modify_time, `status`,'businessIntroduction',
+    'startTime','endTime','starsNum')
+    values (#{id,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+    #{realName,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER},
+    #{telephone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{birthday,jdbcType=TIMESTAMP},
+    #{createUserId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{modifyUserId,jdbcType=VARCHAR},
+    #{modifyTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER},#{businessIntroduction,jdbcType=VARCHAR}
+    #{startTime,jdbcType=TIMESTAMP},#{endTime,jdbc=TIMESTAMP},#{starsNum,jdbc=Integer} )
+  </insert>
 </mapper>

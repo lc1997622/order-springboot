@@ -9,6 +9,8 @@ public interface SysUserMapper {
 
     int insert(SysUser record);
 
+    int insertBusiness(SysUser record);
+
     int insertSelective(SysUser record);
 
     SysUser selectByPrimaryKey(String id);
