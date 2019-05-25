@@ -15,4 +15,6 @@ public interface AddressMapper {
 
     int updateByPrimaryKey(Address record);
 
+    String selectByCreateUserIdGetAddressName(String businessId);
+
 }
