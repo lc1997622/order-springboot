@@ -154,6 +154,7 @@ public class UserInoController {
             mapUserAddress.setModifyDate(tmpDate);
             mapUserAddress.setId(UUID.randomUUID().toString());
             address.setId(UUID.randomUUID().toString());
+            System.out.println(mapUserAddress.getId());
             mapUserAddressService.insert(mapUserAddress);
             addressService.insert(address);
 
