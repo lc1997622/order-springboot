@@ -246,5 +246,27 @@
     food.create_user_id=#{userId,jdbcType=VARCHAR}
   </select>
 
+  <delete id="deleteByFoodType">
+    delete from ccorder.food
+    where ccorder.food.food_type=#{foodType,jdbcType=VARCHAR}
+  </delete>
+
+  <select id="selectByFoodIdGetFoodName" resultType="java.lang.String">
+    select ccorder.food.food_name
+    from ccorder.food
+    where ccorder.food.id=#{foodId,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByFoodIdGetFoodPrice" resultType="java.lang.Double">
+    select ccorder.food.food_price
+    from ccorder.food
+    where ccorder.food.id=#{foodId,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByFoodId" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from ccorder.food
+    where ccorder.food.id=#{foodId,jdbcType=VARCHAR}
+  </select>
 
 </mapper>

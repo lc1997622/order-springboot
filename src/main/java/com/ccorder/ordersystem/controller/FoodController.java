@@ -6,6 +6,7 @@ import com.ccorder.ordersystem.entity.SysDict;
 import com.ccorder.ordersystem.entity.UserFood;
 import com.ccorder.ordersystem.entity.mapEntity.MapUserFood;
 import com.ccorder.ordersystem.entity.SysUser;
+import com.ccorder.ordersystem.mapper.FoodMapper;
 import com.ccorder.ordersystem.mapper.SysDictMapper;
 import com.ccorder.ordersystem.mapper.mapMapper.MapUserFoodMapper;
 import com.ccorder.ordersystem.service.FoodService;
@@ -44,6 +45,8 @@ public class FoodController {
     @Autowired
     private SysDictMapper dictMapper;
 
+    @Autowired
+    private FoodMapper foodMapper;
 
     @ApiOperation(value = "后端测试")
     @GetMapping("getFoodName")
@@ -174,5 +177,60 @@ public class FoodController {
             }
         }
         return new AjaxMessage().Set(MsgType.Error, "新增Food失败");
+    }
+
+    @ApiOperation(value = "商家删除某一个食品")
+    @PostMapping("/deleteOneFood")
+    @ResponseBody
+    public Object deleteOneFood(
+            @ApiParam(name = "foodId", value = "需要删除的食品的id", required = true, type = "String")
+            @RequestBody
+                    String foodId
+    ) {
+        try {
+            foodMapper.deleteByPrimaryKey(foodId);
+            return new AjaxMessage().Set(MsgType.Success,"成功删除食物");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return new AjaxMessage().Set(MsgType.Success,"删除食物失败");
+    }
+
+    @ApiOperation(value = "商家更新某一个食品的信息")
+    @PostMapping("/updateOneFood")
+    @ResponseBody
+    public Object updateOneFood(
+            @ApiParam(name = "food", value = "需要更新的食品", required = true, type = "Food")
+            @RequestBody
+                    Food food
+    ) {
+        try {
+            //先判断food是否存在
+            if(foodMapper.selectByFoodId(food.getId())==null){
+                return new AjaxMessage().Set(MsgType.Success,"不存在此食物");
+            }
+            foodMapper.updateByPrimaryKey(food);
+            return new AjaxMessage().Set(MsgType.Success,"更新食物成功");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return new AjaxMessage().Set(MsgType.Success,"更新食物失败");
+    }
+
+    @ApiOperation(value = "商家删除某一类的食物")
+    @PostMapping("/deleteOneTypeFood")
+    @ResponseBody
+    public Object deleteOneTypeFood(
+            @ApiParam(name = "foodType", value = "需要更新的食品", required = true, type = "String")
+            @RequestBody
+                    String foodType
+    ) {
+        try {
+            foodMapper.deleteByFoodType(foodType);
+            return new AjaxMessage().Set(MsgType.Success,"删除此类食物成功");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return new AjaxMessage().Set(MsgType.Success,"删除此类食物失败");
     }
 }

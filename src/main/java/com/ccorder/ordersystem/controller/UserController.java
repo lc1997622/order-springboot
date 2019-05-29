@@ -31,7 +31,7 @@ public class UserController {
     private AddressMapper addressMapper;
 
     @ApiOperation(value = "用户获取上商家信息")
-    @GetMapping(value="/getBusiness")
+    @PostMapping(value="/getBusiness")
     @ResponseBody
     public Object getBusiness(
             @ApiParam(name = "businessId", value = "商家id", required = true,type = "String")

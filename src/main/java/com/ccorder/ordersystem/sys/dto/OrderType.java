@@ -17,7 +17,7 @@ public enum OrderType {
     private int code;
 
     private String msgName;
-    
+
     OrderType(int code,String msgName)
     {
         this.code=code;

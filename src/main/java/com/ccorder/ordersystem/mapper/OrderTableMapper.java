@@ -25,4 +25,6 @@ public interface OrderTableMapper {
 
     /** 根据userId查询订单列表*/
     List<OrderTable> selectByUserId(String userId);
+
+    OrderTable[] getBusinessAllOrder();
 }

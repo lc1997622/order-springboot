@@ -34,4 +34,12 @@ public interface FoodMapper {
 
     Food selectByUserIdFoodId(String userId,String foodId);
 
+    void deleteByFoodType(String foodType);
+
+    String selectByFoodIdGetFoodName(String foodId);
+
+    Double selectByFoodIdGetFoodPrice(String foodId);
+
+    Food selectByFoodId(String foodId);
+
 }
