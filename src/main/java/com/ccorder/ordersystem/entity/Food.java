@@ -55,7 +55,7 @@ public class Food {
     /**
      * 0是默认值，-1失效
      */
-    @ApiModelProperty(value = "ID", name = "ID", dataType = "Integer", example = "0", notes = "0是默认值，-1失效")
+    @ApiModelProperty(value = "状态", name = "status", dataType = "Integer", example = "0", notes = "0是默认值，-1失效")
     private Integer status;
 
 }

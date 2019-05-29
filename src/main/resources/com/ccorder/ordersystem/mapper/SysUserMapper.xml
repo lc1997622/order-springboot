@@ -6,6 +6,7 @@
         <id column="id" jdbcType="VARCHAR" property="id"/>
         <result column="username" jdbcType="VARCHAR" property="username"/>
         <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="account" jdbcType="DOUBLE" property="account"/>
         <result column="real_name" jdbcType="VARCHAR" property="realName"/>
         <result column="nick_name" jdbcType="VARCHAR" property="nickName"/>
         <result column="sex" jdbcType="INTEGER" property="sex"/>
@@ -14,6 +15,7 @@
         <result column="birthday" jdbcType="TIMESTAMP" property="birthday"/>
         <result column="business_introduction" jdbcType="VARCHAR" property="businessIntroduction"/>
         <result column="stars_num" jdbcType="INTEGER" property="starsNum"/>
+        <result column="ship_fee" jdbcType="DOUBLE" property="shipFee"/>
         <result column="start_time" jdbcType="TIMESTAMP" property="startTime"/>
         <result column="end_time" jdbcType="TIMESTAMP" property="endTime"/>
         <result column="create_user_id" jdbcType="VARCHAR" property="createUserId"/>
@@ -46,7 +48,7 @@
     </resultMap>
     <sql id="Base_Column_List">
         <!--@mbg.generated-->
-        id, username, `password`, real_name, nick_name, sex, telephone, email, birthday,
+        id, username, `password`,account, real_name, nick_name, sex, telephone, email, birthday,
         business_introduction, stars_num, start_time, end_time, create_user_id, create_time,
         modify_user_id, modify_time, `status`
     </sql>
@@ -92,17 +94,19 @@
 
     <insert id="insert" parameterType="com.ccorder.ordersystem.entity.SysUser">
         <!--@mbg.generated-->
-        insert into sys_user (id, username, `password`,
+        insert into sys_user (id, username, `password`,account,
         real_name, nick_name, sex,
         telephone, email, birthday,
-        business_introduction, stars_num, start_time,
+        business_introduction, stars_num, ship_fee,start_time,
         end_time, create_user_id, create_time,
         modify_user_id, modify_time, `status`
         )
         values (#{id,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+        #{account,jdbcType=DOUBLE} ,
         #{realName,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER},
         #{telephone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{birthday,jdbcType=TIMESTAMP},
-        #{businessIntroduction,jdbcType=VARCHAR}, #{starsNum,jdbcType=INTEGER}, #{startTime,jdbcType=TIMESTAMP},
+        #{businessIntroduction,jdbcType=VARCHAR}, #{starsNum,jdbcType=INTEGER}, #{shipFee,jdbcType=DOUBLE}
+        ,#{startTime,jdbcType=TIMESTAMP},
         #{endTime,jdbcType=TIMESTAMP}, #{createUserId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
         #{modifyUserId,jdbcType=VARCHAR}, #{modifyTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}
         )
@@ -120,6 +124,9 @@
             </if>
             <if test="password != null">
                 `password`,
+            </if>
+            <if test="account != null">
+                account,
             </if>
             <if test="realName != null">
                 real_name,
@@ -144,6 +151,9 @@
             </if>
             <if test="starsNum != null">
                 stars_num,
+            </if>
+            <if test="shipFee != null">
+                ship_fee,
             </if>
             <if test="startTime != null">
                 start_time,
@@ -177,6 +187,9 @@
             <if test="password != null">
                 #{password,jdbcType=VARCHAR},
             </if>
+            <if test="account != null">
+                #{account,jdbcType=DOUBLE} ,
+            </if>
             <if test="realName != null">
                 #{realName,jdbcType=VARCHAR},
             </if>
@@ -200,6 +213,9 @@
             </if>
             <if test="starsNum != null">
                 #{starsNum,jdbcType=INTEGER},
+            </if>
+            <if test="shipFee != null">
+                #{shipFee,jdbcType=DOUBLE}
             </if>
             <if test="startTime != null">
                 #{startTime,jdbcType=TIMESTAMP},
@@ -235,6 +251,9 @@
             <if test="password != null">
                 `password` = #{password,jdbcType=VARCHAR},
             </if>
+            <if test="account != null">
+                account = #{account,jdbcType=DOUBLE} ,
+            </if>
             <if test="realName != null">
                 real_name = #{realName,jdbcType=VARCHAR},
             </if>
@@ -258,6 +277,9 @@
             </if>
             <if test="starsNum != null">
                 stars_num = #{starsNum,jdbcType=INTEGER},
+            </if>
+            <if test="shipFee != null">
+                ship_fee = #{shipFee,jdbcType=DOUBLE} ,
             </if>
             <if test="startTime != null">
                 start_time = #{startTime,jdbcType=TIMESTAMP},
@@ -289,6 +311,7 @@
         update sys_user
         set username = #{username,jdbcType=VARCHAR},
         `password` = #{password,jdbcType=VARCHAR},
+        account = #{account,jdbcType=DOUBLE} ,
         real_name = #{realName,jdbcType=VARCHAR},
         nick_name = #{nickName,jdbcType=VARCHAR},
         sex = #{sex,jdbcType=INTEGER},
@@ -297,6 +320,7 @@
         birthday = #{birthday,jdbcType=TIMESTAMP},
         business_introduction = #{businessIntroduction,jdbcType=VARCHAR},
         stars_num = #{starsNum,jdbcType=INTEGER},
+        ship_fee = #{shipFee,jdbcType=DOUBLE} ,
         start_time = #{startTime,jdbcType=TIMESTAMP},
         end_time = #{endTime,jdbcType=TIMESTAMP},
         create_user_id = #{createUserId,jdbcType=VARCHAR},
@@ -324,19 +348,21 @@
     <insert id="insertBusiness" parameterType="com.ccorder.ordersystem.entity.SysUser">
         <!--@mbg.generated-->
         insert into sys_user
-        (id, username, `password`,
+        (id, username, `password`,account,
         real_name, nick_name, sex,
         telephone, email, birthday,
-        business_introduction,start_time,end_time,stars_num,
+        business_introduction,ship_fee,start_time,end_time,stars_num,
         create_user_id, create_time, modify_user_id,
         modify_time, `status`,)
         values (
-        #{id,jdbcType=VARCHAR} ,#{username,jdbcType=VARCHAR} ,#{password,jdbcType=VARCHAR} ,
-        #{realName,jdbcType=VARCHAR} ,#{nickName,jdbcType=VARCHAR} ,#{sex,jdbcType=INTEGER} ,
-        #{telephone,jdbcType=VARCHAR} ,#{email,jdbcType=VARCHAR} ,#{birthday,jdbcType=TIMESTAMP} ,
-        #{businessIntroduction,jdbcType=VARCHAR} ,#{starsNum,jdbcType=INTEGER} ,#{startTime,jdbcType=TIMESTAMP} ,
-        #{endTime,jdbcType=TIMESTAMP} ,#{createUserId,jdbcType=VARCHAR} ,#{createTime,jdbcType=TIMESTAMP} ,
-        #{modifyUserId,jdbcType=VARCHAR} ,#{modifyTime,jdbcType=TIMESTAMP} ,#{status,jdbcType=INTEGER}
+        #{id,jdbcType=VARCHAR} ,#{username,jdbcType=VARCHAR} ,#{password,jdbcType=VARCHAR} ,#{account,jdbcType=DOUBLE},
+        #{realName,jdbcType=VARCHAR}
+        ,#{nickName,jdbcType=VARCHAR},#{sex,jdbcType=INTEGER},#{telephone,jdbcType=VARCHAR},
+        #{email,jdbcType=VARCHAR} ,#{birthday,jdbcType=TIMESTAMP} ,#{businessIntroduction,jdbcType=VARCHAR} ,
+        #{starsNum,jdbcType=INTEGER} ,#{shipFee,jdbcType=DOUBLE},#{startTime,jdbcType=TIMESTAMP}
+        ,#{endTime,jdbcType=TIMESTAMP} ,
+        #{createUserId,jdbcType=VARCHAR} ,#{createTime,jdbcType=TIMESTAMP} ,#{modifyUserId,jdbcType=VARCHAR} ,
+        #{modifyTime,jdbcType=TIMESTAMP} ,#{status,jdbcType=INTEGER}
         )
     </insert>
 </mapper>
