@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -61,5 +62,22 @@ public class CommentController {
         }
 
         return new AjaxMessage().Set(MsgType.Error, "新增评论失败", null);
+    }
+
+    @ApiOperation(value = "查看商家的评论列表(根据商家userId)")
+    @PostMapping("viewStoreComment")
+    @ResponseBody
+    public Object viewStoreComment(
+            @ApiParam(name = "userId", value = "商家用户的userId", required = true, type = "String")
+            @RequestParam("userId")
+                    String userId
+    ) {
+        try {
+            List<Comment> commentList = commentService.getStoreComment(userId);
+            return new AjaxMessage().Set(MsgType.Success, "获取商家评论成功", commentList);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new AjaxMessage().Set(MsgType.Error, "获取商家评论失败", null);
     }
 }

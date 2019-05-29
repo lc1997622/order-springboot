@@ -21,6 +21,10 @@ public class Comment {
             required = false, allowEmptyValue = true)
     private String content;
 
+    @ApiModelProperty(name = "score", value = "评论所属订单的评分", dataType = "Double", example = "100.5",
+            required = false, allowEmptyValue = true)
+    private Double score;
+
     @ApiModelProperty(name = "createUserId", value = "创建人id", dataType = "String", example = "o258k0Zofn-pJJvLs6DzKRHwvkbA",
             required = false, allowEmptyValue = true)
     private String createUserId;

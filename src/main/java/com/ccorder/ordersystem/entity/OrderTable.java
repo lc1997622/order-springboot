@@ -43,6 +43,10 @@ public class OrderTable {
             required = false, allowEmptyValue = true)
     private List<Food> foodList;
 
+    @ApiModelProperty(name = "comment", value = "订单评论", dataType = "Comment", example = "无此输入项",
+            required = false, allowEmptyValue = true)
+    private Comment comment;
+
     @ApiModelProperty(name = "createUserId", value = "创建人id", dataType = "String", example = "o258k0Zofn-pJJvLs6DzKRHwvkbA",
             required = false, allowEmptyValue = true)
     private String createUserId;
