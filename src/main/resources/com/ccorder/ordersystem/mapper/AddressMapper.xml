@@ -4,6 +4,9 @@
   <resultMap id="BaseResultMap" type="com.ccorder.ordersystem.entity.Address">
     <!--@mbg.generated-->
     <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="receiver_name" jdbcType="VARCHAR" property="receiverName" />
+    <result column="receiver_phone" jdbcType="VARCHAR" property="receiverPhone" />
+    <result column="receiver_sex" jdbcType="VARCHAR" property="receiverSex" />
     <result column="address_name" jdbcType="VARCHAR" property="addressName" />
     <result column="house number" jdbcType="VARCHAR" property="houseNumber" />
     <result column="create_user_id" jdbcType="VARCHAR" property="createUserId" />
@@ -14,8 +17,8 @@
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    id, address_name, `house number`, create_user_id, create_date, modify_user_id, modify_date, 
-    `status`
+    id, receiver_name, receiver_phone, receiver_sex, address_name, `house number`, create_user_id, 
+    create_date, modify_user_id, modify_date, `status`
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     <!--@mbg.generated-->
@@ -31,10 +34,12 @@
   </delete>
   <insert id="insert" parameterType="com.ccorder.ordersystem.entity.Address">
     <!--@mbg.generated-->
-    insert into address (id, address_name, `house number`, 
+    insert into address (id, receiver_name, receiver_phone, 
+      receiver_sex, address_name, `house number`, 
       create_user_id, create_date, modify_user_id, 
       modify_date, `status`)
-    values (#{id,jdbcType=VARCHAR}, #{addressName,jdbcType=VARCHAR}, #{houseNumber,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=VARCHAR}, #{receiverName,jdbcType=VARCHAR}, #{receiverPhone,jdbcType=VARCHAR}, 
+      #{receiverSex,jdbcType=VARCHAR}, #{addressName,jdbcType=VARCHAR}, #{houseNumber,jdbcType=VARCHAR}, 
       #{createUserId,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{modifyUserId,jdbcType=VARCHAR}, 
       #{modifyDate,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER})
   </insert>
@@ -44,6 +49,15 @@
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
+      </if>
+      <if test="receiverName != null">
+        receiver_name,
+      </if>
+      <if test="receiverPhone != null">
+        receiver_phone,
+      </if>
+      <if test="receiverSex != null">
+        receiver_sex,
       </if>
       <if test="addressName != null">
         address_name,
@@ -70,6 +84,15 @@
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverName != null">
+        #{receiverName,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverPhone != null">
+        #{receiverPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverSex != null">
+        #{receiverSex,jdbcType=VARCHAR},
       </if>
       <if test="addressName != null">
         #{addressName,jdbcType=VARCHAR},
@@ -98,6 +121,15 @@
     <!--@mbg.generated-->
     update address
     <set>
+      <if test="receiverName != null">
+        receiver_name = #{receiverName,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverPhone != null">
+        receiver_phone = #{receiverPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverSex != null">
+        receiver_sex = #{receiverSex,jdbcType=VARCHAR},
+      </if>
       <if test="addressName != null">
         address_name = #{addressName,jdbcType=VARCHAR},
       </if>
@@ -125,7 +157,10 @@
   <update id="updateByPrimaryKey" parameterType="com.ccorder.ordersystem.entity.Address">
     <!--@mbg.generated-->
     update address
-    set address_name = #{addressName,jdbcType=VARCHAR},
+    set receiver_name = #{receiverName,jdbcType=VARCHAR},
+      receiver_phone = #{receiverPhone,jdbcType=VARCHAR},
+      receiver_sex = #{receiverSex,jdbcType=VARCHAR},
+      address_name = #{addressName,jdbcType=VARCHAR},
       `house number` = #{houseNumber,jdbcType=VARCHAR},
       create_user_id = #{createUserId,jdbcType=VARCHAR},
       create_date = #{createDate,jdbcType=TIMESTAMP},

@@ -30,7 +30,7 @@ public class UserController {
     @Autowired
     private AddressMapper addressMapper;
 
-    @ApiOperation(value = "用户获取上商家信息")
+    @ApiOperation(value = "获取商家信息")
     @PostMapping(value="/getBusiness")
     @ResponseBody
     public Object getBusiness(

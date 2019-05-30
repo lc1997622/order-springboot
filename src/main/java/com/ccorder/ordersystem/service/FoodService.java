@@ -66,6 +66,7 @@ public class FoodService {
 
             /*根据id获取food*/
             tmpFood = foodMapper.selectByPrimaryKey(foodAndAmount.getStringParam());
+            System.out.println(foodAndAmount);
             tmpFood.setFoodAmount(foodAndAmount.getIntegerParam());
             foodList.add(tmpFood);
         }
