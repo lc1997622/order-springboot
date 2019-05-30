@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -54,14 +53,14 @@ public class UserInoController {
     @PostMapping("getUserInfo")
     @ResponseBody
     public Object getUserInfo(
-            @ApiParam(name = "userId", value = "用户的微信ID", required = true,type = "String")
+            @ApiParam(name = "userId", value = "用户的微信ID", required = true, type = "String")
             @RequestParam
-            String userId
-    ){
+                    String userId
+    ) {
         try {
-            ClientUser clientUser= sysUserService.getClientUserInfo(userId);
+            ClientUser clientUser = sysUserService.getClientUserInfo(userId);
             return new AjaxMessage().Set(MsgType.Success, "获取用户信息成功", clientUser);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return new AjaxMessage().Set(MsgType.Error, "获取用户信息失败");
@@ -71,9 +70,9 @@ public class UserInoController {
     @PostMapping("addNewUser")
     @ResponseBody
     protected Object addNewUser(
-            @ApiParam(name = "clientUser",value = "用户信息",required = true,type = "ClientUser")
-            ClientUser clientUser
-    ){
+            @ApiParam(name = "clientUser", value = "用户信息", required = true, type = "ClientUser")
+                    ClientUser clientUser
+    ) {
         SysUser sysUser = new SysUser();
         sysUser.setId(clientUser.getId());
         sysUser.setBirthday(clientUser.getBirthday());
@@ -92,7 +91,7 @@ public class UserInoController {
 
         try {
             sysUserService.insert(sysUser);
-            for (SysRole sysRole:sysRoles){
+            for (SysRole sysRole : sysRoles) {
                 MapUserRole mapUserRole = new MapUserRole();
                 mapUserRole.setId(UUID.randomUUID().toString());
                 mapUserRole.setUserId(sysUser.getId());
@@ -106,7 +105,7 @@ public class UserInoController {
                 sysRoleService.insert(sysRole);
                 return new AjaxMessage().Set(MsgType.Success,"插入新用户成功");
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -119,67 +118,88 @@ public class UserInoController {
     protected Object getUserAddress(
             @ApiParam(name = "userId",value = "用户微信ID",required = true,type = "String")
                     String userId
-    ){
+    ) {
         List<Address> addresses = new ArrayList<>();
-        try{
+        try {
             List<MapUserAddress> mapUserAddresses = mapUserAddressService.selectByUserId(userId);
-            for (MapUserAddress userAddress:mapUserAddresses){
+            for (MapUserAddress userAddress : mapUserAddresses) {
                 Address address = addressService.selectByPrimaryKey(userAddress.getAddressId());
                 addresses.add(address);
             }
-            return new AjaxMessage().Set(MsgType.Success,"获取用户地址成功",addresses);
-        }catch (Exception e){
+            return new AjaxMessage().Set(MsgType.Success, "获取用户地址成功", addresses);
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return new AjaxMessage().Set(MsgType.Error,"获取用户地址失败");
+        return new AjaxMessage().Set(MsgType.Error, "获取用户地址失败");
     }
 
+
+    /**
+     * @param userId
+     * @param recName
+     * @param recSex
+     * @param recPhone
+     * @param addressName
+     * @param houseNum
+     * @return
+     * @author zm
+     */
     @ApiOperation(value = "加入用户地址")
     @PostMapping("addUserAddress")
     @ResponseBody
     protected Object addUserAddress(
-            @ApiParam(name = "addressName",value = "用户地址",required = true,type = "String")
-            String addressName,
-            @ApiParam(name = "houseNumber",value = "地址编号",required = true,type = "String")
-            String houseNumber,
-            @ApiParam(name = "userId",value = "用户微信Id",required = true,type = "String")
-            String userId,
-            @ApiParam(name = "receiverName",value = "收货人姓名",required = true,type = "String")
-            String receiverName,
-            @ApiParam(name = "receiverPhone",value = "收货人电话",required = true,type = "String")
-            String receiverPhone,
-            @ApiParam(name = "sex",value = "收货人性别",required = true,type = "String")
-            String sex
-    ){
+            @ApiParam(name = "userId", value = "用户Id", required = true, type = "String")
+            @RequestParam("userId")
+                    String userId,
+            @ApiParam(name = "recName", value = "收货人姓名", required = true, type = "String")
+            @RequestParam("recName")
+                    String recName,
+            @ApiParam(name = "recSex", value = "收货人性别(0是男1是女)", required = true, type = "Integer")
+            @RequestParam("recSex")
+                    Integer recSex,
+            @ApiParam(name = "recPhone", value = "收货人电话", required = true, type = "String")
+            @RequestParam("recPhone")
+                    String recPhone,
+            @ApiParam(name = "addressName", value = "地址名称", required = true, type = "String")
+            @RequestParam("addressName")
+                    String addressName,
+            @ApiParam(name = "houseNum", value = "门牌号描述", required = true, type = "String")
+            @RequestParam("houseNum")
+                    String houseNum
+    ) {
         try {
-            String addressId = UUID.randomUUID().toString();
-            MapUserAddress mapUserAddress = new MapUserAddress();
-            Address address = new Address();
-            mapUserAddress.setAddressId(addressId);
-            mapUserAddress.setUserId(userId);
-            Date tmpDate = new Date();
-            mapUserAddress.setCreateDate(tmpDate);
-            mapUserAddress.setModifyDate(tmpDate);
-            mapUserAddress.setId(UUID.randomUUID().toString());
-            address.setId(addressId);
-            address.setAddressName(addressName);
-            address.setHouseNumber(houseNumber);
-            address.setReceiverName(receiverName);
-            address.setReceiverPhone(receiverPhone);
-            address.setReceiverSex(sex);
-            address.setCreateUserId(userId);
-            address.setModifyUserId(userId);
-            address.setCreateDate(tmpDate);
-            address.setModifyDate(tmpDate);
-            address.setStatus(1);
-            mapUserAddressService.insert(mapUserAddress);
-            addressService.insert(address);
+            Date dateNow = new Date();
 
-            return new AjaxMessage().Set(MsgType.Success,"用户插入地址成功");
-        }catch (Exception e){
+            Address newAddress = new Address();
+            newAddress.setId(UUID.randomUUID().toString());
+            newAddress.setReceiverName(recName);
+            newAddress.setReceiverSex(recSex);
+            newAddress.setReceiverPhone(recPhone);
+            newAddress.setAddressName(addressName);
+            newAddress.setHouseNumber(houseNum);
+            newAddress.setCreateUserId(userId);
+            newAddress.setModifyUserId(userId);
+            newAddress.setCreateDate(dateNow);
+            newAddress.setModifyDate(dateNow);
+            /*添加关联表新字段*/
+            MapUserAddress mapUserAddress = new MapUserAddress();
+            mapUserAddress.setId(UUID.randomUUID().toString());
+            mapUserAddress.setAddressId(newAddress.getId());
+            mapUserAddress.setUserId(userId);
+            mapUserAddress.setCreateDate(dateNow);
+            mapUserAddress.setModifyDate(dateNow);
+            mapUserAddress.setCreateUserId(userId);
+            mapUserAddress.setModifyUserId(userId);
+
+            addressService.insertSelective(newAddress);
+            mapUserAddressService.insert(mapUserAddress);
+
+            return new AjaxMessage().Set(MsgType.Success, "用户插入地址成功", null);
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return new AjaxMessage().Set(MsgType.Error,"用户插入地址失败");
+
+        return new AjaxMessage().Set(MsgType.Error, "用户插入地址失败", null);
     }
 
     @ApiOperation(value = "更新用户信息")
