@@ -40,7 +40,7 @@
     <insert id="insert" parameterType="com.ccorder.ordersystem.entity.OrderTable">
         <!--@mbg.generated-->
         insert into order_table (id, order_num, pay_method,
-        delivery_time, address, actual_payment,score,
+        delivery_time,address, actual_payment,score,
         create_user_id, create_date, modify_user_id,
         modify_date, `status`)
         values (#{id,jdbcType=VARCHAR}, #{orderNum,jdbcType=VARCHAR}, #{payMethod,jdbcType=VARCHAR},
@@ -213,7 +213,7 @@
 
     <select id="getBusinessAllOrder" resultMap="BaseResultMap">
         select *
-        from order_table
+        from ccorder.order_table
     </select>
 
 </mapper>

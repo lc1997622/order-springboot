@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * @author zm
+ * @author htj
  * @description
  * @data 2019/5/12
  */
@@ -39,10 +39,6 @@ public class BusinessOrderController {
     @Autowired
     private MapOrderFoodMapper mapOrderFoodMapper;
 
-
-    //状态与订单的对应
-    private static final String[] status={
-            "已删除","未支付","已接单","配送中","已送达","已完成","已评价"};
     //商家对订单状态的修改
     @ApiOperation(value = "订单状态的修改")
     @PostMapping("/changeOrderState")
@@ -51,17 +47,17 @@ public class BusinessOrderController {
             @ApiParam(name = "orderId", value = "订单编号", required = true,type = "String")
             @RequestParam
                     String orderId,
-            @ApiParam(name = "stateId", value = "该订单的状态", required = true,type = "int")
+            @ApiParam(name = "status", value = "该订单的状态", required = true,type = "Integer")
             @RequestParam
-                    Integer stateId
+                    Integer status
     ){
-        orderTableMapper.updateOrderstate(orderId,stateId+1);
+        orderTableMapper.updateOrderstate(orderId, status);
         return new AjaxMessage().Set(MsgType.Success,"订单状态修改成功");
     }
 
     //商家的历史订单查询
     @ApiOperation(value = "商家历史订单订单的查询")
-    @PostMapping("/hostoryInquiry")
+    @PostMapping("/historyInquiry")
     @ResponseBody
     public Object inquiry(){
         try{
@@ -123,11 +119,25 @@ public class BusinessOrderController {
     @ResponseBody
     public Object addOrder(
             @ApiParam(name = "oneOrder", value = "新的order的订单", required = true,type = "OrderTable")
-            @RequestParam
+            @RequestBody
                     OrderTable oneOrder
     ){
+        OrderTable newOrder=new OrderTable();
+        Date date=new Date();
+        newOrder.setId(UUID.randomUUID().toString());
+        newOrder.setOrderNum(oneOrder.getOrderNum());
+        newOrder.setDeliveryTime(oneOrder.getDeliveryTime());
+        newOrder.setActualPayment(oneOrder.getActualPayment());
+        newOrder.setPayMethod(oneOrder.getPayMethod());
+        newOrder.setCreateUserId(oneOrder.getCreateUserId());
+        newOrder.setModifyUserId(oneOrder.getModifyUserId());
+        newOrder.setScore(newOrder.getScore());
+        newOrder.setCreateDate(date);
+        newOrder.setModifyDate(date);
+        newOrder.setStatus(oneOrder.getStatus());
+        newOrder.setAddress(oneOrder.getAddress());
         try {
-            orderTableMapper.insert(oneOrder);
+            orderTableMapper.insertSelective(newOrder);
             return new AjaxMessage().Set(MsgType.Success,"成功添加订单");
         }catch (Exception e){
             e.printStackTrace();
@@ -140,10 +150,11 @@ public class BusinessOrderController {
     @ResponseBody
     public Object addOrder(
             @ApiParam(name = "oneMapOrderFood", value = "新的mapOrderFood的订单", required = true,type = "MapOrderFood")
-            @RequestParam
+            @RequestBody
                     MapOrderFood oneMapOrderFood
     ){
         try {
+
             mapOrderFoodMapper.insert(oneMapOrderFood);
             return new AjaxMessage().Set(MsgType.Success,"成功添加订单");
         }catch (Exception e){
