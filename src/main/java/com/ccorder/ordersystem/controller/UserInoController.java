@@ -209,7 +209,7 @@ public class UserInoController {
             @ApiParam(name = "userId",value = "用户微信Id",required = true,type = "String")
             String userId,
             @ApiParam(name = "userName",value = "用户名",type = "String")
-            String userName,
+            String username,
             @ApiParam(name = "realName",value = "用户真名",type = "String")
             String realName,
             @ApiParam(name = "nickName",value = "用户昵称",type = "String")
@@ -223,7 +223,7 @@ public class UserInoController {
     ){
         try {
             SysUser sysUser = new SysUser();
-            sysUser.setUsername(userName);
+            sysUser.setUsername(username);
             sysUser.setSex(sex);
             sysUser.setTelephone(telephone);
             sysUser.setRealName(realName);
