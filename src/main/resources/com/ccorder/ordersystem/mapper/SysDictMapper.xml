@@ -7,7 +7,7 @@
     <result column="name_cn" jdbcType="VARCHAR" property="nameCn" />
     <result column="name_en" jdbcType="VARCHAR" property="nameEn" />
     <result column="sort" jdbcType="INTEGER" property="sort" />
-    <result column="type_id" jdbcType="VARCHAR" property="typeId" />
+    <result column="dict_type" jdbcType="VARCHAR" property="dictType" />
     <result column="parent_id" jdbcType="VARCHAR" property="parentId" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
     <result column="create_user_id" jdbcType="VARCHAR" property="createUserId" />
@@ -18,7 +18,7 @@
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    id, name_cn, name_en, sort, type_id, parent_id, remark, create_user_id, create_date, 
+    id, name_cn, name_en, sort, dict_type, parent_id, remark, create_user_id, create_date, 
     modify_user_id, modify_date, `status`
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -36,12 +36,12 @@
   <insert id="insert" parameterType="com.ccorder.ordersystem.entity.SysDict">
     <!--@mbg.generated-->
     insert into sys_dict (id, name_cn, name_en, 
-      sort, type_id, parent_id, 
+      sort, dict_type, parent_id, 
       remark, create_user_id, create_date, 
       modify_user_id, modify_date, `status`
       )
     values (#{id,jdbcType=VARCHAR}, #{nameCn,jdbcType=VARCHAR}, #{nameEn,jdbcType=VARCHAR}, 
-      #{sort,jdbcType=INTEGER}, #{typeId,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, 
+      #{sort,jdbcType=INTEGER}, #{dictType,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, 
       #{remark,jdbcType=VARCHAR}, #{createUserId,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
       #{modifyUserId,jdbcType=VARCHAR}, #{modifyDate,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}
       )
@@ -62,8 +62,8 @@
       <if test="sort != null">
         sort,
       </if>
-      <if test="typeId != null">
-        type_id,
+      <if test="dictType != null">
+        dict_type,
       </if>
       <if test="parentId != null">
         parent_id,
@@ -100,8 +100,8 @@
       <if test="sort != null">
         #{sort,jdbcType=INTEGER},
       </if>
-      <if test="typeId != null">
-        #{typeId,jdbcType=VARCHAR},
+      <if test="dictType != null">
+        #{dictType,jdbcType=VARCHAR},
       </if>
       <if test="parentId != null">
         #{parentId,jdbcType=VARCHAR},
@@ -139,8 +139,8 @@
       <if test="sort != null">
         sort = #{sort,jdbcType=INTEGER},
       </if>
-      <if test="typeId != null">
-        type_id = #{typeId,jdbcType=VARCHAR},
+      <if test="dictType != null">
+        dict_type = #{dictType,jdbcType=VARCHAR},
       </if>
       <if test="parentId != null">
         parent_id = #{parentId,jdbcType=VARCHAR},
@@ -172,7 +172,7 @@
     set name_cn = #{nameCn,jdbcType=VARCHAR},
       name_en = #{nameEn,jdbcType=VARCHAR},
       sort = #{sort,jdbcType=INTEGER},
-      type_id = #{typeId,jdbcType=VARCHAR},
+      dict_type = #{dictType,jdbcType=VARCHAR},
       parent_id = #{parentId,jdbcType=VARCHAR},
       remark = #{remark,jdbcType=VARCHAR},
       create_user_id = #{createUserId,jdbcType=VARCHAR},

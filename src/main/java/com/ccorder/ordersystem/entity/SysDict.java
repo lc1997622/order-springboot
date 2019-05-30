@@ -26,9 +26,9 @@ public class SysDict {
     private Integer sort;
 
     /**
-     * 字典类别id(对应sys_dict_type的id)
+     * 字典类别
      */
-    private String typeId;
+    private String dictType;
 
     /**
      * 父字典项id
