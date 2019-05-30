@@ -1,7 +1,6 @@
 package com.ccorder.ordersystem.controller;
 
 import com.ccorder.ordersystem.entity.*;
-import com.ccorder.ordersystem.entity.mapEntity.MapFile;
 import com.ccorder.ordersystem.entity.mapEntity.MapUserAddress;
 import com.ccorder.ordersystem.entity.mapEntity.MapUserRole;
 import com.ccorder.ordersystem.service.AddressService;
@@ -18,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -109,8 +109,6 @@ public class UserInoController {
         }catch (Exception e){
             e.printStackTrace();
         }
-//
-//        List<File> files = clientUser.getUserimgs();
 
         return new AjaxMessage().Set(MsgType.Error,"插入新用户失败");
     }
@@ -140,21 +138,40 @@ public class UserInoController {
     @PostMapping("addUserAddress")
     @ResponseBody
     protected Object addUserAddress(
-            @ApiParam(name = "address",value = "用户地址",required = true,type = "Address")
-            Address address,
+            @ApiParam(name = "addressName",value = "用户地址",required = true,type = "String")
+            String addressName,
+            @ApiParam(name = "houseNumber",value = "地址编号",required = true,type = "String")
+            String houseNumber,
             @ApiParam(name = "userId",value = "用户微信Id",required = true,type = "String")
-            String userId
+            String userId,
+            @ApiParam(name = "receiverName",value = "收货人姓名",required = true,type = "String")
+            String receiverName,
+            @ApiParam(name = "receiverPhone",value = "收货人电话",required = true,type = "String")
+            String receiverPhone,
+            @ApiParam(name = "sex",value = "收货人性别",required = true,type = "String")
+            String sex
     ){
         try {
+            String addressId = UUID.randomUUID().toString();
             MapUserAddress mapUserAddress = new MapUserAddress();
-            mapUserAddress.setAddressId(address.getId());
+            Address address = new Address();
+            mapUserAddress.setAddressId(addressId);
             mapUserAddress.setUserId(userId);
             Date tmpDate = new Date();
             mapUserAddress.setCreateDate(tmpDate);
             mapUserAddress.setModifyDate(tmpDate);
             mapUserAddress.setId(UUID.randomUUID().toString());
-            address.setId(UUID.randomUUID().toString());
-            System.out.println(mapUserAddress.getId());
+            address.setId(addressId);
+            address.setAddressName(addressName);
+            address.setHouseNumber(houseNumber);
+            address.setReceiverName(receiverName);
+            address.setReceiverPhone(receiverPhone);
+            address.setReceiverSex(sex);
+            address.setCreateUserId(userId);
+            address.setModifyUserId(userId);
+            address.setCreateDate(tmpDate);
+            address.setModifyDate(tmpDate);
+            address.setStatus(1);
             mapUserAddressService.insert(mapUserAddress);
             addressService.insert(address);
 
@@ -162,7 +179,44 @@ public class UserInoController {
         }catch (Exception e){
             e.printStackTrace();
         }
-
         return new AjaxMessage().Set(MsgType.Error,"用户插入地址失败");
+    }
+
+    @ApiOperation(value = "更新用户信息")
+    @PostMapping("updateUserInfo")
+    @ResponseBody
+    protected Object updateUserInfo(
+            @ApiParam(name = "userId",value = "用户微信Id",required = true,type = "String")
+            String userId,
+            @ApiParam(name = "userName",value = "用户名",type = "String")
+            String userName,
+            @ApiParam(name = "realName",value = "用户真名",type = "String")
+            String realName,
+            @ApiParam(name = "nickName",value = "用户昵称",type = "String")
+            String nickName,
+            @ApiParam(name = "sex",value = "用户性别",type = "String")
+            Integer sex,
+            @ApiParam(name = "telephone",value = "用户电话",type = "Integer")
+            String telephone,
+            @ApiParam(name = "email",value = "用户邮箱",type = "String")
+            String email
+    ){
+        try {
+            SysUser sysUser = new SysUser();
+            sysUser.setUsername(userName);
+            sysUser.setSex(sex);
+            sysUser.setTelephone(telephone);
+            sysUser.setRealName(realName);
+            sysUser.setNickName(nickName);
+            sysUser.setEmail(email);
+            sysUser.setId(userId);
+
+            System.out.println(sysUser.getId());
+            sysUserService.updateByPrimaryKeySelective(sysUser);
+            return new AjaxMessage().Set(MsgType.Success,"更新用户信息成功");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return new AjaxMessage().Set(MsgType.Error,"更新用户信息失败");
     }
 }
