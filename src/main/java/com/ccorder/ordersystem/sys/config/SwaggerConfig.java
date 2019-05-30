@@ -18,8 +18,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 @Configuration
 public class SwaggerConfig {
-
-
     @Bean
     public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)
@@ -31,7 +29,6 @@ public class SwaggerConfig {
                 .paths(PathSelectors.any())
                 .build().pathMapping("/");
     }
-
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("超超打菜")

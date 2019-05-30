@@ -1,8 +1,12 @@
 package com.ccorder.ordersystem.controller;
 
+import com.ccorder.ordersystem.entity.Address;
 import com.ccorder.ordersystem.entity.SysUser;
 import com.ccorder.ordersystem.mapper.AddressMapper;
 import com.ccorder.ordersystem.mapper.SysUserMapper;
+import com.ccorder.ordersystem.service.AddressService;
+import com.ccorder.ordersystem.service.MapUserAddressService;
+import com.ccorder.ordersystem.service.SysUserService;
 import com.ccorder.ordersystem.sys.dto.AjaxMessage;
 import com.ccorder.ordersystem.sys.dto.MsgType;
 import io.swagger.annotations.Api;
@@ -25,43 +29,32 @@ import java.util.Date;
 @Api(tags = "用户API")
 public class UserController {
     @Autowired
-    private SysUserMapper sysUserMapper;
+    private SysUserService sysUserService;
 
     @Autowired
-    private AddressMapper addressMapper;
+    private AddressService addressService;
+
+    @Autowired
+    private MapUserAddressService mapUserAddressService;
 
     @ApiOperation(value = "获取商家信息")
-    @PostMapping(value="/getBusiness")
+    @PostMapping(value = "getBusiness")
     @ResponseBody
     public Object getBusiness(
-            @ApiParam(name = "businessId", value = "商家id", required = true,type = "String")
-            @RequestParam
-                    String businessId
-    ){
-        @Data
-        class BusinessInfo{
-            Date startTime=null;
-            Date endTime=null;
-            String businessIntroduction=null;
-            Integer starsNum=null;
-            String address=null;
-            String phoneNum=null;
-        }
-        try{
-            BusinessInfo businessInfo=new BusinessInfo();
-            //返回商家的营业时间（配送时间），评星，电话，自我介绍
-            SysUser sysUser= sysUserMapper.selectByBusinessIdGetUser(businessId);
-            businessInfo.starsNum=sysUser.getStarsNum();
-            businessInfo.startTime=sysUser.getStartTime();
-            businessInfo.endTime=sysUser.getEndTime();
-            businessInfo.businessIntroduction=sysUser.getBusinessIntroduction();
-            businessInfo.phoneNum=sysUser.getTelephone();
-            //返回商家的地址
-            businessInfo.address=addressMapper.selectByCreateUserIdGetAddressName(businessId);
-            return new AjaxMessage().Set(MsgType.Success,"成功返回商家信息",businessInfo);
-        }catch (Exception e){
+            @ApiParam(name = "userId", value = "商家的用户id", required = true, type = "String")
+            @RequestParam(value = "userId")
+                    String userId
+    ) {
+        try {
+            //返回商家业务信息
+            SysUser store = sysUserService.selectByPrimaryKey(userId);
+            //获取商家地址
+            String storeAddressId = mapUserAddressService.selectByUserId(userId).get(0).getAddressId();
+            store.setStoreAddress(addressService.selectByPrimaryKey(storeAddressId));
+            return new AjaxMessage().Set(MsgType.Success, "成功返回商家信息", store);
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return new AjaxMessage().Set(MsgType.Success,"获取商家信息失败");
+        return new AjaxMessage().Set(MsgType.Success, "获取商家信息失败",null);
     }
 }

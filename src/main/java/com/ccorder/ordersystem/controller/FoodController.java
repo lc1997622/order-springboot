@@ -182,7 +182,7 @@ public class FoodController {
     @ResponseBody
     public Object deleteOneFood(
             @ApiParam(name = "foodId", value = "需要删除的食品的id", required = true, type = "String")
-            @RequestBody
+            @RequestParam("foodId")
                     String foodId
     ) {
         try {
