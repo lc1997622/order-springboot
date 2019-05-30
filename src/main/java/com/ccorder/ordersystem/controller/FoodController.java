@@ -10,6 +10,7 @@ import com.ccorder.ordersystem.mapper.FoodMapper;
 import com.ccorder.ordersystem.mapper.SysDictMapper;
 import com.ccorder.ordersystem.mapper.mapMapper.MapUserFoodMapper;
 import com.ccorder.ordersystem.service.FoodService;
+import com.ccorder.ordersystem.service.SysDictService;
 import com.ccorder.ordersystem.service.SysUserService;
 import com.ccorder.ordersystem.sys.dto.AjaxMessage;
 import com.ccorder.ordersystem.sys.dto.MsgType;
@@ -47,6 +48,9 @@ public class FoodController {
 
     @Autowired
     private FoodMapper foodMapper;
+    @Autowired
+    private SysDictService sysDictService;
+
 
     @ApiOperation(value = "后端测试")
     @GetMapping("getFoodName")
@@ -63,25 +67,25 @@ public class FoodController {
 
         @Data
         class kindFoods{
-            String type;
+            SysDict type;
             UserFood[] typeFoodList;
-            kindFoods(String type,UserFood[] userFoods){
+            kindFoods(SysDict type,UserFood[] userFoods){
                 this.type = type;
                 this.typeFoodList = userFoods;
             }
         }
-        List<String> foodtypes = new ArrayList<>();
+        List<String> foodtypesID = new ArrayList<>();
         List<kindFoods> foodsList = new ArrayList<>();
 
         try{
             List<Map<String,Object>> types = foodService.getAllType();
             for (int i = 0 ; i < types.size();i++){
-                foodtypes.add(types.get(i).get("foodType").toString());
+                foodtypesID.add(types.get(i).get("foodType").toString());
             }
-            for (int i = 0; i< foodtypes.size();i++){
-                System.out.println(foodtypes.get(i));
-                UserFood[] userFoods = foodService.getFoodsByType(foodtypes.get(i));
-                foodsList.add(new kindFoods(foodtypes.get(i),userFoods));
+            for (int i = 0; i< foodtypesID.size();i++){
+                System.out.println(foodtypesID.get(i));
+                UserFood[] userFoods = foodService.getFoodsByType(foodtypesID.get(i));
+                foodsList.add(new kindFoods(sysDictService.selectByPrimaryKey(foodtypesID.get(i)),userFoods));
             }
 
             return new AjaxMessage().Set(MsgType.Success,"获取食品列表成功", foodsList);
