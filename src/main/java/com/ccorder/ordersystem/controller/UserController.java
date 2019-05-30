@@ -1,8 +1,10 @@
 package com.ccorder.ordersystem.controller;
 
+import com.ccorder.ordersystem.entity.Address;
 import com.ccorder.ordersystem.entity.SysUser;
 import com.ccorder.ordersystem.mapper.AddressMapper;
 import com.ccorder.ordersystem.mapper.SysUserMapper;
+import com.ccorder.ordersystem.mapper.mapMapper.MapUserAddressMapper;
 import com.ccorder.ordersystem.sys.dto.AjaxMessage;
 import com.ccorder.ordersystem.sys.dto.MsgType;
 import io.swagger.annotations.Api;
@@ -30,6 +32,9 @@ public class UserController {
     @Autowired
     private AddressMapper addressMapper;
 
+    @Autowired
+    private MapUserAddressMapper mapUserAddressMapper;
+
     @ApiOperation(value = "获取商家信息")
     @PostMapping(value="/getBusiness")
     @ResponseBody
@@ -44,7 +49,7 @@ public class UserController {
             Date endTime=null;
             String businessIntroduction=null;
             Integer starsNum=null;
-            String address=null;
+            Address address=null;
             String phoneNum=null;
         }
         try{
@@ -57,7 +62,8 @@ public class UserController {
             businessInfo.businessIntroduction=sysUser.getBusinessIntroduction();
             businessInfo.phoneNum=sysUser.getTelephone();
             //返回商家的地址
-            businessInfo.address=addressMapper.selectByCreateUserIdGetAddressName(businessId);
+            String addressId=mapUserAddressMapper.selectByUserIdGetAddressId(businessId);
+            businessInfo.address=addressMapper.selectByAddressIdGetAddress(addressId);
             return new AjaxMessage().Set(MsgType.Success,"成功返回商家信息",businessInfo);
         }catch (Exception e){
             e.printStackTrace();
