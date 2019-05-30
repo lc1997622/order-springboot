@@ -18,4 +18,6 @@ public interface MapUserAddressMapper {
     int updateByPrimaryKey(MapUserAddress record);
 
     List<MapUserAddress> selectByUserId(String userId);
+
+    String selectByUserIdGetAddressId(String BusinessId);
 }

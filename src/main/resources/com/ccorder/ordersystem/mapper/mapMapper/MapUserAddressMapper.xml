@@ -142,4 +142,9 @@
       `status` = #{status,jdbcType=INTEGER}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+    <select id="selectByUserIdGetAddressId" resultType="java.lang.String">
+      select ccorder.map_user_address.address_id
+      from ccorder.map_user_address
+      where map_user_address.user_id=#{BusinessId,jdbcType=VARCHAR}
+    </select>
 </mapper>
