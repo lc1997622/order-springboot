@@ -36,7 +36,31 @@ public class StoreController {
     private AddressService addressService;
 
     @Autowired
+    private SysUserService sysUserService;
+
+    @Autowired
     private MapUserAddressService mapUserAddressService;
+
+    @ApiOperation(value = "获取商家信息")
+    @PostMapping(value = "getStoreInfo")
+    @ResponseBody
+    public Object getBusiness(
+            @ApiParam(name = "userId", value = "商家的用户id", required = true, type = "String")
+            @RequestParam(value = "userId")
+                    String userId
+    ) {
+        try {
+            //返回商家业务信息
+            SysUser store = sysUserService.selectByPrimaryKey(userId);
+            //获取商家地址
+            String storeAddressId = mapUserAddressService.selectByUserId(userId).get(0).getAddressId();
+            store.setStoreAddress(addressService.selectByPrimaryKey(storeAddressId));
+            return new AjaxMessage().Set(MsgType.Success, "成功返回商家信息", store);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new AjaxMessage().Set(MsgType.Success, "获取商家信息失败",null);
+    }
 
     @ApiOperation(value = "修改商家信息(修改成功后返回更新后的商家)")
     @PostMapping("updateStoreInfo")

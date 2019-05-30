@@ -1,11 +1,13 @@
 package com.ccorder.ordersystem.controller;
 
 import com.ccorder.ordersystem.entity.Address;
+import com.ccorder.ordersystem.entity.OrderTable;
 import com.ccorder.ordersystem.entity.SysUser;
 import com.ccorder.ordersystem.mapper.AddressMapper;
 import com.ccorder.ordersystem.mapper.SysUserMapper;
 import com.ccorder.ordersystem.service.AddressService;
 import com.ccorder.ordersystem.service.MapUserAddressService;
+import com.ccorder.ordersystem.service.OrderTableService;
 import com.ccorder.ordersystem.service.SysUserService;
 import com.ccorder.ordersystem.sys.dto.AjaxMessage;
 import com.ccorder.ordersystem.sys.dto.MsgType;
@@ -18,11 +20,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 
 /**
- * @author htj
+ * @author zm
  * @description
- * @data 2019/5/17
+ * @data 2019/5/31
  */
 @Controller
 @RequestMapping(value = "/user")
@@ -37,24 +40,24 @@ public class UserController {
     @Autowired
     private MapUserAddressService mapUserAddressService;
 
-    @ApiOperation(value = "获取商家信息")
-    @PostMapping(value = "getBusiness")
+    @Autowired
+    private OrderTableService orderTableService;
+
+    @ApiOperation(value = "获取用户全部订单")
+    @PostMapping(value = "getUserOrders")
     @ResponseBody
     public Object getBusiness(
-            @ApiParam(name = "userId", value = "商家的用户id", required = true, type = "String")
+            @ApiParam(name = "userId", value = "用户端id", required = true, type = "String")
             @RequestParam(value = "userId")
                     String userId
-    ) {
-        try {
-            //返回商家业务信息
-            SysUser store = sysUserService.selectByPrimaryKey(userId);
-            //获取商家地址
-            String storeAddressId = mapUserAddressService.selectByUserId(userId).get(0).getAddressId();
-            store.setStoreAddress(addressService.selectByPrimaryKey(storeAddressId));
-            return new AjaxMessage().Set(MsgType.Success, "成功返回商家信息", store);
-        } catch (Exception e) {
+    ){
+        try{
+            List<OrderTable> orders = orderTableService.getUserOrders(userId);
+            return new AjaxMessage().Set(MsgType.Success,"获取用户全部订单成功",orders);
+        }catch (Exception e){
             e.printStackTrace();
         }
-        return new AjaxMessage().Set(MsgType.Success, "获取商家信息失败",null);
+
+        return new AjaxMessage().Set(MsgType.Error,"获取用户全部订单错误",null);
     }
 }
