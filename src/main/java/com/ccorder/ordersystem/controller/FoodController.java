@@ -186,13 +186,13 @@ public class FoodController {
                     String foodId
     ) {
         try {
-            foodMapper.deleteByPrimaryKey(foodId);
-            return new AjaxMessage().Set(MsgType.Success,"成功删除食物");
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return new AjaxMessage().Set(MsgType.Success,"删除食物失败");
+        foodMapper.deleteByPrimaryKey(foodId);
+        return new AjaxMessage().Set(MsgType.Success,"成功删除食物");
+    }catch (Exception e){
+        e.printStackTrace();
     }
+        return new AjaxMessage().Set(MsgType.Success,"删除食物失败");
+}
 
     @ApiOperation(value = "商家更新某一个食品的信息")
     @PostMapping("/updateOneFood")

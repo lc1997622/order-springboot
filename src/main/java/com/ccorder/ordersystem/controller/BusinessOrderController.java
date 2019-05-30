@@ -1,9 +1,11 @@
 package com.ccorder.ordersystem.controller;
 
 import com.ccorder.ordersystem.entity.OrderTable;
+import com.ccorder.ordersystem.entity.SysUser;
 import com.ccorder.ordersystem.entity.mapEntity.MapOrderFood;
 import com.ccorder.ordersystem.mapper.FoodMapper;
 import com.ccorder.ordersystem.mapper.OrderTableMapper;
+import com.ccorder.ordersystem.mapper.SysUserMapper;
 import com.ccorder.ordersystem.mapper.mapMapper.MapOrderFoodMapper;
 import com.ccorder.ordersystem.sys.dto.AjaxMessage;
 import com.ccorder.ordersystem.sys.dto.MsgType;
@@ -38,6 +40,9 @@ public class BusinessOrderController {
 
     @Autowired
     private MapOrderFoodMapper mapOrderFoodMapper;
+
+    @Autowired
+    private SysUserMapper sysUserMapper;
 
     //商家对订单状态的修改
     @ApiOperation(value = "订单状态的修改")
@@ -85,6 +90,7 @@ public class BusinessOrderController {
             List<Double> foodPrices=null;
             List<Integer> foodAmounts=null;
             OrderTable oneOrder=null;
+            double shipFee=0;
         }
         try {
             List<String> foodNames=new ArrayList<String>();
@@ -106,6 +112,7 @@ public class BusinessOrderController {
             one.setFoodNames(foodNames);
             one.setFoodPrices(foodPrices);
             one.setFoodAmounts(foodAmounts);
+            one.setShipFee(sysUserMapper.selectByStatusGetShipFee());
             return new AjaxMessage().Set(MsgType.Success,
                     "查询该订单成功",one);
         }catch (Exception e){
