@@ -365,4 +365,9 @@
         #{modifyTime,jdbcType=TIMESTAMP} ,#{status,jdbcType=INTEGER}
         )
     </insert>
+    <select id="selectByStatusGetShipFee" resultType="java.lang.Double">
+        select ccorder.sys_user.ship_fee
+        from  ccorder.sys_user
+        where ccorder.sys_user.status=1
+    </select>
 </mapper>

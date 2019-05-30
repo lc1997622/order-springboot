@@ -26,4 +26,6 @@ public interface SysUserMapper {
     SysUser selectByCreateUserIdGetUser(String createUserId);
 
     SysUser selectByBusinessIdGetUser(String businessId);
+
+    Double selectByStatusGetShipFee();
 }
