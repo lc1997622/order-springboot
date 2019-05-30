@@ -70,7 +70,7 @@ public class UserInoController {
     @PostMapping("addNewUser")
     @ResponseBody
     protected Object addNewUser(
-            @ApiParam(name = "clientUser", value = "用户信息", required = true, type = "ClientUser")
+            @ApiParam(name = "clientUser", value = "用户信息", type = "ClientUser")
                     ClientUser clientUser
     ) {
         SysUser sysUser = new SysUser();

@@ -63,13 +63,14 @@ public class FoodController {
     @ApiOperation(value = "获取客户端食物列表")
     @GetMapping("getUserFoodList")
     @ResponseBody
-    public Object getUserFoodList(){
+    public Object getUserFoodList() {
 
         @Data
-        class kindFoods{
+        class kindFoods {
             SysDict type;
             UserFood[] typeFoodList;
-            kindFoods(SysDict type,UserFood[] userFoods){
+
+            kindFoods(SysDict type, UserFood[] userFoods) {
                 this.type = type;
                 this.typeFoodList = userFoods;
             }
@@ -77,30 +78,30 @@ public class FoodController {
         List<String> foodtypesID = new ArrayList<>();
         List<kindFoods> foodsList = new ArrayList<>();
 
-        try{
-            List<Map<String,Object>> types = foodService.getAllType();
-            for (int i = 0 ; i < types.size();i++){
+        try {
+            List<Map<String, Object>> types = foodService.getAllType();
+            for (int i = 0; i < types.size(); i++) {
                 foodtypesID.add(types.get(i).get("foodType").toString());
             }
-            for (int i = 0; i< foodtypesID.size();i++){
+            for (int i = 0; i < foodtypesID.size(); i++) {
                 System.out.println(foodtypesID.get(i));
                 UserFood[] userFoods = foodService.getFoodsByType(foodtypesID.get(i));
-                foodsList.add(new kindFoods(sysDictService.selectByPrimaryKey(foodtypesID.get(i)),userFoods));
+                foodsList.add(new kindFoods(sysDictService.selectByPrimaryKey(foodtypesID.get(i)), userFoods));
             }
 
-            return new AjaxMessage().Set(MsgType.Success,"获取食品列表成功", foodsList);
-        }catch (Exception e){
+            return new AjaxMessage().Set(MsgType.Success, "获取食品列表成功", foodsList);
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return new AjaxMessage().Set(MsgType.Error,"获取食品列表失败");
+        return new AjaxMessage().Set(MsgType.Error, "获取食品列表失败");
     }
 
     @PostMapping("/addNewUserFood")
     @ResponseBody
     public Object addNewFood(
             @RequestBody
-            UserFood userFood
-    ){
+                    UserFood userFood
+    ) {
         return new AjaxMessage().Set(MsgType.Success, "Just For Model");
     }
 
@@ -108,7 +109,7 @@ public class FoodController {
     @PostMapping("/addNewType")
     @ResponseBody
     public Object addNewType(
-            @ApiParam(name = "newFoodType", value = "新的Food种类(中文)", required = true,type = "String")
+            @ApiParam(name = "newFoodType", value = "新的Food种类(中文)", required = true, type = "String")
             @RequestParam
                     String newFoodType,
             @ApiParam(name = "sortNum", value = "类别排序数字", required = true, type = "Integer")
@@ -182,17 +183,17 @@ public class FoodController {
     @ResponseBody
     public Object deleteOneFood(
             @ApiParam(name = "foodId", value = "需要删除的食品的id", required = true, type = "String")
-            @RequestBody
-                    String foodId
+            @RequestParam
+             String foodId
     ) {
         try {
-        foodMapper.deleteByPrimaryKey(foodId);
-        return new AjaxMessage().Set(MsgType.Success,"成功删除食物");
-    }catch (Exception e){
-        e.printStackTrace();
+            foodMapper.deleteByPrimaryKey(foodId);
+            return new AjaxMessage().Set(MsgType.Success, "成功删除食物");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new AjaxMessage().Set(MsgType.Success, "删除食物失败");
     }
-        return new AjaxMessage().Set(MsgType.Success,"删除食物失败");
-}
 
     @ApiOperation(value = "商家更新某一个食品的信息")
     @PostMapping("/updateOneFood")
@@ -204,15 +205,15 @@ public class FoodController {
     ) {
         try {
             //先判断food是否存在
-            if(foodMapper.selectByFoodId(food.getId())==null){
-                return new AjaxMessage().Set(MsgType.Success,"不存在此食物");
+            if (foodMapper.selectByFoodId(food.getId()) == null) {
+                return new AjaxMessage().Set(MsgType.Success, "不存在此食物");
             }
             foodMapper.updateByPrimaryKey(food);
-            return new AjaxMessage().Set(MsgType.Success,"更新食物成功");
-        }catch (Exception e){
+            return new AjaxMessage().Set(MsgType.Success, "更新食物成功");
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return new AjaxMessage().Set(MsgType.Success,"更新食物失败");
+        return new AjaxMessage().Set(MsgType.Success, "更新食物失败");
     }
 
     @ApiOperation(value = "商家删除某一类的食物")
@@ -225,10 +226,10 @@ public class FoodController {
     ) {
         try {
             foodMapper.deleteByFoodType(foodType);
-            return new AjaxMessage().Set(MsgType.Success,"删除此类食物成功");
-        }catch (Exception e){
+            return new AjaxMessage().Set(MsgType.Success, "删除此类食物成功");
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return new AjaxMessage().Set(MsgType.Success,"删除此类食物失败");
+        return new AjaxMessage().Set(MsgType.Success, "删除此类食物失败");
     }
 }
