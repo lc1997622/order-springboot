@@ -34,6 +34,7 @@
         <result column="sex" jdbcType="INTEGER" property="sex"/>
         <result column="telephone" jdbcType="VARCHAR" property="telephone"/>
         <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="account" jdbcType="DOUBLE" property="account"/>
         <collection property="roles" ofType="com.ccorder.ordersystem.entity.SysRole">
             <result column="code" jdbcType="VARCHAR" property="code"/>
             <result column="sort" jdbcType="VARCHAR" property="sort"/>
@@ -61,6 +62,7 @@
       u.nick_name nick_name,
       u.real_name real_name,
       u.sex sex,
+      u.account account,
       u.telephone telephone,
       R.code code,
       R.name name,
