@@ -111,14 +111,10 @@ public class FoodController {
             @ApiParam(name = "newFoodType", value = "新的Food种类(中文)", required = true,type = "String")
             @RequestParam
                     String newFoodType,
-            @ApiParam(name = "openId", value = "当前微信用户的唯一标识", required = true,type = "String")
-            @RequestParam
-                    String openId,
             @ApiParam(name = "sortNum", value = "类别排序数字", required = true, type = "Integer")
             @RequestParam
                     Integer sortNum
     ) {
-        SysUser userNow = userService.selectByPrimaryKey(openId);
 
         /*获取食品类别的dict_type_id*/
         String dictTypeId = dictMapper.selectByNameEnAndStatus("foodType", 0);
@@ -128,8 +124,6 @@ public class FoodController {
         newSysDict.setSort(sortNum);
 
         Date dateNow = new Date();
-        newSysDict.setCreateUserId(userNow.getId());
-        newSysDict.setModifyUserId(userNow.getId());
         newSysDict.setCreateDate(dateNow);
         newSysDict.setModifyDate(dateNow);
 

@@ -1,5 +1,6 @@
 package com.ccorder.ordersystem.entity;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.management.relation.Role;
@@ -25,6 +26,8 @@ public class ClientUser {
      */
     private String username;
 
+
+    private Double account;
     /**
      * 用户密码
      */

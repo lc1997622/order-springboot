@@ -23,7 +23,7 @@ public class Address {
     /**
      * 收货人性别:0是男1是女
      */
-    private String receiverSex;
+    private Integer receiverSex;
 
     /**
      * 地址名
