@@ -27,8 +27,8 @@ public class OrderTable {
             required = false, allowEmptyValue = true)
     private Date deliveryTime;
 
-    @ApiModelProperty(name = "address", value = "收货地址(不需要)", dataType = "String", example = "not need this ",
-            required = false, allowEmptyValue = true)
+    @ApiModelProperty(name = "address", value = "订单的收获地址)", dataType = "String", example = "not need this "
+            ,notes = "对应的是address表的id",required = true, allowEmptyValue = false)
     private String address;
 
     @ApiModelProperty(name = "actualPayment", value = "实际支付", dataType = "Double", example = "100.5",

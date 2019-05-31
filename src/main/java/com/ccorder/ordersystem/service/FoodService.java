@@ -36,7 +36,7 @@ public class FoodService {
     private MapOrderFoodMapper orderFoodMapper;
 
     public int addNewFood(Food newFood){
-        return foodMapper.insert(newFood);
+        return foodMapper.insertSelective(newFood);
     }
 
     public void addUserFoodRecord(MapUserFood userFood) {
@@ -58,7 +58,6 @@ public class FoodService {
     public List<Food> getFoodsByOrderId(String orderId) {
         List<StringAndInteger> mapFoodAmount = new ArrayList<>();
         List<Food> foodList = new ArrayList<>();
-
         /*获取foodId和amount*/
         mapFoodAmount = orderFoodMapper.selectFoodIdAndAmountByOrderId(orderId);
         for (StringAndInteger foodAndAmount : mapFoodAmount) {
@@ -70,7 +69,6 @@ public class FoodService {
             tmpFood.setFoodAmount(foodAndAmount.getIntegerParam());
             foodList.add(tmpFood);
         }
-
         return foodList;
     }
 }

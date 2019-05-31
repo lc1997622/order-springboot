@@ -63,13 +63,14 @@ public class FoodController {
     @ApiOperation(value = "获取客户端食物列表")
     @GetMapping("getUserFoodList")
     @ResponseBody
-    public Object getUserFoodList(){
+    public Object getUserFoodList() {
 
         @Data
-        class kindFoods{
+        class kindFoods {
             SysDict type;
             UserFood[] typeFoodList;
-            kindFoods(SysDict type,UserFood[] userFoods){
+
+            kindFoods(SysDict type, UserFood[] userFoods) {
                 this.type = type;
                 this.typeFoodList = userFoods;
             }
@@ -77,50 +78,74 @@ public class FoodController {
         List<String> foodtypesID = new ArrayList<>();
         List<kindFoods> foodsList = new ArrayList<>();
 
-        try{
-            List<Map<String,Object>> types = foodService.getAllType();
-            for (int i = 0 ; i < types.size();i++){
+        try {
+            List<Map<String, Object>> types = foodService.getAllType();
+            for (int i = 0; i < types.size(); i++) {
                 foodtypesID.add(types.get(i).get("foodType").toString());
             }
-            for (int i = 0; i< foodtypesID.size();i++){
+            for (int i = 0; i < foodtypesID.size(); i++) {
                 System.out.println(foodtypesID.get(i));
                 UserFood[] userFoods = foodService.getFoodsByType(foodtypesID.get(i));
-                foodsList.add(new kindFoods(sysDictService.selectByPrimaryKey(foodtypesID.get(i)),userFoods));
+                foodsList.add(new kindFoods(sysDictService.selectByPrimaryKey(foodtypesID.get(i)), userFoods));
             }
 
-            return new AjaxMessage().Set(MsgType.Success,"获取食品列表成功", foodsList);
-        }catch (Exception e){
+            return new AjaxMessage().Set(MsgType.Success, "获取食品列表成功", foodsList);
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return new AjaxMessage().Set(MsgType.Error,"获取食品列表失败");
+        return new AjaxMessage().Set(MsgType.Error, "获取食品列表失败");
     }
 
-    @PostMapping("/addNewUserFood")
-    @ResponseBody
-    public Object addNewFood(
-            @RequestBody
-            UserFood userFood
-    ){
-        return new AjaxMessage().Set(MsgType.Success, "Just For Model");
-    }
-
-    @ApiOperation(value = "(店铺管理模块)添加新的食品分类")
-    @PostMapping("/addNewType")
+    /**
+     * @author zm
+     * @param userId
+     * @param foodTypeNameCn
+     * @param foodTypeNameEn
+     * @param sortNum
+     * @return
+     */
+    @ApiOperation(value = "添加新的食品分类")
+    @PostMapping("/addFoodType")
     @ResponseBody
     public Object addNewType(
-            @ApiParam(name = "newFoodType", value = "新的Food种类(中文)", required = true,type = "SysDict")
-            @RequestBody
-                    SysDict newFoodType
+            @ApiParam(name = "userId", value = "商家用户id", required = true, type = "String")
+            @RequestParam(value = "userId")
+                    String userId,
+            @ApiParam(name = "foodTypeNameCn", value = "新食品种类名称(中文)", required = true, type = "String")
+            @RequestParam(value = "foodTypeNameCn")
+                    String foodTypeNameCn,
+            @ApiParam(name = "foodTypeNameEn", value = "新食品种类名称(英文)", required = true, type = "String")
+            @RequestParam(value = "foodTypeNameEn")
+                    String foodTypeNameEn,
+            @ApiParam(name = "sortNum", value = "分类排序号", required = true, type = "Integer")
+            @RequestParam(value = "sortNum")
+                    Integer sortNum,
+            @ApiParam(name = "remark", value = "食品分类的备注", required = false, type = "String")
+            @RequestParam(value = "remark")
+                    String remark
     ) {
-       Date nowDate=new Date();
-       newFoodType.setId(UUID.randomUUID().toString());
-       newFoodType.setCreateDate(nowDate);
-       newFoodType.setModifyDate(nowDate);
-       newFoodType.setDictType(newFoodType.getDictType());
-       newFoodType.setSort(sysDictService.countAllRecords()+1);
-       try {
+        SysUser storeUser = userService.selectByPrimaryKey(userId);
+        if(storeUser == null){
+            return new AjaxMessage().Set(MsgType.Error, "商家用户不存在");
+        }
+
+        Date nowDate = new Date();
+        SysDict newFoodType = new SysDict();
+        newFoodType.setId(UUID.randomUUID().toString());
+        newFoodType.setCreateUserId(userId);
+        newFoodType.setModifyUserId(userId);
+        newFoodType.setCreateDate(nowDate);
+        newFoodType.setModifyDate(nowDate);
+        newFoodType.setDictType("food_type");
+        newFoodType.setSort(sortNum);
+        newFoodType.setNameCn(foodTypeNameCn);
+        newFoodType.setNameEn(foodTypeNameEn);
+        if(remark != null && !remark.equals("")){
+            newFoodType.setRemark(remark);
+        }
+        try {
             sysDictService.insertSelective(newFoodType);
-            return new AjaxMessage().Set(MsgType.Success, "添加食品分类成功");
+            return new AjaxMessage().Set(MsgType.Success, "添加食品分类成功",newFoodType);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -128,44 +153,70 @@ public class FoodController {
     }
 
 
-    @ApiOperation(value = "(店铺管理模块)添加新食物")
+    /**
+     * @author zm
+     * @param userId
+     * @param foodName
+     * @param foodPrice
+     * @param foodType
+     * @param foodMaterial
+     * @return
+     */
+    @ApiOperation(value = "添加新食品")
     @PostMapping("/addNewFood")
     @ResponseBody
     public Object addNewFood(
-            @ApiParam(name = "newFood", value = "新的食物(需要设置foodType)", required = true, type = "Food")
-            @RequestBody
-                    Food newFood
-    ) {
-        /*user的openId在暂存在newFood中的createId中*/
-        String openId = newFood.getCreateUserId();
+            @ApiParam(name = "userId", value = "商家的用户id", required = true, type = "String")
+            @RequestParam("userId")
+                    String userId,
+            @ApiParam(name = "foodName", value = "新食品名称", required = true, type = "String")
+            @RequestParam("foodName")
+                    String foodName,
+            @ApiParam(name = "foodPrice", value = "新食品价格", required = true, type = "Double")
+            @RequestParam("foodPrice")
+                    Double foodPrice,
+            @ApiParam(name = "foodType", value = "新食品的种类(字典项id)", required = true, type = "String")
+            @RequestParam("foodType")
+                    String foodType,
+            @ApiParam(name = "foodMaterial", value = "新食品的原料", required = true, type = "String")
+            @RequestParam("foodMaterial")
+                    String foodMaterial
 
+    ) {
         /*获取店家*/
-        SysUser storeUser = userService.selectByPrimaryKey(newFood.getCreateUserId());
-        System.out.println(storeUser);
+        SysUser storeUser = userService.selectByPrimaryKey(userId);
 
         if (storeUser != null) {
             try {
                 /*food表插入记录*/
                 Date tmpDate = new Date();
+                Food newFood = new Food();
                 newFood.setId(UUID.randomUUID().toString());
-                newFood.setCreateUserId(newFood.getCreateUserId());
-                newFood.setModifyUserId(newFood.getModifyUserId());
+
+                newFood.setFoodName(foodName);
+                newFood.setFoodPrice(foodPrice);
+                newFood.setFoodType(foodType);
+                newFood.setFoodMaterial(foodMaterial);
+
+                newFood.setCreateUserId(userId);
+                newFood.setModifyUserId(userId);
                 newFood.setCreateDate(tmpDate);
                 newFood.setModifyDate(tmpDate);
+
                 foodService.addNewFood(newFood);
 
                 /*添加关联记录*/
                 MapUserFood userFoodMap = new MapUserFood();
                 userFoodMap.setId(UUID.randomUUID().toString());
-                userFoodMap.setUserId(storeUser.getId());
+                userFoodMap.setUserId(userId);
                 userFoodMap.setFoodId(newFood.getId());
-                userFoodMap.setCreateUserId(storeUser.getId());
-                userFoodMap.setModifyUserId(storeUser.getId());
-
+                userFoodMap.setCreateUserId(userId);
+                userFoodMap.setModifyUserId(userId);
                 userFoodMap.setCreateDate(tmpDate);
                 userFoodMap.setModifyDate(tmpDate);
+
                 mapUserFoodMapper.insertSelective(userFoodMap);
-                return new AjaxMessage().Set(MsgType.Success, "新增Food成功");
+                return new AjaxMessage().Set(MsgType.Success, "新增Food成功", newFood);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -182,16 +233,16 @@ public class FoodController {
                     String foodId
     ) {
         try {
-            if(foodMapper.selectByFoodId(foodId)==null){
-                return new AjaxMessage().Set(MsgType.Success,"该食物不存在");
+            if (foodMapper.selectByFoodId(foodId) == null) {
+                return new AjaxMessage().Set(MsgType.Success, "该食物不存在");
             }
             foodMapper.deleteByPrimaryKey(foodId);
-            return new AjaxMessage().Set(MsgType.Success,"成功删除食物");
-    }catch (Exception e){
-        e.printStackTrace();
+            return new AjaxMessage().Set(MsgType.Success, "成功删除食物");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new AjaxMessage().Set(MsgType.Success, "删除食物失败");
     }
-        return new AjaxMessage().Set(MsgType.Success,"删除食物失败");
-}
 
     @ApiOperation(value = "商家更新某一个食品的信息")
     @PostMapping("/updateOneFood")
@@ -203,15 +254,15 @@ public class FoodController {
     ) {
         try {
             //先判断food是否存在
-            if(foodMapper.selectByFoodId(food.getId())==null){
-                return new AjaxMessage().Set(MsgType.Success,"不存在此食物");
+            if (foodMapper.selectByFoodId(food.getId()) == null) {
+                return new AjaxMessage().Set(MsgType.Success, "不存在此食物");
             }
             foodMapper.updateByPrimaryKeySelective(food);
-            return new AjaxMessage().Set(MsgType.Success,"更新食物成功");
-        }catch (Exception e){
+            return new AjaxMessage().Set(MsgType.Success, "更新食物成功");
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return new AjaxMessage().Set(MsgType.Success,"更新食物失败");
+        return new AjaxMessage().Set(MsgType.Success, "更新食物失败");
     }
 
     @ApiOperation(value = "商家删除某一类的食物")
@@ -224,10 +275,10 @@ public class FoodController {
     ) {
         try {
             foodMapper.deleteByFoodType(foodType);
-            return new AjaxMessage().Set(MsgType.Success,"删除此类食物成功");
-        }catch (Exception e){
+            return new AjaxMessage().Set(MsgType.Success, "删除此类食物成功");
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return new AjaxMessage().Set(MsgType.Success,"删除此类食物失败");
+        return new AjaxMessage().Set(MsgType.Success, "删除此类食物失败");
     }
 }
