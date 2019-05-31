@@ -1,8 +1,10 @@
 package com.ccorder.ordersystem.controller;
 
+import com.ccorder.ordersystem.entity.Address;
 import com.ccorder.ordersystem.entity.OrderTable;
 import com.ccorder.ordersystem.entity.SysUser;
 import com.ccorder.ordersystem.entity.mapEntity.MapOrderFood;
+import com.ccorder.ordersystem.mapper.AddressMapper;
 import com.ccorder.ordersystem.mapper.FoodMapper;
 import com.ccorder.ordersystem.mapper.OrderTableMapper;
 import com.ccorder.ordersystem.mapper.SysUserMapper;
@@ -17,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.bind.SchemaOutputResolver;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -44,6 +47,9 @@ public class BusinessOrderController {
     @Autowired
     private SysUserMapper sysUserMapper;
 
+    @Autowired
+    private AddressMapper addressMapper;
+
     //商家对订单状态的修改
     @ApiOperation(value = "订单状态的修改")
     @PostMapping("/changeOrderState")
@@ -66,9 +72,17 @@ public class BusinessOrderController {
     @ResponseBody
     public Object inquiry(){
         try{
-            OrderTable[] orderTables=orderTableMapper.getBusinessAllOrder();
+            class OrderAll{
+                OrderTable[] orderTables=null;
+                List<Address> addresses=null;
+            }
+            OrderAll orderall=new OrderAll();
+            orderall.orderTables=orderTableMapper.getBusinessAllOrder();
+            for (OrderTable orderTable : orderall.orderTables) {
+                orderall.addresses.add(addressMapper.selectByAddressIdGetAddress(orderTable.getAddress()));
+            }
             return new AjaxMessage().Set(MsgType.Success,
-                    "成功查询商家历史订单",orderTables);
+                    "成功查询商家历史订单",orderall);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -91,6 +105,7 @@ public class BusinessOrderController {
             List<Integer> foodAmounts=null;
             OrderTable oneOrder=null;
             double shipFee=0;
+            Address address=null;
         }
         try {
             List<String> foodNames=new ArrayList<String>();
@@ -99,6 +114,11 @@ public class BusinessOrderController {
             //先找到该订单
             OrderTable theOrder=orderTableMapper.selectByPrimaryKey(orderId);
             List<String> foodIdList=mapOrderFoodMapper.selectByOrderIdGetFoodId(orderId);
+            //获取地址
+            System.out.println(theOrder.getAddress());
+
+            Address address=addressMapper.selectByAddressIdGetAddress(theOrder.getAddress());
+            System.out.println(address);
             for(String foodId:foodIdList){
                 //返回该顶单的食物名称（food）
                 foodNames.add(foodMapper.selectByFoodIdGetFoodName(foodId));
@@ -112,6 +132,7 @@ public class BusinessOrderController {
             one.setFoodNames(foodNames);
             one.setFoodPrices(foodPrices);
             one.setFoodAmounts(foodAmounts);
+            one.setAddress(address);
             one.setShipFee(sysUserMapper.selectByStatusGetShipFee());
             return new AjaxMessage().Set(MsgType.Success,
                     "查询该订单成功",one);
