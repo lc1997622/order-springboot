@@ -11,10 +11,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,12 +75,15 @@ public class OrderController {
 
     }
 
-    /*@ApiOperation(value = "用户生成新的订单")
+    @ApiOperation(value = "用户生成新的订单")
     @PostMapping("/generateNewOrder")
     @ResponseBody
     public Object generateNewOrder(
-            @ApiParam(name = "userId", value = "用户id", required = true, type = "String")
-            @RequestParam("userId")
-                    String orderId
-    )*/
+            @ApiParam(name = "newOrder", value = "新的订单信息", required = true, type = "OrderTable")
+            @RequestBody
+                   OrderTable newOrder
+
+    ){
+        return null;
+    }
 }

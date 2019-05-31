@@ -121,7 +121,7 @@ public class BusinessOrderController {
         return new AjaxMessage().Set(MsgType.Success,"查询该订单失败");
     }
 
-    @ApiOperation(value = "商家——新订单的插入")
+   /* @ApiOperation(value = "商家——新订单的插入")
     @PostMapping("/addNewOrder")
     @ResponseBody
     public Object addOrder(
@@ -173,5 +173,5 @@ public class BusinessOrderController {
             e.printStackTrace();
         }
         return new AjaxMessage().Set(MsgType.Error, "添加订单失败");
-    }
+    }*/
 }

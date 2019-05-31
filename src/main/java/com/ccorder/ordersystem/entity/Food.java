@@ -35,7 +35,7 @@ public class Food {
             required = false, allowEmptyValue = true)
     private String foodMaterial;
 
-    /** 订单查询的时候用到，其余时候用不上*/
+    /** 订单查询和创建的时候用到，其余时候用不上*/
     @ApiModelProperty(value = "食物数量", name = "foodAmount", dataType = "Integer", example = "10",
             required = false, allowEmptyValue = true)
     private Integer foodAmount;
