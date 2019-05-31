@@ -50,10 +50,10 @@ public class BusinessOrderController {
     @ResponseBody
     public Object changeOrderStatus(
             @ApiParam(name = "orderId", value = "订单编号", required = true,type = "String")
-            @RequestParam
+            @RequestParam(value = "orderId")
                     String orderId,
             @ApiParam(name = "status", value = "该订单的状态", required = true,type = "Integer")
-            @RequestParam
+            @RequestParam(value = "status")
                     Integer status
     ){
         orderTableMapper.updateOrderstate(orderId, status);
@@ -81,7 +81,7 @@ public class BusinessOrderController {
     @ResponseBody
     public Object inquiry(
             @ApiParam(name = "orderId", value = "订单的id", required = true,type = "String")
-            @RequestParam
+            @RequestParam(value = "orderId")
                     String orderId
     ){
         @Data
@@ -129,13 +129,13 @@ public class BusinessOrderController {
             @RequestBody
                     OrderTable oneOrder,
             @ApiParam(name = "foodIds", value = "该订单的foodid列表", required = true,type = "List<String>")
-            @RequestParam
+            @RequestParam(value = "foodIds")
                     List<String> foodIds,
             @ApiParam(name = "foodAmounts", value = "该订单的每种食物数量列表", required = true,type = "List<Integer>")
-            @RequestParam
+            @RequestParam(value = "foodAmounts")
                     List<Integer> foodAmounts,
             @ApiParam(name = "foodScores", value = "该订单的每种食物的评分", required = true,type = "List<Double>")
-            @RequestParam
+            @RequestParam(value = "foodScores")
                     List<Double> foodScores
     ){
         OrderTable newOrder=new OrderTable();
