@@ -68,8 +68,6 @@ public class OrderController {
 
             List<Food> foodList = foodService.getFoodsByOrderId(orderId);
 
-            System.out.println(foodList);
-
             orderNow.setFoodList(foodList);
 
             return new AjaxMessage().Set(MsgType.Success,"获取订单详情成功",orderNow);
@@ -79,4 +77,13 @@ public class OrderController {
         return new AjaxMessage().Set(MsgType.Error,"获取订单详情失败",null);
 
     }
+
+    /*@ApiOperation(value = "用户生成新的订单")
+    @PostMapping("/generateNewOrder")
+    @ResponseBody
+    public Object generateNewOrder(
+            @ApiParam(name = "userId", value = "用户id", required = true, type = "String")
+            @RequestParam("userId")
+                    String orderId
+    )*/
 }

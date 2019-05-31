@@ -49,12 +49,12 @@ public class UserInoController {
     @Autowired
     AddressService addressService;
 
-    @ApiOperation(value = "获取客户端用户信息")
+    @ApiOperation(value = "获取用户信息")
     @PostMapping("getUserInfo")
     @ResponseBody
     public Object getUserInfo(
             @ApiParam(name = "userId", value = "用户的微信ID", required = true, type = "String")
-            @RequestParam
+            @RequestParam("userId")
                     String userId
     ) {
         try {

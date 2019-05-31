@@ -58,14 +58,13 @@ public class FoodService {
     public List<Food> getFoodsByOrderId(String orderId) {
         List<StringAndInteger> mapFoodAmount = new ArrayList<>();
         List<Food> foodList = new ArrayList<>();
+        Food tmpFood = new Food();
+
         /*获取foodId和amount*/
         mapFoodAmount = orderFoodMapper.selectFoodIdAndAmountByOrderId(orderId);
         for (StringAndInteger foodAndAmount : mapFoodAmount) {
-            Food tmpFood = new Food();
-
             /*根据id获取food*/
             tmpFood = foodMapper.selectByPrimaryKey(foodAndAmount.getStringParam());
-            System.out.println(foodAndAmount);
             tmpFood.setFoodAmount(foodAndAmount.getIntegerParam());
             foodList.add(tmpFood);
         }
