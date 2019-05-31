@@ -121,13 +121,22 @@ public class BusinessOrderController {
         return new AjaxMessage().Set(MsgType.Success,"查询该订单失败");
     }
 
-    @ApiOperation(value = "商家——新订单的插入(插入order表)")
+    @ApiOperation(value = "商家——新订单的插入")
     @PostMapping("/addNewOrder")
     @ResponseBody
     public Object addOrder(
             @ApiParam(name = "oneOrder", value = "新的order的订单", required = true,type = "OrderTable")
             @RequestBody
-                    OrderTable oneOrder
+                    OrderTable oneOrder,
+            @ApiParam(name = "foodIds", value = "该订单的foodid列表", required = true,type = "List<String>")
+            @RequestParam
+                    List<String> foodIds,
+            @ApiParam(name = "foodAmounts", value = "该订单的每种食物数量列表", required = true,type = "List<Integer>")
+            @RequestParam
+                    List<Integer> foodAmounts,
+            @ApiParam(name = "foodScores", value = "该订单的每种食物的评分", required = true,type = "List<Double>")
+            @RequestParam
+                    List<Double> foodScores
     ){
         OrderTable newOrder=new OrderTable();
         Date date=new Date();
@@ -145,24 +154,19 @@ public class BusinessOrderController {
         newOrder.setAddress(oneOrder.getAddress());
         try {
             orderTableMapper.insertSelective(newOrder);
-            return new AjaxMessage().Set(MsgType.Success,"成功添加订单");
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return new AjaxMessage().Set(MsgType.Error, "添加订单失败");
-    }
-
-    @ApiOperation(value = "商家——新订单的插入（插入mapOrderFood表）")
-    @PostMapping("/addNewMapOrderFood")
-    @ResponseBody
-    public Object addOrder(
-            @ApiParam(name = "oneMapOrderFood", value = "新的mapOrderFood的订单", required = true,type = "MapOrderFood")
-            @RequestBody
-                    MapOrderFood oneMapOrderFood
-    ){
-        try {
-
-            mapOrderFoodMapper.insert(oneMapOrderFood);
+            for(int i=0;i<foodIds.size();i++){
+                MapOrderFood  oneMapOrderFood=new MapOrderFood();
+                oneMapOrderFood.setFoodId(foodIds.get(i));
+                oneMapOrderFood.setId(UUID.randomUUID().toString());
+                oneMapOrderFood.setModifyDate(date);
+                oneMapOrderFood.setCreateDate(date);
+                oneMapOrderFood.setCreateUserId(newOrder.getCreateUserId());
+                oneMapOrderFood.setModifyUserId(newOrder.getModifyUserId());
+                oneMapOrderFood.setAmount(foodAmounts.get(i));
+                oneMapOrderFood.setScore(foodScores.get(i));
+                oneMapOrderFood.setStatus(0);
+                mapOrderFoodMapper.insertSelective(oneMapOrderFood);
+            }
             return new AjaxMessage().Set(MsgType.Success,"成功添加订单");
         }catch (Exception e){
             e.printStackTrace();
