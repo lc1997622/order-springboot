@@ -182,12 +182,15 @@ public class FoodController {
     @ResponseBody
     public Object deleteOneFood(
             @ApiParam(name = "foodId", value = "需要删除的食品的id", required = true, type = "String")
-            @RequestBody
+            @RequestParam
                     String foodId
     ) {
         try {
-        foodMapper.deleteByPrimaryKey(foodId);
-        return new AjaxMessage().Set(MsgType.Success,"成功删除食物");
+            if(foodMapper.selectByFoodId(foodId)==null){
+                return new AjaxMessage().Set(MsgType.Success,"该食物不存在");
+            }
+            foodMapper.deleteByPrimaryKey(foodId);
+            return new AjaxMessage().Set(MsgType.Success,"成功删除食物");
     }catch (Exception e){
         e.printStackTrace();
     }
@@ -207,7 +210,7 @@ public class FoodController {
             if(foodMapper.selectByFoodId(food.getId())==null){
                 return new AjaxMessage().Set(MsgType.Success,"不存在此食物");
             }
-            foodMapper.updateByPrimaryKey(food);
+            foodMapper.updateByPrimaryKeySelective(food);
             return new AjaxMessage().Set(MsgType.Success,"更新食物成功");
         }catch (Exception e){
             e.printStackTrace();
@@ -220,7 +223,7 @@ public class FoodController {
     @ResponseBody
     public Object deleteOneTypeFood(
             @ApiParam(name = "foodType", value = "需要更新的食品", required = true, type = "String")
-            @RequestBody
+            @RequestParam
                     String foodType
     ) {
         try {
