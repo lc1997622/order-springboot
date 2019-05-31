@@ -8,6 +8,7 @@
         <result column="pay_method" jdbcType="VARCHAR" property="payMethod"/>
         <result column="delivery_time" jdbcType="TIMESTAMP" property="deliveryTime"/>
         <result column="address" jdbcType="VARCHAR" property="address"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
         <result column="actual_payment" jdbcType="FLOAT" property="actualPayment"/>
         <result column="score" jdbcType="FLOAT" property="score"/>
         <result column="create_user_id" jdbcType="VARCHAR" property="createUserId"/>
@@ -19,7 +20,7 @@
 
     <sql id="Base_Column_List">
         <!--@mbg.generated-->
-        id, order_num, pay_method, delivery_time, address, actual_payment, score,create_user_id,
+        id, order_num, pay_method, delivery_time, address,remark, actual_payment, score,create_user_id,
         create_date, modify_user_id, modify_date, `status`
     </sql>
 
@@ -40,11 +41,11 @@
     <insert id="insert" parameterType="com.ccorder.ordersystem.entity.OrderTable">
         <!--@mbg.generated-->
         insert into order_table (id, order_num, pay_method,
-        delivery_time,address, actual_payment,score,
+        delivery_time,address, remark,actual_payment,score,
         create_user_id, create_date, modify_user_id,
         modify_date, `status`)
         values (#{id,jdbcType=VARCHAR}, #{orderNum,jdbcType=VARCHAR}, #{payMethod,jdbcType=VARCHAR},
-        #{deliveryTime,jdbcType=TIMESTAMP}, #{address,jdbcType=VARCHAR}, #{actualPayment,jdbcType=FLOAT},
+        #{deliveryTime,jdbcType=TIMESTAMP}, #{address,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR} , #{actualPayment,jdbcType=FLOAT},
         #{createUserId,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{modifyUserId,jdbcType=VARCHAR},
         #{modifyDate,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER} )
     </insert>
@@ -66,6 +67,9 @@
             </if>
             <if test="address != null">
                 address,
+            </if>
+            <if test="remark != null">
+                remark,
             </if>
             <if test="actualPayment != null">
                 actual_payment,
@@ -105,6 +109,9 @@
             <if test="address != null">
                 #{address,jdbcType=VARCHAR},
             </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR}
+            </if>
             <if test="actualPayment != null">
                 #{actualPayment,jdbcType=FLOAT},
             </if>
@@ -142,6 +149,9 @@
             <if test="address != null">
                 address = #{address,jdbcType=VARCHAR},
             </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR}
+            </if>
             <if test="actualPayment != null">
                 actual_payment = #{actualPayment,jdbcType=FLOAT},
             </if>
@@ -173,6 +183,7 @@
         pay_method = #{payMethod,jdbcType=VARCHAR},
         delivery_time = #{deliveryTime,jdbcType=TIMESTAMP},
         address = #{address,jdbcType=VARCHAR},
+        remark = #{remark,jdbcType=VARCHAR} ,
         actual_payment = #{actualPayment,jdbcType=FLOAT},
         score = #{score,jdbcType=FLOAT},
         create_user_id = #{createUserId,jdbcType=VARCHAR},
