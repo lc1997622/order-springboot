@@ -70,7 +70,8 @@ public class UserInoController {
     @PostMapping("addNewUser")
     @ResponseBody
     protected Object addNewUser(
-            @ApiParam(name = "clientUser", value = "用户信息", required = true, type = "ClientUser")
+            @ApiParam(name = "clientUser", value = "用户信息", type = "ClientUser")
+            @RequestBody
                     ClientUser clientUser
     ) {
         SysUser sysUser = new SysUser();
@@ -208,23 +209,30 @@ public class UserInoController {
     @ResponseBody
     protected Object updateUserInfo(
             @ApiParam(name = "userId", value = "用户微信Id", required = true, type = "String")
+            @RequestParam("userId")
                     String userId,
             @ApiParam(name = "userName", value = "用户名", type = "String")
-                    String userName,
+            @RequestParam("username")
+                    String username,
             @ApiParam(name = "realName", value = "用户真名", type = "String")
+            @RequestParam("realName")
                     String realName,
             @ApiParam(name = "nickName", value = "用户昵称", type = "String")
+            @RequestParam("nickName")
                     String nickName,
             @ApiParam(name = "sex", value = "用户性别", type = "String")
+            @RequestParam("sex")
                     Integer sex,
             @ApiParam(name = "telephone", value = "用户电话", type = "Integer")
+            @RequestParam("telephone")
                     String telephone,
             @ApiParam(name = "email", value = "用户邮箱", type = "String")
+            @RequestParam("email")
                     String email
     ) {
         try {
             SysUser sysUser = new SysUser();
-            sysUser.setUsername(userName);
+            sysUser.setUsername(username);
             sysUser.setSex(sex);
             sysUser.setTelephone(telephone);
             sysUser.setRealName(realName);
