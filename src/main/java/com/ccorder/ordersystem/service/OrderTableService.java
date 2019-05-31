@@ -4,6 +4,9 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import com.ccorder.ordersystem.mapper.OrderTableMapper;
 import com.ccorder.ordersystem.entity.OrderTable;
+
+import java.util.List;
+
 @Service
 public class OrderTableService{
 
@@ -40,4 +43,7 @@ public class OrderTableService{
         return orderTableMapper.updateByPrimaryKey(record);
     }
 
+    public List<OrderTable> getUserOrders(String userId){
+        return orderTableMapper.selectByUserId(userId);
+    }
 }

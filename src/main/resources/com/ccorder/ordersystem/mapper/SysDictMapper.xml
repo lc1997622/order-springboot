@@ -188,4 +188,8 @@
         where name_en = #{nameEn,jdbcType=VARCHAR}
           and status = #{status}
     </select>
+    <select id="countAllRecords" resultType="int">
+      select count(ccorder.sys_dict.id)
+      from sys_dict
+    </select>
 </mapper>

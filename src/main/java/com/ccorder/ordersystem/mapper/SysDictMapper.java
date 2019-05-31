@@ -15,7 +15,7 @@ public interface SysDictMapper {
 
     int updateByPrimaryKey(SysDict record);
 
-
+    int countAllRecords();
     /**
      * 根据名字和状态查询返回sys_dict_type的id
      *

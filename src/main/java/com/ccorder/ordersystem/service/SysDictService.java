@@ -41,5 +41,9 @@ public class SysDictService {
         return sysDictMapper.updateByPrimaryKey(record);
     }
 
+    public int countAllRecords(){
+        return sysDictMapper.countAllRecords();
+    }
+
 }
 
