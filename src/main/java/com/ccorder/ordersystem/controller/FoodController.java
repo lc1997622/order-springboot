@@ -108,27 +108,18 @@ public class FoodController {
     @PostMapping("/addNewType")
     @ResponseBody
     public Object addNewType(
-            @ApiParam(name = "newFoodType", value = "新的Food种类(中文)", required = true,type = "String")
-            @RequestParam
-                    String newFoodType,
-            @ApiParam(name = "sortNum", value = "类别排序数字", required = true, type = "Integer")
-            @RequestParam
-                    Integer sortNum
+            @ApiParam(name = "newFoodType", value = "新的Food种类(中文)", required = true,type = "SysDict")
+            @RequestBody
+                    SysDict newFoodType
     ) {
-
-        /*获取食品类别的dict_type_id*/
-        String dictTypeId = dictMapper.selectByNameEnAndStatus("foodType", 0);
-        SysDict newSysDict = new SysDict();
-        newSysDict.setId(UUID.randomUUID().toString());
-        newSysDict.setNameCn(newFoodType);
-        newSysDict.setSort(sortNum);
-
-        Date dateNow = new Date();
-        newSysDict.setCreateDate(dateNow);
-        newSysDict.setModifyDate(dateNow);
-
-        try {
-            dictMapper.insertSelective(newSysDict);
+       Date nowDate=new Date();
+       newFoodType.setId(UUID.randomUUID().toString());
+       newFoodType.setCreateDate(nowDate);
+       newFoodType.setModifyDate(nowDate);
+       newFoodType.setDictType(newFoodType.getDictType());
+       newFoodType.setSort(sysDictService.countAllRecords()+1);
+       try {
+            sysDictService.insertSelective(newFoodType);
             return new AjaxMessage().Set(MsgType.Success, "添加食品分类成功");
         } catch (Exception e) {
             e.printStackTrace();
@@ -155,7 +146,12 @@ public class FoodController {
         if (storeUser != null) {
             try {
                 /*food表插入记录*/
+                Date tmpDate = new Date();
                 newFood.setId(UUID.randomUUID().toString());
+                newFood.setCreateUserId(newFood.getCreateUserId());
+                newFood.setModifyUserId(newFood.getModifyUserId());
+                newFood.setCreateDate(tmpDate);
+                newFood.setModifyDate(tmpDate);
                 foodService.addNewFood(newFood);
 
                 /*添加关联记录*/
@@ -165,7 +161,7 @@ public class FoodController {
                 userFoodMap.setFoodId(newFood.getId());
                 userFoodMap.setCreateUserId(storeUser.getId());
                 userFoodMap.setModifyUserId(storeUser.getId());
-                Date tmpDate = new Date();
+
                 userFoodMap.setCreateDate(tmpDate);
                 userFoodMap.setModifyDate(tmpDate);
                 mapUserFoodMapper.insertSelective(userFoodMap);
