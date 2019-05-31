@@ -154,17 +154,18 @@ public class BusinessOrderController {
         newOrder.setAddress(oneOrder.getAddress());
         try {
             orderTableMapper.insertSelective(newOrder);
+            MapOrderFood  oneMapOrderFood=new MapOrderFood();
+            oneMapOrderFood.setModifyDate(date);
+            oneMapOrderFood.setOrderId(newOrder.getId());
+            oneMapOrderFood.setCreateDate(date);
+            oneMapOrderFood.setCreateUserId(newOrder.getCreateUserId());
+            oneMapOrderFood.setModifyUserId(newOrder.getModifyUserId());
+            oneMapOrderFood.setStatus(0);
             for(int i=0;i<foodIds.size();i++){
-                MapOrderFood  oneMapOrderFood=new MapOrderFood();
                 oneMapOrderFood.setFoodId(foodIds.get(i));
                 oneMapOrderFood.setId(UUID.randomUUID().toString());
-                oneMapOrderFood.setModifyDate(date);
-                oneMapOrderFood.setCreateDate(date);
-                oneMapOrderFood.setCreateUserId(newOrder.getCreateUserId());
-                oneMapOrderFood.setModifyUserId(newOrder.getModifyUserId());
                 oneMapOrderFood.setAmount(foodAmounts.get(i));
                 oneMapOrderFood.setScore(foodScores.get(i));
-                oneMapOrderFood.setStatus(0);
                 mapOrderFoodMapper.insertSelective(oneMapOrderFood);
             }
             return new AjaxMessage().Set(MsgType.Success,"成功添加订单");
