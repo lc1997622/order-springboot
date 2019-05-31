@@ -2,6 +2,9 @@ package com.ccorder.ordersystem.controller;
 
 import com.ccorder.ordersystem.entity.Address;
 import com.ccorder.ordersystem.entity.SysUser;
+import com.ccorder.ordersystem.entity.mapEntity.MapUserAddress;
+import com.ccorder.ordersystem.service.AddressService;
+import com.ccorder.ordersystem.service.MapUserAddressService;
 import com.ccorder.ordersystem.service.SysUserService;
 import com.ccorder.ordersystem.sys.dto.AjaxMessage;
 import com.ccorder.ordersystem.sys.dto.MsgType;
@@ -14,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author zm
@@ -27,6 +31,36 @@ public class StoreController {
 
     @Autowired
     private SysUserService userService;
+
+    @Autowired
+    private AddressService addressService;
+
+    @Autowired
+    private SysUserService sysUserService;
+
+    @Autowired
+    private MapUserAddressService mapUserAddressService;
+
+    @ApiOperation(value = "获取商家信息")
+    @PostMapping(value = "getStoreInfo")
+    @ResponseBody
+    public Object getBusiness(
+            @ApiParam(name = "userId", value = "商家的用户id", required = true, type = "String")
+            @RequestParam(value = "userId")
+                    String userId
+    ) {
+        try {
+            //返回商家业务信息
+            SysUser store = sysUserService.selectByPrimaryKey(userId);
+            //获取商家地址
+            String storeAddressId = mapUserAddressService.selectByUserId(userId).get(0).getAddressId();
+            store.setStoreAddress(addressService.selectByPrimaryKey(storeAddressId));
+            return new AjaxMessage().Set(MsgType.Success, "成功返回商家信息", store);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new AjaxMessage().Set(MsgType.Success, "获取商家信息失败",null);
+    }
 
     @ApiOperation(value = "修改商家信息(修改成功后返回更新后的商家)")
     @PostMapping("updateStoreInfo")
@@ -54,11 +88,14 @@ public class StoreController {
         try {
             /*获取原有店铺user*/
             SysUser storeNow = userService.selectByPrimaryKey(storeId);
+            /*获取店铺原有地址*/
+            String addressId = mapUserAddressService.selectByUserId(storeId).get(0).getAddressId();
+            Address oldAddress = addressService.selectByPrimaryKey(addressId);
+            /*修改店铺地址*/
+            oldAddress.setAddressName(storeAddress);
+            addressService.updateByPrimaryKey(oldAddress);
             /*更新用户信息*/
             storeNow.setRealName(storeName);
-            Address newAddress = new Address();
-            newAddress.setAddressName(storeAddress);
-            storeNow.setStoreAddress(newAddress);
             storeNow.setShipFee(shipFee);
             storeNow.setStatus(shopStatus);
             storeNow.setBusinessIntroduction(storeIntroduce);

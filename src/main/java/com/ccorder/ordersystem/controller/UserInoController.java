@@ -103,20 +103,21 @@ public class UserInoController {
                 mapUserRoleService.insert(mapUserRole);
                 sysRole.setId(UUID.randomUUID().toString());
                 sysRoleService.insert(sysRole);
-                return new AjaxMessage().Set(MsgType.Success,"插入新用户成功");
+                return new AjaxMessage().Set(MsgType.Success, "插入新用户成功");
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return new AjaxMessage().Set(MsgType.Error,"插入新用户失败");
+        return new AjaxMessage().Set(MsgType.Error, "插入新用户失败");
     }
 
     @ApiOperation(value = "获取用户地址")
     @PostMapping("getUserAddress")
     @ResponseBody
     protected Object getUserAddress(
-            @ApiParam(name = "userId",value = "用户微信ID",required = true,type = "String")
+            @ApiParam(name = "userId", value = "用户微信ID", required = true, type = "String")
+            @RequestParam("userId")
                     String userId
     ) {
         List<Address> addresses = new ArrayList<>();
@@ -206,24 +207,24 @@ public class UserInoController {
     @PostMapping("updateUserInfo")
     @ResponseBody
     protected Object updateUserInfo(
-            @ApiParam(name = "userId",value = "用户微信Id",required = true,type = "String")
-            String userId,
-            @ApiParam(name = "userName",value = "用户名",type = "String")
-            String username,
-            @ApiParam(name = "realName",value = "用户真名",type = "String")
-            String realName,
-            @ApiParam(name = "nickName",value = "用户昵称",type = "String")
-            String nickName,
-            @ApiParam(name = "sex",value = "用户性别",type = "String")
-            Integer sex,
-            @ApiParam(name = "telephone",value = "用户电话",type = "Integer")
-            String telephone,
-            @ApiParam(name = "email",value = "用户邮箱",type = "String")
-            String email
-    ){
+            @ApiParam(name = "userId", value = "用户微信Id", required = true, type = "String")
+                    String userId,
+            @ApiParam(name = "userName", value = "用户名", type = "String")
+                    String userName,
+            @ApiParam(name = "realName", value = "用户真名", type = "String")
+                    String realName,
+            @ApiParam(name = "nickName", value = "用户昵称", type = "String")
+                    String nickName,
+            @ApiParam(name = "sex", value = "用户性别", type = "String")
+                    Integer sex,
+            @ApiParam(name = "telephone", value = "用户电话", type = "Integer")
+                    String telephone,
+            @ApiParam(name = "email", value = "用户邮箱", type = "String")
+                    String email
+    ) {
         try {
             SysUser sysUser = new SysUser();
-            sysUser.setUsername(username);
+            sysUser.setUsername(userName);
             sysUser.setSex(sex);
             sysUser.setTelephone(telephone);
             sysUser.setRealName(realName);
@@ -233,10 +234,10 @@ public class UserInoController {
 
             System.out.println(sysUser.getId());
             sysUserService.updateByPrimaryKeySelective(sysUser);
-            return new AjaxMessage().Set(MsgType.Success,"更新用户信息成功");
-        }catch (Exception e){
+            return new AjaxMessage().Set(MsgType.Success, "更新用户信息成功");
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return new AjaxMessage().Set(MsgType.Error,"更新用户信息失败");
+        return new AjaxMessage().Set(MsgType.Error, "更新用户信息失败");
     }
 }
