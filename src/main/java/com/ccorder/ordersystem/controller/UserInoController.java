@@ -59,6 +59,9 @@ public class UserInoController {
     ) {
         try {
             ClientUser clientUser = sysUserService.getClientUserInfo(userId);
+            if (clientUser == null) {
+                return new AjaxMessage().Set(MsgType.Error, "用户不存在");
+            }
             return new AjaxMessage().Set(MsgType.Success, "获取用户信息成功", clientUser);
         } catch (Exception e) {
             e.printStackTrace();
