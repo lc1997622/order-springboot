@@ -177,7 +177,7 @@
   <select id="selectByAddressIdGetAddress" resultMap="BaseResultMap">
     select <include refid="Base_Column_List"/>
     from ccorder.address
-    where ccorder.address.create_user_id=#{addressId,jdbcType=VARCHAR}
+    where ccorder.address.id=#{addressId,jdbcType=VARCHAR}
 
   </select>
 </mapper>
