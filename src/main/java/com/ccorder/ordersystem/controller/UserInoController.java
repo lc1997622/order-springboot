@@ -121,7 +121,7 @@ public class UserInoController {
     @ResponseBody
     protected Object getUserAddress(
             @ApiParam(name = "userId", value = "用户微信ID", required = true, type = "String")
-            @RequestParam("userId")
+            @RequestParam(value = "userId")
                     String userId
     ) {
         List<Address> addresses = new ArrayList<>();
