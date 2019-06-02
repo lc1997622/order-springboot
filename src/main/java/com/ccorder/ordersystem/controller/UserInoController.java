@@ -129,7 +129,9 @@ public class UserInoController {
             List<MapUserAddress> mapUserAddresses = mapUserAddressService.selectByUserId(userId);
             for (MapUserAddress userAddress : mapUserAddresses) {
                 Address address = addressService.selectByPrimaryKey(userAddress.getAddressId());
-                addresses.add(address);
+                if(address!=null) {
+                    addresses.add(address);
+                }
             }
             return new AjaxMessage().Set(MsgType.Success, "获取用户地址成功", addresses);
         } catch (Exception e) {

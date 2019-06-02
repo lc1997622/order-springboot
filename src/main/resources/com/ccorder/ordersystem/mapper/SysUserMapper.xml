@@ -50,7 +50,7 @@
     <sql id="Base_Column_List">
         <!--@mbg.generated-->
         id, username, `password`,account, real_name, nick_name, sex, telephone, email, birthday,
-        business_introduction, stars_num, start_time, end_time, create_user_id, create_time,
+        business_introduction, stars_num, ship_fee,start_time, end_time, create_user_id, create_time,
         modify_user_id, modify_time, `status`
     </sql>
 
