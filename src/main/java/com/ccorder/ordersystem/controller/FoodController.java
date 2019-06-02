@@ -119,10 +119,10 @@ public class FoodController {
                     String foodTypeNameEn,
             @ApiParam(name = "sortNum", value = "分类排序号", required = true, type = "Integer")
             @RequestParam(value = "sortNum")
-                    Integer sortNum,
-            @ApiParam(name = "remark", value = "食品分类的备注", required = false, type = "String")
+                    Integer sortNum
+            /*@ApiParam(name = "remark", value = "食品分类的备注", required = false, type = "String")
             @RequestParam(value = "remark")
-                    String remark
+                    String remark*/
     ) {
         SysUser storeUser = userService.selectByPrimaryKey(userId);
         if(storeUser == null){
@@ -140,9 +140,9 @@ public class FoodController {
         newFoodType.setSort(sortNum);
         newFoodType.setNameCn(foodTypeNameCn);
         newFoodType.setNameEn(foodTypeNameEn);
-        if(remark != null && !remark.equals("")){
+      /*  if(remark != null && !remark.equals("")){
             newFoodType.setRemark(remark);
-        }
+        }*/
         try {
             sysDictService.insertSelective(newFoodType);
             return new AjaxMessage().Set(MsgType.Success, "添加食品分类成功",newFoodType);
