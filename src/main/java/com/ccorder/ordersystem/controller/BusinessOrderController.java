@@ -19,11 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.bind.SchemaOutputResolver;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * @author htj
@@ -71,16 +68,22 @@ public class BusinessOrderController {
     @PostMapping("/historyInquiry")
     @ResponseBody
     public Object inquiry(){
-        try{
-            class OrderAll{
-                OrderTable[] orderTables=null;
-                List<Address> addresses=null;
+        @Data
+        class OrderAll{
+            OrderTable[] orderTables=null;
+            List<Address> addresses=null;
+            OrderAll(){
+                this.addresses=new ArrayList<Address>();
             }
+        }
+        try{
             OrderAll orderall=new OrderAll();
             orderall.orderTables=orderTableMapper.getBusinessAllOrder();
+            System.out.println(orderall.orderTables[0]);
             for (OrderTable orderTable : orderall.orderTables) {
                 orderall.addresses.add(addressMapper.selectByAddressIdGetAddress(orderTable.getAddress()));
             }
+            System.out.println(orderall.addresses.get(0));
             return new AjaxMessage().Set(MsgType.Success,
                     "成功查询商家历史订单",orderall);
         }catch (Exception e){
