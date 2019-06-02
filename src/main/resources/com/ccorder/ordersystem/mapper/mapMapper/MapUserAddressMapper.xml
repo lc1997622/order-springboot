@@ -38,9 +38,9 @@
     where id = #{id,jdbcType=VARCHAR}
   </delete>
 
-  <delete id="deleteByUserIdAndId" parameterType="java.lang.String">
-    delete from address
-    where user_id = #{userId,jdbcType=VARCHAR} and addreee_id = #{addressId,jdbcType=VARCHAR}
+  <delete id="deleteByUserIdAndId">
+    delete from map_user_address
+    where user_id = #{userId,jdbcType=VARCHAR} and address_id = #{addressId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.ccorder.ordersystem.entity.mapEntity.MapUserAddress">
     <!--@mbg.generated-->

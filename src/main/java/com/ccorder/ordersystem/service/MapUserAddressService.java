@@ -1,5 +1,6 @@
 package com.ccorder.ordersystem.service;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import com.ccorder.ordersystem.mapper.mapMapper.MapUserAddressMapper;
@@ -44,6 +45,6 @@ public class MapUserAddressService{
         return mapUserAddressMapper.updateByPrimaryKey(record);
     }
 
-    public int deleteByUserIdAndId(String userId,String addressId){return mapUserAddressMapper.deleteByUserIdAndId(userId,addressId);}
+    public int deleteByUserIdAndId(String userId, String addressId){return mapUserAddressMapper.deleteByUserIdAndId(userId,addressId);}
 
 }

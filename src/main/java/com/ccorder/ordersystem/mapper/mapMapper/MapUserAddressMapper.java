@@ -1,6 +1,7 @@
 package com.ccorder.ordersystem.mapper.mapMapper;
 
 import com.ccorder.ordersystem.entity.mapEntity.MapUserAddress;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -21,5 +22,5 @@ public interface MapUserAddressMapper {
 
     String selectByUserIdGetAddressId(String BusinessId);
 
-    int deleteByUserIdAndId(String userId,String addressId);
+    int deleteByUserIdAndId(@Param("userId")String userId, @Param("addressId") String addressId);
 }
