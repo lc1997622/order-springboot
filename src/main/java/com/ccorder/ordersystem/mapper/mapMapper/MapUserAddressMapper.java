@@ -20,4 +20,6 @@ public interface MapUserAddressMapper {
     List<MapUserAddress> selectByUserId(String userId);
 
     String selectByUserIdGetAddressId(String BusinessId);
+
+    int deleteByUserIdAndId(String userId,String addressId);
 }
