@@ -44,4 +44,6 @@ public class MapUserAddressService{
         return mapUserAddressMapper.updateByPrimaryKey(record);
     }
 
+    public int deleteByUserIdAndId(String userId,String addressId){return mapUserAddressMapper.deleteByUserIdAndId(userId,addressId);}
+
 }

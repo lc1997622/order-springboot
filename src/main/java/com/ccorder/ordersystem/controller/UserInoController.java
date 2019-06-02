@@ -251,4 +251,26 @@ public class UserInoController {
         }
         return new AjaxMessage().Set(MsgType.Error, "更新用户信息失败");
     }
+
+
+    @ApiOperation(value = "删除用户地址")
+    @PostMapping("deletUserAddress")
+    @ResponseBody
+    public Object deletUserAddress(
+            @ApiParam(name = "userId", value = "用户微信Id", required = true, type = "String")
+            @RequestParam("userId")
+                    String userId,
+            @ApiParam(name = "addressId", value = "地址Id", type = "String")
+            @RequestParam("addressId")
+                    String addressId
+    ){
+        try {
+            mapUserAddressService.deleteByUserIdAndId(userId,addressId);
+            addressService.deleteByPrimaryKey(addressId);
+            return new AjaxMessage().Set(MsgType.Success,"删除用户地址成功");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return new AjaxMessage().Set(MsgType.Error,"删除用户地址失败");
+    }
 }

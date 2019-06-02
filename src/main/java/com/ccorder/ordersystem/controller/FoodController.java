@@ -281,4 +281,5 @@ public class FoodController {
         }
         return new AjaxMessage().Set(MsgType.Success, "删除此类食物失败");
     }
+
 }
