@@ -48,6 +48,7 @@ public class FoodController {
 
     @Autowired
     private FoodMapper foodMapper;
+
     @Autowired
     private SysDictService sysDictService;
 
@@ -59,6 +60,7 @@ public class FoodController {
         Food tmpFood = new Food();
         return new AjaxMessage().Set(MsgType.Success, "获取FoodName成功", tmpFood);
     }
+
 
     @ApiOperation(value = "获取客户端食物列表")
     @GetMapping("getUserFoodList")
@@ -79,9 +81,15 @@ public class FoodController {
         List<kindFoods> foodsList = new ArrayList<>();
 
         try {
-            List<Map<String, Object>> types = foodService.getAllType();
-            for (int i = 0; i < types.size(); i++) {
-                foodtypesID.add(types.get(i).get("foodType").toString());
+//            List<Map<String, Object>> types = foodService.getAllType();
+
+            List<SysDict> allTypes = sysDictService.selectAll();
+//            for (int i = 0; i < types.size(); i++) {
+//                foodtypesID.add(types.get(i).get("foodType").toString());
+//            }
+
+            for (int i = 0; i < allTypes.size();i++){
+                foodtypesID.add(allTypes.get(i).getId());
             }
             for (int i = 0; i < foodtypesID.size(); i++) {
                 System.out.println(foodtypesID.get(i));

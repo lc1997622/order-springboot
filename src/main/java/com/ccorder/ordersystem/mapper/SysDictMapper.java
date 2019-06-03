@@ -2,6 +2,8 @@ package com.ccorder.ordersystem.mapper;
 
 import com.ccorder.ordersystem.entity.SysDict;import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 public interface SysDictMapper {
     int deleteByPrimaryKey(String id);
 
@@ -26,4 +28,6 @@ public interface SysDictMapper {
      * @date 10:58 2019/5/17
      */
     String selectByNameEnAndStatus(@Param("nameEn") String nameEn, @Param("status") int status);
+
+    List<SysDict> selectAll();
 }

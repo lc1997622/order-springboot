@@ -73,42 +73,29 @@ public class UserInoController {
     @PostMapping("addNewUser")
     @ResponseBody
     protected Object addNewUser(
-            @ApiParam(name = "clientUser", value = "用户信息", type = "ClientUser")
-            @RequestBody
-                    ClientUser clientUser
-    ) {
+            @ApiParam(name = "userId", value = "用户Id",required = true,type = "String")
+            @RequestParam(value = "userId")
+                    String userId,
+            @ApiParam(name = "nickname", value = "用户昵称",required = true, type = "String")
+            @RequestParam(value = "nickname")
+                    String nickname,
+            @ApiParam(name = "sex", value = "用户性别",required = true, type = "Integer")
+            @RequestParam(value = "sex")
+                    Integer sex
+            ) {
         SysUser sysUser = new SysUser();
-        sysUser.setId(clientUser.getId());
-        sysUser.setBirthday(clientUser.getBirthday());
-        sysUser.setEmail(clientUser.getEmail());
-        sysUser.setNickName(clientUser.getNickName());
-        sysUser.setPassword(clientUser.getPassword());
-        sysUser.setRealName(clientUser.getRealName());
-        sysUser.setSex(clientUser.getSex());
-        sysUser.setTelephone(clientUser.getTelephone());
-        sysUser.setUsername(clientUser.getUsername());
+        sysUser.setId(userId);
+        sysUser.setNickName(nickname);
+        sysUser.setSex(sex);
+        sysUser.setAccount(100.0);
+        sysUser.setUsername(nickname);
         Date tmpDate = new Date();
         sysUser.setCreateTime(tmpDate);
         sysUser.setModifyTime(tmpDate);
 
-        List<SysRole> sysRoles = clientUser.getRoles();
-
         try {
             sysUserService.insert(sysUser);
-            for (SysRole sysRole : sysRoles) {
-                MapUserRole mapUserRole = new MapUserRole();
-                mapUserRole.setId(UUID.randomUUID().toString());
-                mapUserRole.setUserId(sysUser.getId());
-                mapUserRole.setRoleId(sysRole.getId());
-                mapUserRole.setCreateUserId(sysUser.getId());
-                mapUserRole.setCreateDate(tmpDate);
-                mapUserRole.setModifyDate(tmpDate);
-                mapUserRole.setModifyUserId(sysUser.getId());
-                mapUserRoleService.insert(mapUserRole);
-                sysRole.setId(UUID.randomUUID().toString());
-                sysRoleService.insert(sysRole);
-                return new AjaxMessage().Set(MsgType.Success, "插入新用户成功");
-            }
+            return new AjaxMessage().Set(MsgType.Success, "插入新用户成功");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -129,7 +116,7 @@ public class UserInoController {
             List<MapUserAddress> mapUserAddresses = mapUserAddressService.selectByUserId(userId);
             for (MapUserAddress userAddress : mapUserAddresses) {
                 Address address = addressService.selectByPrimaryKey(userAddress.getAddressId());
-                if(address!=null) {
+                if (address != null) {
                     addresses.add(address);
                 }
             }
@@ -265,14 +252,14 @@ public class UserInoController {
             @ApiParam(name = "addressId", value = "地址Id", type = "String")
             @RequestParam("addressId")
                     String addressId
-    ){
+    ) {
         try {
-            mapUserAddressService.deleteByUserIdAndId(userId,addressId);
+            mapUserAddressService.deleteByUserIdAndId(userId, addressId);
             addressService.deleteByPrimaryKey(addressId);
-            return new AjaxMessage().Set(MsgType.Success,"删除用户地址成功");
-        }catch (Exception e){
+            return new AjaxMessage().Set(MsgType.Success, "删除用户地址成功");
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return new AjaxMessage().Set(MsgType.Error,"删除用户地址失败");
+        return new AjaxMessage().Set(MsgType.Error, "删除用户地址失败");
     }
 }
