@@ -73,14 +73,20 @@ public class CommentService {
         Map<Comment,SysUser> hashmap=new HashMap<Comment,SysUser>();
         /*根据订单号获取全部评论，并添加订单评分*/
         for (int i = 0; i < orderTableList.size(); i++) {
+            System.out.println(orderTableList.get(i).getId());
             Comment tmpComment = new Comment();
+            SysUser sysUser=new SysUser();
             String tmpOrderId = orderTableList.get(i).getId();
             tmpComment = commentMapper.selectByOrderId(tmpOrderId);
             //获得用户的信息
-            SysUser sysUser=new SysUser();
-            sysUser=sysUserMapper.selectByPrimaryKey(tmpComment.getCreateUserId());
-            tmpComment.setScore(orderTableList.get(i).getScore());
-            hashmap.put(tmpComment,sysUser);
+            if(tmpComment==null) sysUser=null;
+            else{
+                System.out.println(tmpComment.getCreateUserId());
+                sysUser=sysUserMapper.selectByPrimaryKey(tmpComment.getCreateUserId());
+                System.out.println(sysUser);
+                tmpComment.setScore(orderTableList.get(i).getScore());
+                hashmap.put(tmpComment,sysUser);
+            }
         }
         return hashmap;
     }
