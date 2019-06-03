@@ -75,7 +75,7 @@ public class CommentController {
                     String userId
     ) {
         try {
-            Map<List<Comment>,List<String>> CommentAndRealNamemap = commentService.getStoreComment(userId);
+            Map<Comment,String> CommentAndRealNamemap = commentService.getStoreComment(userId);
             return new AjaxMessage().Set(MsgType.Success, "获取商家评论成功", CommentAndRealNamemap);
         } catch (Exception e) {
             e.printStackTrace();
