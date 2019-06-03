@@ -5,6 +5,8 @@ import javax.annotation.Resource;
 import com.ccorder.ordersystem.mapper.SysDictMapper;
 import com.ccorder.ordersystem.entity.SysDict;
 
+import java.util.List;
+
 @Service
 public class SysDictService {
 
@@ -44,6 +46,8 @@ public class SysDictService {
     public int countAllRecords(){
         return sysDictMapper.countAllRecords();
     }
+
+    public List<SysDict> selectAll(){return sysDictMapper.selectAll();}
 
 }
 
