@@ -4,10 +4,12 @@ package com.ccorder.ordersystem.service;
 import com.ccorder.ordersystem.entity.Address;
 import com.ccorder.ordersystem.entity.Food;
 import com.ccorder.ordersystem.entity.OrderTable;
+import com.ccorder.ordersystem.entity.SysUser;
 import com.ccorder.ordersystem.entity.mapEntity.MapUserOrder;
 import com.ccorder.ordersystem.mapper.AddressMapper;
 import com.ccorder.ordersystem.mapper.OrderTableMapper;
 import com.ccorder.ordersystem.entity.mapEntity.MapOrderFood;
+import com.ccorder.ordersystem.mapper.SysUserMapper;
 import com.ccorder.ordersystem.mapper.mapMapper.MapOrderFoodMapper;
 import com.ccorder.ordersystem.mapper.mapMapper.MapUserOrderMapper;
 import com.ccorder.ordersystem.sys.dto.OrderType;
@@ -27,6 +29,9 @@ import java.util.UUID;
  */
 @Service
 public class OrderService {
+
+    @Autowired
+    private SysUserMapper userMapper;
 
     @Autowired
     private MapUserOrderMapper mapUserOrderMapper;
@@ -133,6 +138,11 @@ public class OrderService {
         //已支付
         newOrder.setStatus(0);
         orderTableMapper.insertSelective(newOrder);
+
+        /*用户余额扣款*/
+        SysUser userNow = userMapper.selectByPrimaryKey(userId);
+        userNow.setAccount(userNow.getAccount() - newOrder.getActualPayment());
+        userMapper.updateByPrimaryKey(userNow);
 
         return orderTableMapper.selectByPrimaryKey(orderId);
     }
