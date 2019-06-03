@@ -66,29 +66,42 @@ public class CommentService {
     }
 
     /** 根据userId获取店家全部评论*/
-    public Map<Comment,SysUser> getStoreComment(String userId) {
+    public List<Comment> getStoreComment(String userId) {
         System.out.println("1----------------------");
         /*获取全部订单*/
         List<OrderTable> orderTableList = orderTableMapper.selectByUserId(userId);
-        Map<Comment,SysUser> hashmap=new HashMap<Comment,SysUser>();
+        List<Comment> commentList=new ArrayList<Comment>();
         /*根据订单号获取全部评论，并添加订单评分*/
         for (int i = 0; i < orderTableList.size(); i++) {
-            System.out.println(orderTableList.get(i).getId());
             Comment tmpComment = new Comment();
-            SysUser sysUser=new SysUser();
             String tmpOrderId = orderTableList.get(i).getId();
             tmpComment = commentMapper.selectByOrderId(tmpOrderId);
-            //获得用户的信息
-            if(tmpComment==null) sysUser=null;
-            else{
-                System.out.println(tmpComment.getCreateUserId());
-                sysUser=sysUserMapper.selectByPrimaryKey(tmpComment.getCreateUserId());
-                System.out.println(sysUser);
+            if(tmpComment!=null) {
                 tmpComment.setScore(orderTableList.get(i).getScore());
-                hashmap.put(tmpComment,sysUser);
+                commentList.add(tmpComment);
             }
         }
-        return hashmap;
+        return commentList;
+    }
+
+    /** 根据userId获取店家全部评论*/
+    public List<SysUser> getStoreCommentName(String userId) {
+        System.out.println("1----------------------");
+        /*获取全部订单*/
+        List<OrderTable> orderTableList = orderTableMapper.selectByUserId(userId);
+        List<SysUser> nameList=new ArrayList<SysUser>();
+        /*根据订单号获取全部评论，并添加订单评分*/
+        for (int i = 0; i < orderTableList.size(); i++) {
+            Comment tmpComment = new Comment();
+            String tmpOrderId = orderTableList.get(i).getId();
+            tmpComment = commentMapper.selectByOrderId(tmpOrderId);
+            if(tmpComment!=null){
+                String sysUserId=tmpComment.getCreateUserId();
+                SysUser sysUser=sysUserMapper.selectByPrimaryKey(sysUserId);
+                nameList.add(sysUser);
+            }
+        }
+        return nameList;
     }
 }
 
