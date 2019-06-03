@@ -3,9 +3,11 @@ package com.ccorder.ordersystem.entity;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Data
 @ApiModel(value = "OrderTable", description = "订单实体")
@@ -23,6 +25,8 @@ public class OrderTable implements Cloneable{
             required = false, allowEmptyValue = true)
     private String payMethod;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @ApiModelProperty(name = "deliveryTime", value = "送达时间", dataType = "Date", example = "Wed May 22 16:05:32 CST 2019",
             required = false, allowEmptyValue = true)
     private Date deliveryTime;
