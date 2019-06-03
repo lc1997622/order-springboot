@@ -276,12 +276,13 @@ public class FoodController {
     @PostMapping("/deleteOneTypeFood")
     @ResponseBody
     public Object deleteOneTypeFood(
-            @ApiParam(name = "foodType", value = "需要更新的食品", required = true, type = "String")
+            @ApiParam(name = "foodType", value = "需要更新的食品类别", required = true, type = "String")
             @RequestParam(value = "foodType")
                     String foodType
     ) {
         try {
-            foodMapper.deleteByFoodType(foodType);
+            foodMapper.updateByFoodType(foodType);
+            sysDictService.deleteByPrimaryKey(foodType);
             return new AjaxMessage().Set(MsgType.Success, "删除此类食物成功");
         } catch (Exception e) {
             e.printStackTrace();
