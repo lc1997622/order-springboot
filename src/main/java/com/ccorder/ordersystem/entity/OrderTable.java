@@ -25,6 +25,10 @@ public class OrderTable implements Cloneable{
             required = false, allowEmptyValue = true)
     private String payMethod;
 
+    @ApiModelProperty(name = "shipFee", value = "本次订单的配送费", dataType = "Double", example = "4.5",
+            required = false, allowEmptyValue = true)
+    private Double shipFee;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @ApiModelProperty(name = "deliveryTime", value = "送达时间", dataType = "Date", example = "Wed May 22 16:05:32 CST 2019",

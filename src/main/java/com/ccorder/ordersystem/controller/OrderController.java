@@ -86,7 +86,7 @@ public class OrderController {
                    OrderTable newOrder
 
     ){
-        /*需要地址id，用户id，食物列表(id+amount)，配送时间，实际支付价格，订单备注*/
+        /*需要地址id，用户id，食物列表(id+amount)，配送时间，实际支付价格，订单备注，配送费*/
         newOrder.setId(UUID.randomUUID().toString());
         try{
             OrderTable insertedOrder = orderService.addNewOrder(newOrder);

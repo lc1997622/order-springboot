@@ -123,12 +123,12 @@ public class OrderService {
 
         /*在order中插入一条记录*/
         //首先把地址id转换成实际数据
-        Address addressNow = addressMapper.selectByPrimaryKey(newOrder.getAddress());
+        /*Address addressNow = addressMapper.selectByPrimaryKey(newOrder.getAddress());
         String addressData = addressNow.getAddressName() + " " + addressNow.getHouseNumber();
-        newOrder.setAddress(addressData);
+        newOrder.setAddress(addressData);*/
 
         int orderAllCount = orderMapper.selectOrderAmountAll();
-        String newOrderNum = "orderNum"+orderAllCount;
+        String newOrderNum = "orderNum"+orderAllCount+1;
         newOrder.setOrderNum(newOrderNum);
         //已支付
         newOrder.setStatus(0);

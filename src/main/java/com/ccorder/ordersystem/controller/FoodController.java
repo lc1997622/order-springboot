@@ -138,7 +138,7 @@ public class FoodController {
 
         Date nowDate = new Date();
         SysDict newFoodType = new SysDict();
-        newFoodType.setId(UUID.randomUUID().toString());
+        newFoodType.setId("cc"+UUID.randomUUID().toString());
         newFoodType.setCreateUserId(userId);
         newFoodType.setModifyUserId(userId);
         newFoodType.setCreateDate(nowDate);
@@ -198,7 +198,7 @@ public class FoodController {
                 /*food表插入记录*/
                 Date tmpDate = new Date();
                 Food newFood = new Food();
-                newFood.setId(UUID.randomUUID().toString());
+                newFood.setId("cc"+UUID.randomUUID().toString());
 
                 newFood.setFoodName(foodName);
                 newFood.setFoodPrice(foodPrice);
