@@ -27,4 +27,7 @@ public interface OrderTableMapper {
     List<OrderTable> selectByUserId(String userId);
 
     OrderTable[] getBusinessAllOrder();
+
+    /** 查询orderTable订单数量*/
+    Integer selectOrderAmountAll();
 }

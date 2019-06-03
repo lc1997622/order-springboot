@@ -100,7 +100,6 @@ public class FoodController {
      * @author zm
      * @param userId
      * @param foodTypeNameCn
-     * @param foodTypeNameEn
      * @param sortNum
      * @return
      */
@@ -114,9 +113,9 @@ public class FoodController {
             @ApiParam(name = "foodTypeNameCn", value = "新食品种类名称(中文)", required = true, type = "String")
             @RequestParam(value = "foodTypeNameCn")
                     String foodTypeNameCn,
-            @ApiParam(name = "foodTypeNameEn", value = "新食品种类名称(英文)", required = true, type = "String")
+            /*@ApiParam(name = "foodTypeNameEn", value = "新食品种类名称(英文)", required = true, type = "String")
             @RequestParam(value = "foodTypeNameEn")
-                    String foodTypeNameEn,
+                    String foodTypeNameEn,*/
             @ApiParam(name = "sortNum", value = "分类排序号", required = true, type = "Integer")
             @RequestParam(value = "sortNum")
                     Integer sortNum
@@ -139,8 +138,8 @@ public class FoodController {
         newFoodType.setDictType("food_type");
         newFoodType.setSort(sortNum);
         newFoodType.setNameCn(foodTypeNameCn);
-        newFoodType.setNameEn(foodTypeNameEn);
-      /*  if(remark != null && !remark.equals("")){
+        /*newFoodType.setNameEn(foodTypeNameEn);
+        if(remark != null && !remark.equals("")){
             newFoodType.setRemark(remark);
         }*/
         try {

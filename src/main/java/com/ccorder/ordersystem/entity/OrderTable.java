@@ -9,7 +9,7 @@ import lombok.Data;
 
 @Data
 @ApiModel(value = "OrderTable", description = "订单实体")
-public class OrderTable {
+public class OrderTable implements Cloneable{
 
     @ApiModelProperty(name = "id", value = "主键id", dataType = "String", example = "order0001",
             required = true, allowEmptyValue = false)
