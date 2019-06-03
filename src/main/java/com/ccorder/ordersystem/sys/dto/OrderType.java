@@ -6,8 +6,9 @@ package com.ccorder.ordersystem.sys.dto;
  * @data 2019/5/22
  */
 public enum OrderType {
-    Deleted(-1, "已删除"),
-    UnPayed(0, "未支付"),
+    Deleted(-2,"已删除"),
+    Rejected(-1, "已拒单"),
+    UnPayed(0, "已支付"),
     Received(1, "已接单"),
     Delivering(2, "配送中"),
     Delivered(3, "已送达"),

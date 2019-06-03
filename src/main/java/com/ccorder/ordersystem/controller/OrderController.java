@@ -14,7 +14,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author zm
@@ -84,6 +86,14 @@ public class OrderController {
                    OrderTable newOrder
 
     ){
-        return null;
+        /*需要地址id，用户id，食物列表(id+amount)，配送时间，实际支付价格，订单备注*/
+        newOrder.setId(UUID.randomUUID().toString());
+        try{
+            OrderTable insertedOrder = orderService.addNewOrder(newOrder);
+            return new AjaxMessage().Set(MsgType.Success,"订单生成成功",insertedOrder);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return new AjaxMessage().Set(MsgType.Error,"订单生成失败",null);
     }
 }

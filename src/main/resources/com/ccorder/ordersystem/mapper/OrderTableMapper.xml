@@ -110,7 +110,7 @@
                 #{address,jdbcType=VARCHAR},
             </if>
             <if test="remark != null">
-                #{remark,jdbcType=VARCHAR}
+                #{remark,jdbcType=VARCHAR},
             </if>
             <if test="actualPayment != null">
                 #{actualPayment,jdbcType=FLOAT},
@@ -225,6 +225,11 @@
     <select id="getBusinessAllOrder" resultMap="BaseResultMap">
         select *
         from ccorder.order_table
+    </select>
+
+    <select id="selectOrderAmountAll" resultType="java.lang.Integer">
+          select count(*)
+        from order_table
     </select>
 
 </mapper>
