@@ -138,7 +138,7 @@ public class FoodController {
 
         Date nowDate = new Date();
         SysDict newFoodType = new SysDict();
-        newFoodType.setId(UUID.randomUUID().toString());
+        newFoodType.setId("cc"+UUID.randomUUID().toString());
         newFoodType.setCreateUserId(userId);
         newFoodType.setModifyUserId(userId);
         newFoodType.setCreateDate(nowDate);

@@ -48,14 +48,14 @@ public class BusinessOrderController {
     private AddressMapper addressMapper;
 
     //商家对订单状态的修改
-    @ApiOperation(value = "订单状态的修改")
+    @ApiOperation(value = "修改订单状态")
     @PostMapping("/changeOrderState")
     @ResponseBody
     public Object changeOrderStatus(
-            @ApiParam(name = "orderId", value = "订单编号", required = true,type = "String")
+            @ApiParam(name = "orderId", value = "订单主键id", required = true,type = "String")
             @RequestParam(value = "orderId")
                     String orderId,
-            @ApiParam(name = "status", value = "该订单的状态", required = true,type = "Integer")
+            @ApiParam(name = "status", value = "订单状态号", required = true,type = "Integer")
             @RequestParam(value = "status")
                     Integer status
     ){
