@@ -66,20 +66,21 @@ public class CommentService {
     }
 
     /** 根据userId获取店家全部评论*/
-    public Map<Comment,String> getStoreComment(String userId) {
+    public Map<Comment,SysUser> getStoreComment(String userId) {
         System.out.println("1----------------------");
         /*获取全部订单*/
         List<OrderTable> orderTableList = orderTableMapper.selectByUserId(userId);
-        Map<Comment,String> hashmap=new HashMap<Comment,String>();
+        Map<Comment,SysUser> hashmap=new HashMap<Comment,SysUser>();
         /*根据订单号获取全部评论，并添加订单评分*/
         for (int i = 0; i < orderTableList.size(); i++) {
             Comment tmpComment = new Comment();
             String tmpOrderId = orderTableList.get(i).getId();
             tmpComment = commentMapper.selectByOrderId(tmpOrderId);
             //获得用户的信息
-            String name=sysUserMapper.selectByPrimaryKey(tmpComment.getCreateUserId()).getRealName();
+            SysUser sysUser=new SysUser();
+            sysUser=sysUserMapper.selectByPrimaryKey(tmpComment.getCreateUserId());
             tmpComment.setScore(orderTableList.get(i).getScore());
-            hashmap.put(tmpComment,name);
+            hashmap.put(tmpComment,sysUser);
         }
         return hashmap;
     }
