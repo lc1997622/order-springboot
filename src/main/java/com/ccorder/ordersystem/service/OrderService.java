@@ -13,6 +13,7 @@ import com.ccorder.ordersystem.mapper.mapMapper.MapUserOrderMapper;
 import com.ccorder.ordersystem.sys.dto.OrderType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -74,6 +75,7 @@ public class OrderService {
     /**
      * 用户下单成功
      */
+    @Transactional
     public OrderTable addNewOrder(OrderTable newOrder) {
         String orderId = newOrder.getId();
         String userId = newOrder.getCreateUserId();
