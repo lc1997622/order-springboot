@@ -18,6 +18,7 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import tk.mybatis.mapper.annotation.Order;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +60,14 @@ public class BusinessOrderController {
             @RequestParam(value = "status")
                     Integer status
     ){
+        /*如果是修改为订单已经完成，那么商家的account应该增加收入*/
+        if(status == 4){
+            OrderTable tmpOrder = orderTableMapper.selectByPrimaryKey(orderId);
+            SysUser storeUser = sysUserMapper.selectByPrimaryKey("store0001");
+            storeUser.setAccount(storeUser.getAccount() + tmpOrder.getActualPayment());
+            sysUserMapper.updateByPrimaryKey(storeUser);
+        }
+
         orderTableMapper.updateOrderstate(orderId, status);
         return new AjaxMessage().Set(MsgType.Success,"订单状态修改成功");
     }
