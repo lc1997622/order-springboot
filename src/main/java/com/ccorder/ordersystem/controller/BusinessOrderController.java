@@ -65,6 +65,7 @@ public class BusinessOrderController {
             OrderTable tmpOrder = orderTableMapper.selectByPrimaryKey(orderId);
             SysUser storeUser = sysUserMapper.selectByPrimaryKey("store0001");
             storeUser.setAccount(storeUser.getAccount() + tmpOrder.getActualPayment());
+
             sysUserMapper.updateByPrimaryKey(storeUser);
         }
 
