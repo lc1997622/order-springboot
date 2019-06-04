@@ -60,7 +60,7 @@ public class OrderService {
         List<OrderTable> orderList = new ArrayList<>();
 
         //首先获当前用户的所有订单id
-        orderIdList = mapUserOrderMapper.selectByUserIdGetOrderId(openId);
+        orderIdList = mapUserOrderMapper.selectOrderIdByUserId(openId);
 
         //根据orderId获取订单
         for (String orderId : orderIdList) {
