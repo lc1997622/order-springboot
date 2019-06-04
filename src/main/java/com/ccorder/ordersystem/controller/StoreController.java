@@ -65,7 +65,7 @@ public class StoreController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return new AjaxMessage().Set(MsgType.Success, "获取商家信息失败",null);
+        return new AjaxMessage().Set(MsgType.Error, "获取商家信息失败",null);
     }
 
     @ApiOperation(value = "修改商家信息")
@@ -107,7 +107,7 @@ public class StoreController {
             address.setHouseNumber(houseNum);
             address.setAddressName(addressName);
             addressService.updateByPrimaryKeySelective(address);
-            return new AjaxMessage().Set(MsgType.Success, "更新商家信息成功");
+            return new AjaxMessage().Set(MsgType.Success, "更新商家信息成功",null);
         } catch (Exception e) {
             e.printStackTrace();
         }

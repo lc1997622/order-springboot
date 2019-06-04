@@ -228,7 +228,7 @@ public class FoodController {
                 e.printStackTrace();
             }
         }
-        return new AjaxMessage().Set(MsgType.Error, "新增Food失败");
+        return new AjaxMessage().Set(MsgType.Error, "新增Food失败",null);
     }
 
     @ApiOperation(value = "商家删除某一个食品")
@@ -244,11 +244,11 @@ public class FoodController {
                 return new AjaxMessage().Set(MsgType.Success, "该食物不存在");
             }
             foodMapper.deleteByPrimaryKey(foodId);
-            return new AjaxMessage().Set(MsgType.Success, "成功删除食物");
+            return new AjaxMessage().Set(MsgType.Success, "成功删除食物",null);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return new AjaxMessage().Set(MsgType.Success, "删除食物失败");
+        return new AjaxMessage().Set(MsgType.Error, "删除食物失败",null);
     }
 
     @ApiOperation(value = "商家更新某一个食品的信息")
@@ -265,11 +265,11 @@ public class FoodController {
                 return new AjaxMessage().Set(MsgType.Success, "不存在此食物");
             }
             foodMapper.updateByPrimaryKeySelective(food);
-            return new AjaxMessage().Set(MsgType.Success, "更新食物成功");
+            return new AjaxMessage().Set(MsgType.Success, "更新食物成功",null);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return new AjaxMessage().Set(MsgType.Success, "更新食物失败");
+        return new AjaxMessage().Set(MsgType.Error, "更新食物失败",null);
     }
 
     @ApiOperation(value = "商家删除某一类的食物")
@@ -283,11 +283,11 @@ public class FoodController {
         try {
             foodMapper.updateByFoodType(foodType);
             sysDictService.deleteByPrimaryKey(foodType);
-            return new AjaxMessage().Set(MsgType.Success, "删除此类食物成功");
+            return new AjaxMessage().Set(MsgType.Success, "删除此类食物成功",null);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return new AjaxMessage().Set(MsgType.Success, "删除此类食物失败");
+        return new AjaxMessage().Set(MsgType.Error, "删除此类食物失败",null);
     }
 
 }
