@@ -126,20 +126,20 @@ public class OrderService {
             mapOrderFoodMapper.insertSelective(mapOrderFood);
         }
 
-        /*在order中插入一条记录*/
-        //首先把地址id转换成实际数据
-        /*Address addressNow = addressMapper.selectByPrimaryKey(newOrder.getAddress());
-        String addressData = addressNow.getAddressName() + " " + addressNow.getHouseNumber();
-        newOrder.setAddress(addressData);*/
-
+        /*1.设置订单号*/
         int orderAllCount = orderMapper.selectOrderAmountAll();
         String newOrderNum = "orderNum"+orderAllCount+1;
         newOrder.setOrderNum(newOrderNum);
-        //已支付
+        /*2.设置状态为已支付*/
         newOrder.setStatus(0);
+        /*3.设置创建人、创建时间、修改人、修改时间*/
+        newOrder.setCreateUserId(userId);
+        newOrder.setCreateDate(dateNow);
+        newOrder.setModifyUserId(userId);
+        newOrder.setModifyDate(dateNow);
+        /*4.在订单表插入新订单*/
         orderTableMapper.insertSelective(newOrder);
-
-        /*用户余额扣款*/
+        /*5.用户余额扣款*/
         SysUser userNow = userMapper.selectByPrimaryKey(userId);
         userNow.setAccount(userNow.getAccount() - newOrder.getActualPayment());
         userMapper.updateByPrimaryKey(userNow);
