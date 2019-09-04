@@ -19,9 +19,6 @@ public interface MapUserOrderMapper {
 
     int updateByPrimaryKey(MapUserOrder record);
 
-    /** 根据orderId获取userId*/
-    List<String> selectByUserIdGetOrderId(String userId);
-
     /** 根据userId获取orderId*/
     List<String> selectOrderIdByUserId(@Param("userId")String userId);
 }

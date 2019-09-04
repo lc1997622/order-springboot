@@ -265,9 +265,11 @@
     from ccorder.food
     where ccorder.food.id=#{foodId,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByFoodType">
-    delete from ccorder.food
-    where ccorder.food.food_type=#{foodType,jdbcType=VARCHAR}
-  </delete>
+  <update id="updateByFoodType">
+    update ccorder.food
+    set food.food_type=null
+    where food_type=#{foodType,jdbcType=VARCHAR}
+  </update>
+
 
 </mapper>

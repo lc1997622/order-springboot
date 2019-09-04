@@ -8,6 +8,7 @@ import com.ccorder.ordersystem.sys.dto.MsgType;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -74,9 +75,16 @@ public class CommentController {
             @RequestParam("userId")
                     String userId
     ) {
+        @Data
+        class CommentAll{
+            List<Comment> commentList=null;
+            List<SysUser> sysUserList=null;
+        }
         try {
-            Map<Comment,String> CommentAndRealNamemap = commentService.getStoreComment(userId);
-            return new AjaxMessage().Set(MsgType.Success, "获取商家评论成功", CommentAndRealNamemap);
+            CommentAll commentAll=new CommentAll();
+            commentAll.commentList=commentService.getStoreComment(userId);
+            commentAll.sysUserList=commentService.getStoreCommentName(userId);
+            return new AjaxMessage().Set(MsgType.Success, "获取商家评论成功", commentAll);
         } catch (Exception e) {
             e.printStackTrace();
         }

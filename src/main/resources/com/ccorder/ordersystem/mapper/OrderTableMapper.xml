@@ -6,6 +6,7 @@
         <id column="id" jdbcType="VARCHAR" property="id"/>
         <result column="order_num" jdbcType="VARCHAR" property="orderNum"/>
         <result column="pay_method" jdbcType="VARCHAR" property="payMethod"/>
+        <result column="ship_fee" jdbcType="VARCHAR" property="shipFee"/>
         <result column="delivery_time" jdbcType="TIMESTAMP" property="deliveryTime"/>
         <result column="address" jdbcType="VARCHAR" property="address"/>
         <result column="remark" jdbcType="VARCHAR" property="remark"/>
@@ -20,7 +21,7 @@
 
     <sql id="Base_Column_List">
         <!--@mbg.generated-->
-        id, order_num, pay_method, delivery_time, address,remark, actual_payment, score,create_user_id,
+        id, order_num, pay_method, ship_fee,delivery_time, address,remark, actual_payment, score,create_user_id,
         create_date, modify_user_id, modify_date, `status`
     </sql>
 
@@ -40,12 +41,14 @@
 
     <insert id="insert" parameterType="com.ccorder.ordersystem.entity.OrderTable">
         <!--@mbg.generated-->
-        insert into order_table (id, order_num, pay_method,
+        insert into order_table (id, order_num, ship_fee, pay_method,ship_fee,
         delivery_time,address, remark,actual_payment,score,
         create_user_id, create_date, modify_user_id,
         modify_date, `status`)
-        values (#{id,jdbcType=VARCHAR}, #{orderNum,jdbcType=VARCHAR}, #{payMethod,jdbcType=VARCHAR},
-        #{deliveryTime,jdbcType=TIMESTAMP}, #{address,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR} , #{actualPayment,jdbcType=FLOAT},
+        values (#{id,jdbcType=VARCHAR}, #{orderNum,jdbcType=VARCHAR}, #{shipFee,jdbcType=DOUBLE}
+        ,#{payMethod,jdbcType=VARCHAR},#{shipFee,jdbcType=DOUBLE} ,
+        #{deliveryTime,jdbcType=TIMESTAMP}, #{address,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR} ,
+        #{actualPayment,jdbcType=FLOAT},
         #{createUserId,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{modifyUserId,jdbcType=VARCHAR},
         #{modifyDate,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER} )
     </insert>
@@ -61,6 +64,9 @@
             </if>
             <if test="payMethod != null">
                 pay_method,
+            </if>
+            <if test="shipFee != null">
+                ship_fee,
             </if>
             <if test="deliveryTime != null">
                 delivery_time,
@@ -103,6 +109,9 @@
             <if test="payMethod != null">
                 #{payMethod,jdbcType=VARCHAR},
             </if>
+            <if test="shipFee != null">
+                #{shipFee,jdbcType=DOUBLE},
+            </if>
             <if test="deliveryTime != null">
                 #{deliveryTime,jdbcType=TIMESTAMP},
             </if>
@@ -143,6 +152,9 @@
             <if test="payMethod != null">
                 pay_method = #{payMethod,jdbcType=VARCHAR},
             </if>
+            <if test="shipFee != null">
+                ship_fee = #{shipFee,jdbcType=DOUBLE} ,
+            </if>
             <if test="deliveryTime != null">
                 delivery_time = #{deliveryTime,jdbcType=TIMESTAMP},
             </if>
@@ -181,6 +193,7 @@
         update order_table
         set order_num = #{orderNum,jdbcType=VARCHAR},
         pay_method = #{payMethod,jdbcType=VARCHAR},
+        ship_fee = #{shipFee,jdbcType=DOUBLE} ,
         delivery_time = #{deliveryTime,jdbcType=TIMESTAMP},
         address = #{address,jdbcType=VARCHAR},
         remark = #{remark,jdbcType=VARCHAR} ,
